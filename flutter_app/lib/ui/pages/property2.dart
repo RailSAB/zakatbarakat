@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 
-class UshrPage extends StatefulWidget {
-  const UshrPage({super.key});
+class Property2Page extends StatefulWidget {
+  const Property2Page({super.key});
 
   @override
-  State<UshrPage> createState() => _UshrState();
+  State<Property2Page> createState() => _Property2State();
 }
 
-class _UshrState extends State<UshrPage> {
-final numberController = TextEditingController();
+class _Property2State extends State<Property2Page> {
+
+  final numberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ushr Page'),
+        title: const Text('Livestock Page'),
       ),
       body: Center(
         child: Column(
@@ -24,7 +25,7 @@ final numberController = TextEditingController();
           padding: const EdgeInsets.all(32.0),
           child: title(),
         ),
-        //body
+        // body
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: button(),
@@ -35,11 +36,11 @@ final numberController = TextEditingController();
     );
   }
 
-  Widget title() => const Text('Zakat on Ushr', style: TextStyle(fontSize: 30), textAlign: TextAlign.center,);
+  Widget title() => const Text('Zakat on Property 2', style: TextStyle(fontSize: 30), textAlign: TextAlign.center,);
 
   Widget button(){
-    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/overall');}, 
+    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/property3');}, 
     style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
-    child: const Text('Calculate', style: TextStyle(fontSize: 24),),);
+    child: const Text('Continue', style: TextStyle(fontSize: 24),),);
   }
 }

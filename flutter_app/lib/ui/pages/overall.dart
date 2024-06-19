@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class PropertyPage extends StatefulWidget {
-  const PropertyPage({super.key});
+class OverallPage extends StatefulWidget {
+  const OverallPage({super.key});
 
   @override
-  State<PropertyPage> createState() => _PropertyState();
+  State<OverallPage> createState() => _OverallState();
 }
 
-class _PropertyState extends State<PropertyPage> {
+class _OverallState extends State<OverallPage> {
 
   final numberController = TextEditingController();
 
@@ -15,7 +15,7 @@ class _PropertyState extends State<PropertyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Property Page'),
+        title: const Text('Overall'),
       ),
       body: Center(
         child: Column(
@@ -23,9 +23,8 @@ class _PropertyState extends State<PropertyPage> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(32.0),
-          child: title(),
+          child: sum(123456),
         ),
-        // body
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: button(),
@@ -36,11 +35,15 @@ class _PropertyState extends State<PropertyPage> {
     );
   }
 
-  Widget title() => const Text('Zakat on Property', style: TextStyle(fontSize: 30), textAlign: TextAlign.center,);
+  Widget title() => const Text('Overall:', style: TextStyle(fontSize: 30),);
+
+  Widget sum(int number){
+    return Text(style: const TextStyle(fontSize: 30), "Overall: $number RUB", textAlign: TextAlign.center,);
+  }
 
   Widget button(){
-    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/property2');}, 
+    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/home');}, 
     style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
-    child: const Text('Continue', style: TextStyle(fontSize: 24),),);
+    child: const Text('Go to Home page', style: TextStyle(fontSize: 24),),);
   }
 }

@@ -58,7 +58,7 @@ class _LivestockState extends State<LivestockPage> {
   }
 
   Widget button(){
-    return ElevatedButton(onPressed: () {}, 
+    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/livestock2');}, 
     style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
     child: const Text('Continue', style: TextStyle(fontSize: 24),),);
   }
