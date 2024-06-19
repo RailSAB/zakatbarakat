@@ -9,7 +9,23 @@ class LivestockPage extends StatefulWidget {
 
 class _LivestockState extends State<LivestockPage> {
 
-  final numberController = TextEditingController();
+  final List<TextEditingController> controllers = [];
+  final List<String> elemTitle = ["Sheep/Rams", "Cows/Bulls", "Goats"];
+  final List<int> nisab = [40, 30, 40];
+
+   @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < 3; i++) { // Assuming you want 3 fields
+      controllers.add(TextEditingController());
+    }
+  }
+
+  @override
+  void dispose() {
+    controllers.forEach((controller) => controller.dispose());
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +38,14 @@ class _LivestockState extends State<LivestockPage> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.all(32.0),
+          padding: const EdgeInsets.all(16.0),
           child: title(),
         ),
-        //body
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: notificationBox(),
+        ),
+        body(),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: button(),
@@ -40,8 +60,8 @@ class _LivestockState extends State<LivestockPage> {
 
   Widget notificationBox(){
     return Container(
-      width: 324,
-      height: 84,
+      width: 600,
+      height: 100,
       decoration: BoxDecoration(
               color: Colors.grey, 
               borderRadius: BorderRadius.circular(20), 
@@ -63,34 +83,39 @@ class _LivestockState extends State<LivestockPage> {
     child: const Text('Continue', style: TextStyle(fontSize: 24),),);
   }
 
-  /*
------------------------------------ body methods that don't yet work ---------------------------------------------
+ 
+ Widget body() {
+  return Column(
+    children: [
+      ...[
+        for (int i = 0; i < 3; i++)
+          enterField(controllers[i], elemTitle[i], nisab[i])
+      ], // Explicitly converting the Set to a List
+    ],
+  );
+}
 
- Widget body(){
-    return Column(
-      children: [enterField('Sheep/Rams', 40), enterField('Cows/Bulls', 30), enterField('Goats', 40)]
-    );
-  }
 
-  Widget enterField(String title, int nisab){
-    return Column(
-      children: [ 
-        Text(title),
-        Text('Nisab $nisab heads'),
-        Row(children: [const Text('Amount'), textField()],)]
-          );
-      
-  }
+  Widget enterField(TextEditingController controller, String text, int nisab) {
+  return Column(
+    children: [
+      Text(text), 
+      Text('Nisab $nisab heads'), 
+      Row(
+        children: [
+          const Text('Amount'),
+          const SizedBox(width: 20),
+          Expanded(child: TextField(controller: controller, 
+          decoration: const InputDecoration(
+                      hintText: 'Enter value',
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.all(8),
+                    ),
+                    keyboardType: TextInputType.number,)), 
+        ],
+      ),
+    ],
+  );
+}
 
-  Widget textField(){
-    return TextField(
-      controller: numberController,
-      decoration: const InputDecoration(border: OutlineInputBorder(), labelText: 'Enter amount'),
-      textInputAction: TextInputAction.done,
-      keyboardType: TextInputType.number,
-    );
-  }
-
-------------------------------------------------------------------------------------------------------------------
-  */
 }
