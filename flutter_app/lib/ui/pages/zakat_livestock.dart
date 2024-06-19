@@ -11,6 +11,6 @@ class _LivestockState extends State<LivestockPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

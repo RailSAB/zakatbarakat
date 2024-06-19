@@ -11,6 +11,6 @@ class _UshrState extends State<UshrPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }

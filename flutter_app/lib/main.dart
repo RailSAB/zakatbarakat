@@ -15,13 +15,12 @@ class ExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Zakat Calculator',
-      initialRoute: '/',
+      theme: ThemeData(primarySwatch: Colors.deepPurple,),
+      home: const HomePage(),
       routes: {
-        '/': (context) => HomePage(),
-        '/livestock': (context) => LivestockPage(),
-        '/property': (context) => PropertyPage(),
-        '/ushr': (context) => UshrPage()
+        '/livestock': (context) => const LivestockPage(),
+        '/property': (context) => const PropertyPage(),
+        '/ushr': (context) => const UshrPage()
       },
     );
   }

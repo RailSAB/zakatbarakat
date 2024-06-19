@@ -11,6 +11,6 @@ class _PropertyState extends State<PropertyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return const Scaffold();
   }
 }
