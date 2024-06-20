@@ -11,7 +11,6 @@ class _Livestock2State extends State<Livestock2Page> {
 
   final List<TextEditingController> controllers = [];
   final List<String> elemTitle = ["Horses", "Buffaloes", "Camels"];
-  final List<int> nisab = [0, 30, 40];
 
    @override
   void initState() {
@@ -90,7 +89,7 @@ class _Livestock2State extends State<Livestock2Page> {
       ...[
         for (int i = 0; i < 3; i++)
           if (elemTitle[i] != "Horses")
-            enterField(controllers[i], elemTitle[i], nisab[i])
+            enterField(controllers[i], elemTitle[i])
           else horses(controllers[i]),
       ], // Explicitly converting the Set to a List
     ],
@@ -98,11 +97,10 @@ class _Livestock2State extends State<Livestock2Page> {
 }
 
 
-  Widget enterField(TextEditingController controller, String text, int nisab) {
+  Widget enterField(TextEditingController controller, String text) {
   return Column(
     children: [
-      Text(text), 
-      Text('Nisab $nisab heads'), 
+      Text(text),  
       Row(
         children: [
           const Text('Amount'),

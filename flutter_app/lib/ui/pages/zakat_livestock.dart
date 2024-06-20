@@ -11,7 +11,6 @@ class _LivestockState extends State<LivestockPage> {
 
   final List<TextEditingController> controllers = [];
   final List<String> elemTitle = ["Sheep/Rams", "Cows/Bulls", "Goats"];
-  final List<int> nisab = [40, 30, 40];
 
    @override
   void initState() {
@@ -89,18 +88,17 @@ class _LivestockState extends State<LivestockPage> {
     children: [
       ...[
         for (int i = 0; i < 3; i++)
-          enterField(controllers[i], elemTitle[i], nisab[i])
+          enterField(controllers[i], elemTitle[i])
       ], // Explicitly converting the Set to a List
     ],
   );
 }
 
 
-  Widget enterField(TextEditingController controller, String text, int nisab) {
+  Widget enterField(TextEditingController controller, String text) {
   return Column(
     children: [
       Text(text), 
-      Text('Nisab $nisab heads'), 
       Row(
         children: [
           const Text('Amount'),
