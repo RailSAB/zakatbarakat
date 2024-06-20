@@ -45,10 +45,10 @@ _removeItem(int index){
   });
 }
 
-void _submit(){
+bool _submit(){
   final isValid = _formKey.currentState!.validate();
   if(!isValid){
-    return;
+    return false;
   }
   _formKey.currentState!.save();
   
@@ -73,6 +73,8 @@ void _submit(){
   );
 --------------------------------------------------------------
 */
+
+  return true;
 }
 
   @override
@@ -181,8 +183,9 @@ void _submit(){
           borderRadius: BorderRadius.circular(10)),
         color: Colors.deepPurple,
         onPressed: (){
-          _submit();
-          Navigator.pushNamed(context, '/ushr');
+          if(_submit()){
+            Navigator.pushNamed(context, '/ushr');
+          }
         },
         child: const Padding(
           padding: EdgeInsets.all(15),
