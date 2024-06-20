@@ -7,6 +7,7 @@ import 'package:flutter_app/ui/pages/livestock2.dart';
 import 'package:flutter_app/ui/pages/property2.dart';
 import 'package:flutter_app/ui/pages/property3.dart';
 import 'package:flutter_app/ui/pages/overall.dart';
+import 'package:flutter_app/ui/widgets/dynamic_table.dart';
 
 void main() {
   runApp(const ExampleApp());
@@ -30,6 +31,7 @@ class ExampleApp extends StatelessWidget {
         '/property3': (context) => const Property3Page(),
         '/livestock2': (context) => const Livestock2Page(),
         '/overall': (context) => const OverallPage(),
+        '/harvestTable': (context) => const DynamicTable(taskId: '1',),
       },
     );
   }

@@ -24,6 +24,10 @@ final numberController = TextEditingController();
           padding: const EdgeInsets.all(32.0),
           child: title(),
         ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: addHarvest(),
+        ),
         //body
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -41,5 +45,11 @@ final numberController = TextEditingController();
     return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/overall');}, 
     style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
     child: const Text('Calculate', style: TextStyle(fontSize: 24),),);
+  }
+
+  Widget addHarvest(){
+    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/harvestTable');}, 
+    style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
+    child: const Text('Edit Harvest', style: TextStyle(fontSize: 24),),);
   }
 }
