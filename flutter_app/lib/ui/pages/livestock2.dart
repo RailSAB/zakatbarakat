@@ -8,6 +8,8 @@ class Livestock2Page extends StatefulWidget {
 }
 
 class _Livestock2State extends State<Livestock2Page> {
+  bool isSwitched1 = false;
+  bool isSwitched2 = false;
 
   final List<TextEditingController> controllers = [];
   final List<String> elemTitle = ["Horses", "Buffaloes", "Camels"];
@@ -60,7 +62,7 @@ class _Livestock2State extends State<Livestock2Page> {
   Widget notificationBox(){
     return Container(
       width: 600,
-      height: 100,
+      height: 90,
       decoration: BoxDecoration(
               color: Colors.grey, 
               borderRadius: BorderRadius.circular(20), 
@@ -69,7 +71,7 @@ class _Livestock2State extends State<Livestock2Page> {
         child: 
             Text("It does not count if the livestock is used for work, riding; "
             "the animal was harmed; the owner has NOT fed the herd on his own for more than 7 months",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 16),
             textAlign: TextAlign.center,),
             )
       );
@@ -100,9 +102,12 @@ class _Livestock2State extends State<Livestock2Page> {
   Widget enterField(TextEditingController controller, String text) {
   return Column(
     children: [
-      Text(text),  
+      const SizedBox(height: 20),
+      Text(text, style: const TextStyle(fontSize: 24), ), 
+      const SizedBox(height: 20), 
       Row(
         children: [
+          const SizedBox(width: 20),
           const Text('Amount'),
           const SizedBox(width: 20),
           Expanded(child: TextField(controller: controller, 
@@ -121,9 +126,33 @@ class _Livestock2State extends State<Livestock2Page> {
 Widget horses(TextEditingController controller){
   return Column(
     children: [
-      const Text('Horses'),  
+      const Text('Horses', style: TextStyle(fontSize: 24),), 
+      const SizedBox(height: 20),
+      Row (
+        children: [
+          const SizedBox(width: 20),
+          const Text('Are they being \nbred for sale?'),
+          const SizedBox(width: 20),
+          Switch(value: isSwitched1,
+                 onChanged: (value) {
+                  setState(() {
+                  isSwitched1 = value;
+                });
+              },),
+          const SizedBox(width: 50,),
+          const Text('Are there any \nfemales?'),
+          Switch(value: isSwitched2,
+                 onChanged: (value) {
+                  setState(() {
+                  isSwitched2 = value;
+                });
+              },),
+        ],
+      ),
+      const SizedBox(height: 20),
       Row(
         children: [
+          const SizedBox(width: 20),
           const Text('Amount'),
           const SizedBox(width: 20),
           Expanded(child: TextField(controller: controller, 
@@ -132,8 +161,8 @@ Widget horses(TextEditingController controller){
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.all(8),
                     ),
-                    keyboardType: TextInputType.number,)), 
-        ],
+                    keyboardType: TextInputType.number,)),          
+        ], 
       ),
     ],
   );

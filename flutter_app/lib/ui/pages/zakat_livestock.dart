@@ -60,7 +60,7 @@ class _LivestockState extends State<LivestockPage> {
   Widget notificationBox(){
     return Container(
       width: 600,
-      height: 100,
+      height: 90,
       decoration: BoxDecoration(
               color: Colors.grey, 
               borderRadius: BorderRadius.circular(20), 
@@ -69,7 +69,7 @@ class _LivestockState extends State<LivestockPage> {
         child: 
             Text("It does not count if the livestock is used for work, riding; "
             "the animal was harmed; the owner has NOT fed the herd on his own for more than 7 months",
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 16),
             textAlign: TextAlign.center,),
             )
       );
@@ -98,9 +98,12 @@ class _LivestockState extends State<LivestockPage> {
   Widget enterField(TextEditingController controller, String text) {
   return Column(
     children: [
-      Text(text), 
+      const SizedBox(height: 20),
+      Text(text, style: const TextStyle(fontSize: 24), ), 
+      const SizedBox(height: 20),
       Row(
         children: [
+          const SizedBox(width: 20),
           const Text('Amount'),
           const SizedBox(width: 20),
           Expanded(child: TextField(controller: controller, 
