@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/zakat_on_property_provider.dart';
@@ -15,14 +16,15 @@ class _Property3State extends ConsumerState<Property3Page> {
   List <TextEditingController> controllers = [];
   List <String> elemTitle = ["Bought without the intention \nof resale, but the first \nsteps towards this \nhave been taken",
   "Was used or spent after \npayment of zakat became \nobligatory \n(if stolen or lost, do not count)",
-  "Income from premises for \nrent or sale"];
+  "Income from premises for \nrent or sale",
+  "Debts that must be paid within the next 12 months."];
 
   final numberController = TextEditingController();
 
   @override
   void initState(){
     super.initState();
-    for (int i = 0; i < 3; i++) { 
+    for (int i = 0; i < 4; i++) { 
       controllers.add(TextEditingController());
     }
   }
@@ -68,6 +70,7 @@ class _Property3State extends ConsumerState<Property3Page> {
       ref.read(zakatOnPropertyProvider.notifier).setPurchasedNotForResaling(setValues(controllers[0].text));
       ref.read(zakatOnPropertyProvider.notifier).setUsedAfterNisab(setValues(controllers[1].text));
       ref.read(zakatOnPropertyProvider.notifier).setRentMoney(setValues(controllers[2].text));
+      ref.read(zakatOnPropertyProvider.notifier).setTaxesValue(setValues(controllers[3].text));
       performPostRequest();
       }, 
     style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
@@ -80,7 +83,7 @@ class _Property3State extends ConsumerState<Property3Page> {
       ...[
         const Text('Property', style: TextStyle(fontSize: 24)),
         const SizedBox(height: 20),
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < 4; i++)
           enterField(controllers[i], elemTitle[i]),
       ], // Explicitly converting the Set to a List
     ],
@@ -134,7 +137,9 @@ Future<void> performPostRequest() async {
       "rent_money":   ref.read(zakatOnPropertyProvider).rentMoney,
       "stocks_for_resaling": ref.read(zakatOnPropertyProvider).stocksForResaling,
       "income_from_stocks": ref.read(zakatOnPropertyProvider).incomeFromStocks,
-      "taxes_value": ref.read(zakatOnPropertyProvider).taxesValue
+      "taxes_value": ref.read(zakatOnPropertyProvider).taxesValue,
+      "nisab_value": ref.read(zakatOnPropertyProvider).nisabValue
+      // "currency": ref.read(currencyProvider).code
     });
     try {
       final response = await http.post(url, headers: headers, body: body);
@@ -147,10 +152,10 @@ Future<void> performPostRequest() async {
         }else{
           ref.read(zakatOnPropertyProvider.notifier).setZakatValue(zakatvalue);
         }
-        Navigator.pushNamed(context, '/overall');
       } else {
         print('Request failed with status: ${response.statusCode}.');
       }
+      Navigator.pushNamed(context, '/propertyoverall');
     } catch (e) {
       print('Error: $e');
     }

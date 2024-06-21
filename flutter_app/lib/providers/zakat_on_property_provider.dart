@@ -36,6 +36,8 @@ class ZakatOnPropertyNotifier extends StateNotifier<ZakatOnPropertyModel> {
 
   void setTaxesValue(int value) => state.taxesValue = value;//13
 
+  void setNisabValue(int value) => state.nisabValue = value;
+
   void setZakatValue(int value){
     state.zakatValue = value;//14
   }

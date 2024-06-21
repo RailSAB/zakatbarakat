@@ -1,24 +1,52 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/currency_model.dart';
+import 'package:flutter_app/providers/currency_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:currency_picker/currency_picker.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(child: Text('Home Page'),),
+        title:  Center(child: 
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Center(child:Text('Home Page')),
+            ElevatedButton(
+              onPressed: (){
+                showCurrencyPicker(
+                  context: context,
+                  showFlag: true,
+                  showCurrencyName: true,
+                  showCurrencyCode: true,
+                  onSelect: (Currency currency) {
+                    ref.read(currencyProvider.notifier).setCurrency(currency);
+                  },
+                  favorite: ['USD', 'RUB'],
+                  currencyFilter: CurrencyModel.currencies.values.toList(),
+                );
+              }, 
+              child: const Text('Choose Currency'),
+
+              )
+          ],
+        ),
+      ),
       ),
       body: Center(
         child:Column(
           children: [ 
-            Padding(
+          Padding(
           padding: const EdgeInsets.all(32.0),
           child: title(),
         ),

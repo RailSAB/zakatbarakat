@@ -16,6 +16,7 @@ class ZakatOnPropertyModel {
   int taxesValue;
 
   int zakatValue;
+  int nisabValue = 0;
 
   ZakatOnPropertyModel({
     this.cash = 0,
@@ -31,7 +32,8 @@ class ZakatOnPropertyModel {
     this.stocksForResaling = 0,
     this.incomeFromStocks = 0,
     this.taxesValue = 0,
-    this.zakatValue = 0
+    this.zakatValue = 0,
+    this.nisabValue = 0
   });
 
   

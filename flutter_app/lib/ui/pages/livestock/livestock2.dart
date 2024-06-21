@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_app/models/zakat_on_livestock_model.dart';
+import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_app/providers/zakat_on_property_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -161,7 +162,7 @@ Widget horses(TextEditingController controller){
                 });
               },),
         ],
-      ),
+      ), 
       const SizedBox(height: 20),
       Row(
         children: [
@@ -191,9 +192,10 @@ Future<void> performPostRequest() async {
       "buffaloes": ref.read(zakatOnLivestockProvider).buffaloes,
       "sheep": ref.read(zakatOnLivestockProvider).sheep,
       "goats": ref.read(zakatOnLivestockProvider).goats,
-      "horses_value": ref.read(zakatOnLivestockProvider).horses_value
-      //"isFemale_horses": ref.read(zakatOnLivestockProvider).isFemale
-      //"isForSale_horses": ref.read(zakatOnLivestockProvider).isForSale
+      "horses_value": ref.read(zakatOnLivestockProvider).horses_value,
+      "isFemale_horses": ref.read(zakatOnLivestockProvider).isFemale,
+      "isForSale_horses": ref.read(zakatOnLivestockProvider).isForSale
+      // "currency": ref.read(currencyProvider).code
     });
     try {
       final response = await http.post(url, headers: headers, body: body);
@@ -215,10 +217,10 @@ Future<void> performPostRequest() async {
           ref.read(zakatOnLivestockProvider.notifier).setHorsesValue(zakatvalueForHorses);
           ref.read(zakatOnLivestockProvider.notifier).setAnimalsForZakat(animalList);
         }
-        Navigator.pushNamed(context, '/overall');
       } else {
         print('Request failed with status: ${response.statusCode}.');
       }
+      Navigator.pushNamed(context, '/livestockoverall');
     } catch (e) {
       print('Error: $e');
     }

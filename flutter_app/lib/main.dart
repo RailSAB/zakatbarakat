@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/pages/livestock/livestock_overall.dart';
 import 'package:flutter_app/ui/pages/livestock/zakat_livestock.dart';
 import 'package:flutter_app/ui/pages/zakat_on_property/zakat_property.dart';
 import 'package:flutter_app/ui/pages/zakat_ushr.dart';
@@ -31,7 +32,8 @@ class ExampleApp extends StatelessWidget {
         '/property2': (context) => const Property2Page(),
         '/property3': (context) => const Property3Page(),
         '/livestock2': (context) => const Livestock2Page(),
-        '/overall': (context) => const OverallPage(),
+        '/propertyoverall': (context) => const PropertyOverallPage(),
+        '/livestockoverall': (context) => const LivestockOverallPage(),
         '/harvestTable': (context) => const DynamicTable(taskId: '1',),
       },
     );

@@ -1,17 +1,16 @@
-import 'dart:convert';
+import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_app/providers/zakat_on_property_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
-class OverallPage extends ConsumerStatefulWidget {
-  const OverallPage({super.key});
+class PropertyOverallPage extends ConsumerStatefulWidget {
+  const PropertyOverallPage({super.key});
 
   @override
-  ConsumerState<OverallPage> createState() => _OverallState();
+  ConsumerState<PropertyOverallPage> createState() => _PropertyOverallState();
 }
 
-class _OverallState extends ConsumerState<OverallPage> {
+class _PropertyOverallState extends ConsumerState<PropertyOverallPage> {
 
   final numberController = TextEditingController();
 
@@ -42,7 +41,10 @@ class _OverallState extends ConsumerState<OverallPage> {
   Widget title() => const Text('Overall:', style: TextStyle(fontSize: 30),);
 
   Widget sum(int number){
-    return Text(style: const TextStyle(fontSize: 30), "Overall: $number RUB", textAlign: TextAlign.center,);
+    if(number == 0){
+      return Text(style: const TextStyle(fontSize: 30), "You don't have any zakat", textAlign: TextAlign.center,);
+    }
+    return Text(style: const TextStyle(fontSize: 30), "Overall: $number ${ref.watch(currencyProvider).code}", textAlign: TextAlign.center,);
   }
 
   Widget button(){
