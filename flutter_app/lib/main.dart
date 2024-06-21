@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/pages/zakat_livestock.dart';
-import 'package:flutter_app/ui/pages/zakat_property.dart';
+import 'package:flutter_app/ui/pages/livestock/zakat_livestock.dart';
+import 'package:flutter_app/ui/pages/zakat_on_property/zakat_property.dart';
 import 'package:flutter_app/ui/pages/zakat_ushr.dart';
 import 'package:flutter_app/ui/pages/home_page.dart';
-import 'package:flutter_app/ui/pages/livestock2.dart';
-import 'package:flutter_app/ui/pages/property2.dart';
-import 'package:flutter_app/ui/pages/property3.dart';
-import 'package:flutter_app/ui/pages/overall.dart';
+import 'package:flutter_app/ui/pages/livestock/livestock2.dart';
+import 'package:flutter_app/ui/pages/zakat_on_property/property2.dart';
+import 'package:flutter_app/ui/pages/zakat_on_property/property3.dart';
+import 'package:flutter_app/ui/pages/zakat_on_property/overall.dart';
 import 'package:flutter_app/ui/widgets/dynamic_table.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const ExampleApp());
+  runApp(ProviderScope(child:  ExampleApp()));
 }
 
 class ExampleApp extends StatelessWidget {

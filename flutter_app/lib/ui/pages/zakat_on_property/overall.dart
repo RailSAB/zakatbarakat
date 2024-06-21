@@ -1,13 +1,17 @@
+import 'dart:convert';
+import 'package:flutter_app/providers/zakat_on_property_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
-class OverallPage extends StatefulWidget {
+class OverallPage extends ConsumerStatefulWidget {
   const OverallPage({super.key});
 
   @override
-  State<OverallPage> createState() => _OverallState();
+  ConsumerState<OverallPage> createState() => _OverallState();
 }
 
-class _OverallState extends State<OverallPage> {
+class _OverallState extends ConsumerState<OverallPage> {
 
   final numberController = TextEditingController();
 
@@ -23,7 +27,7 @@ class _OverallState extends State<OverallPage> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(32.0),
-          child: sum(123456),
+          child: sum(ref.watch(zakatOnPropertyProvider).zakatValue),
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -46,4 +50,6 @@ class _OverallState extends State<OverallPage> {
     style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
     child: const Text('Go to Home page', style: TextStyle(fontSize: 24),),);
   }
+
+
 }
