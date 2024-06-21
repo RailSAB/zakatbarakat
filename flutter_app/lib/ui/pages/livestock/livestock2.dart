@@ -1,13 +1,19 @@
+import 'dart:convert';
+import 'package:flutter_app/models/zakat_on_livestock_model.dart';
+import 'package:flutter_app/providers/zakat_on_property_provider.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class Livestock2Page extends StatefulWidget {
+class Livestock2Page extends ConsumerStatefulWidget {
   const Livestock2Page({super.key});
 
   @override
-  State<Livestock2Page> createState() => _Livestock2State();
+  ConsumerState<Livestock2Page> createState() => _Livestock2State();
 }
 
-class _Livestock2State extends State<Livestock2Page> {
+class _Livestock2State extends ConsumerState<Livestock2Page> {
   bool isSwitched1 = false;
   bool isSwitched2 = false;
 
@@ -79,7 +85,14 @@ class _Livestock2State extends State<Livestock2Page> {
   }
 
   Widget button(){
-    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/overall');}, 
+    return ElevatedButton(onPressed: () {
+    ref.read(zakatOnLivestockProvider.notifier).setForSale(isSwitched1);
+    ref.read(zakatOnLivestockProvider.notifier).setFemale(isSwitched2);
+    ref.read(zakatOnLivestockProvider.notifier).setHorsesValue(setValues(controllers[0].text));
+    ref.read(zakatOnLivestockProvider.notifier).setBuffaloes(setValues(controllers[1].text));
+    ref.read(zakatOnLivestockProvider.notifier).setCamels(setValues(controllers[2].text));
+    performPostRequest();
+    },
     style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
     child: const Text('Calculate', style: TextStyle(fontSize: 24),),);
   }
@@ -167,4 +180,57 @@ Widget horses(TextEditingController controller){
     ],
   );
 }
+
+
+Future<void> performPostRequest() async {
+    final url = Uri.parse('http://10.90.137.169:8000/calculator/zakat-livestock');
+    final headers = {'Content-Type': 'application/json'};
+    final body = jsonEncode({
+      "camels": ref.read(zakatOnLivestockProvider).camels,
+      "cows": ref.read(zakatOnLivestockProvider).cows,
+      "buffaloes": ref.read(zakatOnLivestockProvider).buffaloes,
+      "sheep": ref.read(zakatOnLivestockProvider).sheep,
+      "goats": ref.read(zakatOnLivestockProvider).goats,
+      "horses_value": ref.read(zakatOnLivestockProvider).horses_value
+      //"isFemale_horses": ref.read(zakatOnLivestockProvider).isFemale
+      //"isForSale_horses": ref.read(zakatOnLivestockProvider).isForSale
+    });
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        final zakatvalueForHorses = jsonDecode(response.body)['value_for_horses'].toInt();
+        Map<String, dynamic> parsedJson = jsonDecode(response.body);
+        List<dynamic> animals = parsedJson['animals'];
+        List<Animal> animalList = animals.map((json) {
+          return Animal(
+            type: json['type'],
+            quantity: json['quantity'],
+            age: json.containsKey('age') ? json['age'] : null,
+          );
+        }).toList();
+
+        if(jsonDecode(response.body)['nisab_status'] != false)
+        {
+          ref.read(zakatOnLivestockProvider.notifier).setHorsesValue(zakatvalueForHorses);
+          ref.read(zakatOnLivestockProvider.notifier).setAnimalsForZakat(animalList);
+        }
+        Navigator.pushNamed(context, '/overall');
+      } else {
+        print('Request failed with status: ${response.statusCode}.');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
+  } 
+
+
+int setValues(String value){
+  
+    if(value.isEmpty){
+      return 0;
+    }
+    return int.parse(value);
+  }
+
 }

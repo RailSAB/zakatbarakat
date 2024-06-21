@@ -34,24 +34,7 @@ class ZakatOnPropertyModel {
     this.zakatValue = 0
   });
 
-  ZakatOnPropertyModel copyWith({required int cash, required int cashOnBankCards}) {
-    return ZakatOnPropertyModel(
-      cash: cash,
-      cashOnBankCards: cashOnBankCards,
-      goldJewellery: goldJewellery,
-      silverJewellery: silverJewellery,
-      purchasedProductForResaling: purchasedProductForResaling,
-      unfinishedProduct: unfinishedProduct,
-      producedProductForResaling: producedProductForResaling,
-      purchasedNotForResaling: purchasedNotForResaling,
-      usedAfterNisab: usedAfterNisab,
-      rentMoney: rentMoney,
-      stocksForResaling: stocksForResaling,
-      incomeFromStocks: incomeFromStocks,
-      taxesValue: taxesValue,
-      zakatValue: zakatValue
-    );
-  }
+  
 
 
 }

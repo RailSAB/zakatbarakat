@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class LivestockPage extends StatefulWidget {
+class LivestockPage extends ConsumerStatefulWidget {
   const LivestockPage({super.key});
 
   @override
-  State<LivestockPage> createState() => _LivestockState();
+  ConsumerState<LivestockPage> createState() => _LivestockState();
 }
 
-class _LivestockState extends State<LivestockPage> {
+class _LivestockState extends ConsumerState<LivestockPage> {
 
   final List<TextEditingController> controllers = [];
   final List<String> elemTitle = ["Sheep/Rams", "Cows/Bulls", "Goats"];
@@ -77,7 +79,12 @@ class _LivestockState extends State<LivestockPage> {
   }
 
   Widget button(){
-    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/livestock2');}, 
+    return ElevatedButton(onPressed: () {
+      ref.read(zakatOnLivestockProvider.notifier).setSheep(setValues(controllers[0].text));
+      ref.read(zakatOnLivestockProvider.notifier).setCows(setValues(controllers[1].text));
+      ref.read(zakatOnLivestockProvider.notifier).setGoats(setValues(controllers[2].text));
+      Navigator.pushNamed(context, '/livestock2');
+      }, 
     style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
     child: const Text('Continue', style: TextStyle(fontSize: 24),),);
   }
@@ -119,4 +126,11 @@ class _LivestockState extends State<LivestockPage> {
   );
 }
 
+int setValues(String value){
+  
+    if(value.isEmpty){
+      return 0;
+    }
+    return int.parse(value);
+  }
 }
