@@ -138,8 +138,8 @@ Future<void> performPostRequest() async {
       "stocks_for_resaling": ref.read(zakatOnPropertyProvider).stocksForResaling,
       "income_from_stocks": ref.read(zakatOnPropertyProvider).incomeFromStocks,
       "taxes_value": ref.read(zakatOnPropertyProvider).taxesValue,
-      "nisab_value": ref.read(zakatOnPropertyProvider).nisabValue
-      // "currency": ref.read(currencyProvider).code
+      "nisab_value": ref.read(zakatOnPropertyProvider).nisabValue,
+      "currency": ref.read(currencyProvider).code
     });
     try {
       final response = await http.post(url, headers: headers, body: body);

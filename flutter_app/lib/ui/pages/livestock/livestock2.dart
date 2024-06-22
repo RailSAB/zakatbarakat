@@ -194,8 +194,8 @@ Future<void> performPostRequest() async {
       "goats": ref.read(zakatOnLivestockProvider).goats,
       "horses_value": ref.read(zakatOnLivestockProvider).horses_value,
       "isFemale_horses": ref.read(zakatOnLivestockProvider).isFemale,
-      "isForSale_horses": ref.read(zakatOnLivestockProvider).isForSale
-      // "currency": ref.read(currencyProvider).code
+      "isForSale_horses": ref.read(zakatOnLivestockProvider).isForSale,
+      "currency": ref.read(currencyProvider).code
     });
     try {
       final response = await http.post(url, headers: headers, body: body);
