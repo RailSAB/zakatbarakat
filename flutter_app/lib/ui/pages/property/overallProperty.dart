@@ -42,7 +42,7 @@ class _PropertyOverallState extends ConsumerState<PropertyOverallPage> {
 
   Widget sum(int number){
     if(number == 0){
-      return Text(style: const TextStyle(fontSize: 30), "You don't have any zakat", textAlign: TextAlign.center,);
+      return const Text(style: TextStyle(fontSize: 30), "You don't have any zakat", textAlign: TextAlign.center,);
     }
     return Text(style: const TextStyle(fontSize: 30), "Overall: $number ${ref.watch(currencyProvider).code}", textAlign: TextAlign.center,);
   }

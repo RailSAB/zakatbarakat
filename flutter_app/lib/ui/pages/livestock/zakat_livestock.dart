@@ -24,7 +24,9 @@ class _LivestockState extends ConsumerState<LivestockPage> {
 
   @override
   void dispose() {
-    controllers.forEach((controller) => controller.dispose());
+    for (var controller in controllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 

@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_app/models/zakat_on_livestock_model.dart';
 import 'package:flutter_app/providers/currency_provider.dart';
-import 'package:flutter_app/providers/zakat_on_property_provider.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
@@ -31,7 +30,9 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
 
   @override
   void dispose() {
-    controllers.forEach((controller) => controller.dispose());
+    for (var controller in controllers) {
+      controller.dispose();
+    }
     super.dispose();
   }
 

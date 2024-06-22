@@ -1,9 +1,5 @@
-import 'dart:convert';
-import 'package:flutter_app/models/zakat_on_livestock_model.dart';
 import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
-import 'package:flutter_app/providers/zakat_on_property_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class LivestockOverallPage extends ConsumerStatefulWidget {

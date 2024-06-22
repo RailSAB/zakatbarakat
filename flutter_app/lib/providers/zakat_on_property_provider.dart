@@ -7,7 +7,7 @@ class ZakatOnPropertyNotifier extends StateNotifier<ZakatOnPropertyModel> {
   
   ZakatOnPropertyNotifier() : super(ZakatOnPropertyModel());
 
-  ZakatOnPropertyModel _model = ZakatOnPropertyModel();
+  final ZakatOnPropertyModel _model = ZakatOnPropertyModel();
 
 
   void setCash(int value) => state.cash = value;//1
