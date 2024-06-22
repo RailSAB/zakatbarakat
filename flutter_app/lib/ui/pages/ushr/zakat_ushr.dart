@@ -95,7 +95,7 @@ bool isSwitched2 = false;
   Widget title() => const Text('Zakat on Ushr', style: TextStyle(fontSize: 30), textAlign: TextAlign.center,);
 
   Widget button(){
-    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/overall');}, 
+    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/ushrOverall');}, 
     style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
     child: const Text('Calculate', style: TextStyle(fontSize: 24),),);
   }

@@ -17,7 +17,7 @@ class _Property3State extends ConsumerState<Property3Page> {
   List <String> elemTitle = ["Bought without the intention \nof resale, but the first \nsteps towards this \nhave been taken",
   "Was used or spent after \npayment of zakat became \nobligatory \n(if stolen or lost, do not count)",
   "Income from premises for \nrent or sale",
-  "Debts that must be paid within the next 12 months."];
+  "Debts that must be paid \nwithin the next 12 months."];
 
   final numberController = TextEditingController();
 
