@@ -25,16 +25,8 @@ class _UshrState extends State<UshrPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.all(32.0),
+                padding: const EdgeInsets.all(16.0),
                 child: title(),
-              ),
-              // get request to api that dysplays table
-              // initial table is empty with 1 row
-              const Padding(
-                padding: EdgeInsets.all(16.0),
-                child: DynamicTable(
-                  taskId: '1',
-                ), // Include DynamicTable
               ),
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -102,6 +94,27 @@ class _UshrState extends State<UshrPage> {
                     ),
                   ],
                 ),
+              ),
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  children: [
+                         Text(
+                          'Enter your harvest',
+                          style: TextStyle(fontSize: 24),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                ),
+
+              // get request to api that dysplays table
+              // initial table is empty with 1 row
+              const Padding(
+                padding: EdgeInsets.all(16.0),
+                child: DynamicTable(
+                  taskId: '1',
+                ), // Include DynamicTable
               ),
             ],
           ),
