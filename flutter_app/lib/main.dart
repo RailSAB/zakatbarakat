@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/pages/livestock/overallLivestock.dart';
-import 'package:flutter_app/ui/pages/livestock/zakat_livestock.dart';
-import 'package:flutter_app/ui/pages/property/zakat_property.dart';
-import 'package:flutter_app/ui/pages/ushr/zakat_ushr.dart';
+import 'package:flutter_app/ui/pages/livestock/overall_screen_livestock.dart';
+import 'package:flutter_app/ui/pages/livestock/zakat_livestock_screen_1.dart';
+import 'package:flutter_app/ui/pages/property/zakat_property_screen_1.dart';
+import 'package:flutter_app/ui/pages/ushr/zakat_ushr_screen.dart';
 import 'package:flutter_app/ui/pages/home_page.dart';
-import 'package:flutter_app/ui/pages/livestock/livestock2.dart';
-import 'package:flutter_app/ui/pages/property/property2.dart';
-import 'package:flutter_app/ui/pages/property/property3.dart';
-import 'package:flutter_app/ui/pages/property/overallProperty.dart';
+import 'package:flutter_app/ui/pages/livestock/zakat_livestock_screen_2.dart.dart';
+import 'package:flutter_app/ui/pages/property/zakat_property_screen_2.dart';
+import 'package:flutter_app/ui/pages/property/zakat_property_screen_3.dart';
+import 'package:flutter_app/ui/pages/property/overall_screen_property.dart';
 import 'package:flutter_app/ui/widgets/dynamic_table.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_app/ui/pages/ushr/overallUshr.dart';
+import 'package:flutter_app/ui/pages/ushr/overall_screen_ushr.dart';
 
 void main() {
   runApp(const ProviderScope(child:  ExampleApp()));
