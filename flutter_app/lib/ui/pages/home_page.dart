@@ -55,7 +55,13 @@ class _HomePageState extends ConsumerState<HomePage> {
           padding: const EdgeInsets.all(16.0),
           child: buttons(),
         ),
-          ]
+        Padding(padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {Navigator.pushNamed(context, '/funds');},
+          child: const Text("View Funds", style: TextStyle(fontSize: 20),),
+        )
+        ),
+        ]
         )
       ),
     );

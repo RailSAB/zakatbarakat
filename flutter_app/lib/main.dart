@@ -11,6 +11,7 @@ import 'package:flutter_app/ui/pages/property/overall_screen_property.dart';
 import 'package:flutter_app/ui/widgets/dynamic_table.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/pages/ushr/overall_screen_ushr.dart';
+import 'package:flutter_app/ui/pages/funds/funds.dart';
 
 void main() {
   runApp(const ProviderScope(child:  ExampleApp()));
@@ -38,6 +39,7 @@ class ExampleApp extends StatelessWidget {
         '/harvestTable': (context) => const DynamicTable(taskId: '1',), 
         //dont understand why this needs taskID, and what taskID should we use
         '/ushrOverall': (context) => const UshrOverallPage(),
+        '/funds': (context) => const FundsPage(),
       },
     );
   }
