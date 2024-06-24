@@ -1,16 +1,22 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart';
+import 'package:flutter_app/models/zakat_ushr_model.dart';
+import 'package:flutter_app/providers/zakat_ushr_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
 
 //didn't understand why this needs taskID
-class DynamicTable extends StatefulWidget {
+class DynamicTable extends ConsumerStatefulWidget {
   final String taskId;
   const DynamicTable({super.key, required this.taskId});
 
   @override
-  State<DynamicTable> createState() => _DynamicTableState();
+  ConsumerState<DynamicTable> createState() => _DynamicTableState();
 }
 
-class _DynamicTableState extends State<DynamicTable> {
+class _DynamicTableState extends ConsumerState<DynamicTable> {
   final List<TextEditingController> _name = [];
   final List<TextEditingController> _weight = [];
 
@@ -62,29 +68,50 @@ class _DynamicTableState extends State<DynamicTable> {
     }
     _formKey.currentState!.save();
 
-    FormData formData = FormData.fromMap({});
+    // FormData formData = FormData.fromMap({});
 
     // why not MapEntry(name.text, weight.text)?
     for (int i = 0; i < _name.length; i++) {
-      formData.fields.add(MapEntry("name[]", _name[i].text));
-      formData.fields.add(MapEntry("weight[]", _weight[i].text));
+      // formData.fields.add(MapEntry("name[]", _name[i].text));
+      // formData.fields.add(MapEntry("weight[]", _weight[i].text));
+      ref.read(zakatUshrProvider.notifier).addCrop(Crop(type: _name[i].text, quantity: int.parse(_weight[i].text)));
     }
-
-/*
-----------------------some kind of API----------------------
-  networkRequest(
-    context: context,
-    requestType: "POST",
-    url: "${Urls.billAdd}${widget.taskId}?jhhihu",
-    data: formData,
-    action: (r) {
-      Navigator.pop(context, true);
-    }
-  );
---------------------------------------------------------------
-*/
 
     return true;
+  }
+
+
+  Future<void> performPostRequest() async {
+
+    final url = Uri.parse('http://10.90.137.169:8000/calculator/zakat-ushr');
+    final headers = {'Content-Type': 'application/json'};
+
+    final body = jsonEncode({
+      "crops": ref.read(zakatUshrProvider).crops.map((crop) => crop.toJson()).toList(),
+      "is_ushr_land": ref.read(zakatUshrProvider).isUshrLand,
+      "is_irrigated": ref.read(zakatUshrProvider).isIrregated,
+    }); 
+
+    try {
+      final response = await http.post(url, headers: headers, body: body);
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> parsedJson = jsonDecode(response.body);
+        List<dynamic> crops = parsedJson['zakat_ushr_value'];
+        List<Crop> cropList = crops.map((json) {
+          return Crop(
+            type: json['type'],
+            quantity: json['quantity'].round(),
+          );
+        }).toList();
+        ref.read(zakatUshrProvider.notifier).setCrops(cropList);
+      } else {
+        print('Request failed with status: ${response.statusCode}.'); 
+      }
+      Navigator.pushNamed(context, '/ushrOverall');
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 
   @override
@@ -181,7 +208,7 @@ class _DynamicTableState extends State<DynamicTable> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_submit()) {
-                    Navigator.pushNamed(context, '/ushrOverall');
+                    performPostRequest();
                   }
                 },
                 style: ElevatedButton.styleFrom(

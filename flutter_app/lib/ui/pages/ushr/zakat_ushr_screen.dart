@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/providers/zakat_ushr_provider.dart';
 import 'package:flutter_app/ui/widgets/dynamic_table.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UshrPage extends StatefulWidget {
+class UshrPage extends ConsumerStatefulWidget {
   const UshrPage({super.key});
 
   @override
-  State<UshrPage> createState() => _UshrState();
+  ConsumerState<UshrPage> createState() => _UshrState();
 }
 
-class _UshrState extends State<UshrPage> {
+class _UshrState extends ConsumerState<UshrPage> {
   final numberController = TextEditingController();
 
   bool isSwitched1 = false;
@@ -45,6 +47,7 @@ class _UshrState extends State<UshrPage> {
                           onChanged: (value) {
                             setState(() {
                               isSwitched1 = value;
+                              ref.read(zakatUshrProvider.notifier).setIrregated(value);
                             });
                           },
                         ),
@@ -79,6 +82,7 @@ class _UshrState extends State<UshrPage> {
                           onChanged: (value) {
                             setState(() {
                               isSwitched2 = value;
+                              ref.read(zakatUshrProvider.notifier).setUshrLand(value);
                             });
                           },
                         ),

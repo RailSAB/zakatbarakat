@@ -1,4 +1,5 @@
 import 'package:flutter_app/providers/currency_provider.dart';
+import 'package:flutter_app/providers/zakat_ushr_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 
@@ -23,10 +24,9 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
         child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis
       children: <Widget>[
-        const Padding(
+        Padding(
           padding: EdgeInsets.all(32.0),
-          child:// sum(ref.watch(zakatOnUshrProvider).zakatValue), //TODO: connect to zakatOnUshrProvider
-          Text("to be added", textAlign: TextAlign.center,),
+          child: sum(),
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),
@@ -40,11 +40,22 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
 
   Widget title() => const Text('Overall:', style: TextStyle(fontSize: 30),);
 
-  Widget sum(int number){
-    if(number == 0){
+  Widget sum(){
+    if(ref.watch(zakatUshrProvider).crops.isEmpty || ref.watch(zakatUshrProvider).isUshrLand == false) {
+      ref.read(zakatUshrProvider.notifier).setCrops([]);
       return const Text(style: TextStyle(fontSize: 30), "You don't have any zakat", textAlign: TextAlign.center,);
     }
-    return Text(style: const TextStyle(fontSize: 30), "Overall: $number ${ref.watch(currencyProvider).code}", textAlign: TextAlign.center,);
+    final toReturn =Column(
+      children: [
+        ...(ref.watch(zakatUshrProvider).crops.map((crop) => 
+          Text(style: const TextStyle(fontSize: 30), "Crop type: ${crop.type}, Quantity: ${crop.quantity}", textAlign: TextAlign.center,)
+        ).toList()),
+      ]
+    );
+
+    ref.read(zakatUshrProvider.notifier).setCrops([]);
+
+    return toReturn;
   }
 
   Widget button(){
