@@ -28,6 +28,12 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
           padding: EdgeInsets.all(32.0),
           child: sum(),
         ),
+        Padding(padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {Navigator.pushNamed(context, '/funds');},
+          child: const Text("View Funds", style: TextStyle(fontSize: 20),),
+        )
+        ),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: button(),

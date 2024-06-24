@@ -3,6 +3,7 @@ import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:currency_picker/currency_picker.dart';
+import 'package:flutter_app/ui/widgets/footer.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -64,6 +65,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ]
         )
       ),
+      bottomNavigationBar: const CustomBottomNavBar(index: 0,),
     );
   }
 
