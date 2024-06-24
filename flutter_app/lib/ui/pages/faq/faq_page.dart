@@ -63,18 +63,33 @@ class _FAQPageState extends ConsumerState<FAQPage> {
         ),
       ),
       ),
-       body: ListView.builder(
-        itemCount: _data.length,
-        itemBuilder: (BuildContext context, int index) {
-          return ExpansionTile(
-            title: Text(_data[index].headerText),
-            children: <Widget>[
-              ListTile(
-                title: Text(_data[index].expandedText),
+       body: Padding(
+        padding: const EdgeInsets.all(16.0), // Adjust the padding value as needed
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start, // Aligns the title to the start
+          children: <Widget>[
+            const Text(
+              'Questions and Answers', // Body title
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 30), // Adds some space between the title and the list
+            Expanded(
+              child: ListView.builder(
+                itemCount: _data.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return ExpansionTile(
+                    title: Text(_data[index].headerText),
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(_data[index].expandedText),
+                      ),
+                    ],
+                  );
+                },
               ),
-            ],
-          );
-        },
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: const CustomBottomNavBar(index: 2,),
     );
