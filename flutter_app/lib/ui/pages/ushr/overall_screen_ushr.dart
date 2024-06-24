@@ -28,6 +28,12 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
           child:// sum(ref.watch(zakatOnUshrProvider).zakatValue), //TODO: connect to zakatOnUshrProvider
           Text("to be added", textAlign: TextAlign.center,),
         ),
+        Padding(padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {Navigator.pushNamed(context, '/funds');},
+          child: const Text("View Funds", style: TextStyle(fontSize: 20),),
+        )
+        ),
         Padding(
           padding: const EdgeInsets.all(16.0),
           child: button(),
