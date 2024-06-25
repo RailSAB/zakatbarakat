@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/controller/dependency_injection.dart';
 import 'package:flutter_app/ui/pages/livestock/overall_screen_livestock.dart';
 import 'package:flutter_app/ui/pages/livestock/zakat_livestock_screen_1.dart';
 import 'package:flutter_app/ui/pages/property/zakat_property_screen_1.dart';
@@ -13,9 +14,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/pages/ushr/overall_screen_ushr.dart';
 import 'package:flutter_app/ui/pages/funds/funds.dart';
 import 'package:flutter_app/ui/pages/faq/faq_page.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const ProviderScope(child:  ExampleApp()));
+  DependencyInjection.init();
 }
 
 class ExampleApp extends StatelessWidget {
@@ -23,7 +26,7 @@ class ExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.deepPurple,),
       home: const HomePage(),
