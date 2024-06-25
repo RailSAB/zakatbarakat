@@ -73,31 +73,55 @@ class _HomePageState extends ConsumerState<HomePage> {
 
   Widget buttons() {
   return Center(
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly, // This centers the buttons and adds space between them
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center, // Center Alignment
       children: [
-        ElevatedButton(
-          onPressed: () {Navigator.pushNamed(context, '/ushr');},
-          style: ElevatedButton.styleFrom(minimumSize: const Size(100, 60)),
-          child: const Text("Ushr", style: TextStyle(fontSize: 20),),
-        ),
-        const SizedBox(width: 20), // Adds horizontal space between the first two buttons
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround, // Distributes the space evenly around the buttons
+          mainAxisSize: MainAxisSize.min, // Sets the minimum width for the Row
+          children: [
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {Navigator.pushNamed(context, '/property');},
+                  style: ElevatedButton.styleFrom(
+                    minimumSize: const Size(100, 60)
+                  ),
+                  child: Image.asset('/Users/anastasiakucumova/swp/zakatcalcteam55/flutter_app/pngtree-vector-property-search-icon-png-image_4015722.jpg', height: 50, width: 50),
+                ),
+                const SizedBox(height: 10), // Indentation under the button
+                const Text("Property", style: TextStyle(fontSize: 20)),
+              ],
+            ),
+            Spacer(), // Creates a free space between the buttons
+            Column(
+              children: [
+                ElevatedButton(
+                  onPressed: () {Navigator.pushNamed(context, '/livestock');},
+                  style: ElevatedButton.styleFrom(minimumSize: const Size(100, 60)),
+                  child: Image.asset('/Users/anastasiakucumova/swp/zakatcalcteam55/flutter_app/2717675-200.png', height: 50, width: 50),
+                ),
+                const SizedBox(height: 10), // Indentation under the button
+                const Text("Livestock", style: TextStyle(fontSize: 20)),
+              ],
+            ),
+            Spacer(), // Creates a free space between the buttons
+            Column(
+              children:[
+                ElevatedButton(
+                onPressed:() {Navigator.pushNamed(context, '/ushr');},
+                 style: ElevatedButton.styleFrom(minimumSize: const Size(100,60)),
+                 child: Image.asset('/Users/anastasiakucumova/swp/zakatcalcteam55/flutter_app/1070430-200.png',height:50 ,width: 50),
+                 ),
+                 const SizedBox(height: 10),
+                 const Text("Ushr", style: TextStyle(fontSize: 20)),
 
-        ElevatedButton(
-          onPressed: () {Navigator.pushNamed(context, '/livestock');},
-          style: ElevatedButton.styleFrom(minimumSize: const Size(100, 60)),
-          child: const Text("Livestock", style: TextStyle(fontSize: 20),),
-        ),
-        const SizedBox(width: 20), // Adds horizontal space between the second and third buttons
-
-        ElevatedButton(
-          onPressed: () {Navigator.pushNamed(context, '/property');},
-          style: ElevatedButton.styleFrom(minimumSize: const Size(100, 60)),
-          child: const Text("Property", style: TextStyle(fontSize: 20),),
+              ],
+            ),
+          ],
         ),
       ],
     ),
   );
 }
-
 }
