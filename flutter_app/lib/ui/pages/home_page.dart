@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+<<<<<<< HEAD
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
+=======
+import 'package:currency_picker/currency_picker.dart';
+import 'package:flutter_app/ui/widgets/footer.dart';
+>>>>>>> d8d9c31e521b5b3b1a7268fe53f79e076b0c02ef
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -25,7 +30,20 @@ class _HomePageState extends ConsumerState<HomePage> {
           padding: const EdgeInsets.all(16.0),
           child: buttons(),
         ),
+<<<<<<< HEAD
       ])),
+=======
+        Padding(padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {Navigator.pushNamed(context, '/funds');},
+          child: const Text("View Funds", style: TextStyle(fontSize: 20),),
+        )
+        ),
+        ]
+        )
+      ),
+      bottomNavigationBar: const CustomBottomNavBar(index: 0,),
+>>>>>>> d8d9c31e521b5b3b1a7268fe53f79e076b0c02ef
     );
   }
 

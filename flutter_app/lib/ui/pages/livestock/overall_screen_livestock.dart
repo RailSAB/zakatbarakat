@@ -69,6 +69,30 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
         'Go to Home page',
         style: TextStyle(fontSize: 24),
       ),
+<<<<<<< HEAD
+=======
+      body: Center(
+        child: Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(32.0),
+          child: sum(),
+        ),
+        Padding(padding: const EdgeInsets.all(16.0),
+        child: ElevatedButton(
+          onPressed: () {Navigator.pushNamed(context, '/funds');},
+          child: const Text("View Funds", style: TextStyle(fontSize: 20),),
+        )
+        ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: button(),
+        ),
+      ],
+    )
+    )
+>>>>>>> d8d9c31e521b5b3b1a7268fe53f79e076b0c02ef
     );
   }
 }
