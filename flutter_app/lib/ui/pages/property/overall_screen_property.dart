@@ -17,7 +17,6 @@ class _PropertyOverallState extends ConsumerState<PropertyOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
         appBar: const CustomAppBar(pageTitle: 'Overall on Property Zakat'),
         body: Center(
             child: Column(
@@ -53,32 +52,6 @@ class _PropertyOverallState extends ConsumerState<PropertyOverallPage> {
       style: const TextStyle(fontSize: 30),
       "Overall: $number ${ref.watch(currencyProvider).code}",
       textAlign: TextAlign.center,
-=======
-      appBar: AppBar(
-        title: const Text('Overall'),
-      ),
-      body: Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: sum(ref.watch(zakatOnPropertyProvider).zakatValue),
-        ),
-        Padding(padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed: () {Navigator.pushNamed(context, '/funds');},
-          child: const Text("View Funds", style: TextStyle(fontSize: 20),),
-        )
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: button(),
-        ),
-      ],
-    )
-    )
->>>>>>> d8d9c31e521b5b3b1a7268fe53f79e076b0c02ef
     );
   }
 

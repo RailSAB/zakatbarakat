@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/zakat_ushr_provider.dart';
 import 'package:flutter_app/ui/widgets/dynamic_table.dart';
-<<<<<<< HEAD
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
-=======
 import 'package:flutter_riverpod/flutter_riverpod.dart';
->>>>>>> d8d9c31e521b5b3b1a7268fe53f79e076b0c02ef
 
 class UshrPage extends ConsumerStatefulWidget {
   const UshrPage({super.key});

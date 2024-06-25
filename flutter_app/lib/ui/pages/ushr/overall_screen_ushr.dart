@@ -16,64 +16,7 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
-        appBar: const CustomAppBar(pageTitle: 'Overall on Ushr Zakat'),
-        body: Center(
-            child: Column(
-          mainAxisAlignment: MainAxisAlignment
-              .spaceBetween, // This aligns items along the vertical axis
-          children: <Widget>[
-            const Padding(
-              padding: EdgeInsets.all(32.0),
-              child: // sum(ref.watch(zakatOnUshrProvider).zakatValue), //TODO: connect to zakatOnUshrProvider
-                  Text(
-                "to be added",
-                textAlign: TextAlign.center,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: button(),
-            ),
-          ],
-        )));
-  }
-
-  Widget title() => const Text(
-        'Overall:',
-        style: TextStyle(fontSize: 30),
-      );
-
-  Widget sum(int number) {
-    if (number == 0) {
-      return const Text(
-        style: TextStyle(fontSize: 30),
-        "You don't have any zakat",
-        textAlign: TextAlign.center,
-      );
-    }
-    return Text(
-      style: const TextStyle(fontSize: 30),
-      "Overall: $number ${ref.watch(currencyProvider).code}",
-      textAlign: TextAlign.center,
-    );
-  }
-
-  Widget button() {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.pushNamed(context, '/home');
-      },
-      style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
-      child: const Text(
-        'Go to Home page',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
-=======
-      appBar: AppBar(
-        title: const Text('Overall'),
-      ),
+      appBar: const CustomAppBar(pageTitle: 'Overall'),
       body: Center(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis
@@ -116,6 +59,19 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
     ref.read(zakatUshrProvider.notifier).setCrops([]);
 
     return toReturn;
->>>>>>> d8d9c31e521b5b3b1a7268fe53f79e076b0c02ef
+  }
+
+
+  Widget button() {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.pushNamed(context, '/home');
+      },
+      style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
+      child: const Text(
+        'Go to Home page',
+        style: TextStyle(fontSize: 24),
+      ),
+    );
   }
 }
