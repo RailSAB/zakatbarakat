@@ -1,4 +1,3 @@
-import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_app/providers/zakat_ushr_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
