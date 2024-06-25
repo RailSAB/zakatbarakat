@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/widgets/dynamic_table.dart';
+import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 
 class UshrPage extends StatefulWidget {
   const UshrPage({super.key});
@@ -17,9 +18,7 @@ class _UshrState extends State<UshrPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Ushr Page'),
-        ),
+        appBar: const CustomAppBar(pageTitle: 'Zakat on Ushr'),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,14 +98,14 @@ class _UshrState extends State<UshrPage> {
                 padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                         Text(
-                          'Enter your harvest',
-                          style: TextStyle(fontSize: 24),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                    Text(
+                      'Enter your harvest',
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
                     ),
+                  ],
                 ),
+              ),
 
               // get request to api that dysplays table
               // initial table is empty with 1 row

@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 
 class Livestock2Page extends ConsumerStatefulWidget {
   const Livestock2Page({super.key});
@@ -20,10 +21,11 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
   final List<TextEditingController> controllers = [];
   final List<String> elemTitle = ["Horses", "Buffaloes", "Camels"];
 
-   @override
+  @override
   void initState() {
     super.initState();
-    for (int i = 0; i < 3; i++) { // Assuming you want 3 fields
+    for (int i = 0; i < 3; i++) {
+      // Assuming you want 3 fields
       controllers.add(TextEditingController());
     }
   }
@@ -39,153 +41,181 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Livestock Page'),
+        appBar: const CustomAppBar(pageTitle: 'Zakat on Livestock'),
+        body: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment
+              .spaceBetween, // This aligns items along the vertical axis
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: title(),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: notificationBox(),
+            ),
+            body(),
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: button(),
+            ),
+          ],
+        )));
+  }
+
+  Widget title() => const Text(
+        'Zakat on Livestock',
+        style: TextStyle(fontSize: 30),
+        textAlign: TextAlign.center,
+      );
+
+  Widget notificationBox() {
+    return Container(
+        width: 600,
+        height: 90,
+        decoration: BoxDecoration(
+          color: Colors.grey,
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: const Center(
+          child: Text(
+            "It does not count if the livestock is used for work, riding; "
+            "the animal was harmed; the owner has NOT fed the herd on his own for more than 7 months",
+            style: TextStyle(fontSize: 16),
+            textAlign: TextAlign.center,
+          ),
+        ));
+  }
+
+  Widget button() {
+    return ElevatedButton(
+      onPressed: () {
+        ref.read(zakatOnLivestockProvider.notifier).setForSale(isSwitched1);
+        ref.read(zakatOnLivestockProvider.notifier).setFemale(isSwitched2);
+        ref
+            .read(zakatOnLivestockProvider.notifier)
+            .setHorsesValue(setValues(controllers[0].text));
+        ref
+            .read(zakatOnLivestockProvider.notifier)
+            .setBuffaloes(setValues(controllers[1].text));
+        ref
+            .read(zakatOnLivestockProvider.notifier)
+            .setCamels(setValues(controllers[2].text));
+        performPostRequest();
+      },
+      style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
+      child: const Text(
+        'Calculate',
+        style: TextStyle(fontSize: 24),
       ),
-      body: Center(
-        child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: title(),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: notificationBox(),
-        ),
-        body(),
-        Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: button(),
-        ),
-      ],
-    )
-    )
     );
   }
 
-  Widget title() => const Text('Zakat on Livestock', style: TextStyle(fontSize: 30), textAlign: TextAlign.center,);
-
-  Widget notificationBox(){
-    return Container(
-      width: 600,
-      height: 90,
-      decoration: BoxDecoration(
-              color: Colors.grey, 
-              borderRadius: BorderRadius.circular(20), 
-            ),
-      child: const Center(
-        child: 
-            Text("It does not count if the livestock is used for work, riding; "
-            "the animal was harmed; the owner has NOT fed the herd on his own for more than 7 months",
-            style: TextStyle(fontSize: 16),
-            textAlign: TextAlign.center,),
-            )
-      );
-
+  Widget body() {
+    return Column(
+      children: [
+        ...[
+          for (int i = 0; i < 3; i++)
+            if (elemTitle[i] != "Horses")
+              enterField(controllers[i], elemTitle[i])
+            else
+              horses(controllers[i]),
+        ], // Explicitly converting the Set to a List
+      ],
+    );
   }
-
-  Widget button(){
-    return ElevatedButton(onPressed: () {
-    ref.read(zakatOnLivestockProvider.notifier).setForSale(isSwitched1);
-    ref.read(zakatOnLivestockProvider.notifier).setFemale(isSwitched2);
-    ref.read(zakatOnLivestockProvider.notifier).setHorsesValue(setValues(controllers[0].text));
-    ref.read(zakatOnLivestockProvider.notifier).setBuffaloes(setValues(controllers[1].text));
-    ref.read(zakatOnLivestockProvider.notifier).setCamels(setValues(controllers[2].text));
-    performPostRequest();
-    },
-    style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
-    child: const Text('Calculate', style: TextStyle(fontSize: 24),),);
-  }
-
- 
- Widget body() {
-  return Column(
-    children: [
-      ...[
-        for (int i = 0; i < 3; i++)
-          if (elemTitle[i] != "Horses")
-            enterField(controllers[i], elemTitle[i])
-          else horses(controllers[i]),
-      ], // Explicitly converting the Set to a List
-    ],
-  );
-}
-
 
   Widget enterField(TextEditingController controller, String text) {
-  return Column(
-    children: [
-      const SizedBox(height: 20),
-      Text(text, style: const TextStyle(fontSize: 24), ), 
-      const SizedBox(height: 20), 
-      Row(
-        children: [
-          const SizedBox(width: 20),
-          const Text('Amount'),
-          const SizedBox(width: 20),
-          Expanded(child: TextField(controller: controller, 
-          decoration: const InputDecoration(
-                      hintText: 'Enter value',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.all(8),
-                    ),
-                    keyboardType: TextInputType.number,)), 
-        ],
-      ),
-    ],
-  );
-}
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        Text(
+          text,
+          style: const TextStyle(fontSize: 24),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            const SizedBox(width: 20),
+            const Text('Amount'),
+            const SizedBox(width: 20),
+            Expanded(
+                child: TextField(
+              controller: controller,
+              decoration: const InputDecoration(
+                hintText: 'Enter value',
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.all(8),
+              ),
+              keyboardType: TextInputType.number,
+            )),
+          ],
+        ),
+      ],
+    );
+  }
 
-Widget horses(TextEditingController controller){
-  return Column(
-    children: [
-      const Text('Horses', style: TextStyle(fontSize: 24),), 
-      const SizedBox(height: 20),
-      Row (
-        children: [
-          const SizedBox(width: 20),
-          const Text('Are they being \nbred for sale?'),
-          const SizedBox(width: 20),
-          Switch(value: isSwitched1,
-                 onChanged: (value) {
-                  setState(() {
+  Widget horses(TextEditingController controller) {
+    return Column(
+      children: [
+        const Text(
+          'Horses',
+          style: TextStyle(fontSize: 24),
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            const SizedBox(width: 20),
+            const Text('Are they being \nbred for sale?'),
+            const SizedBox(width: 20),
+            Switch(
+              value: isSwitched1,
+              onChanged: (value) {
+                setState(() {
                   isSwitched1 = value;
                 });
-              },),
-          const SizedBox(width: 50,),
-          const Text('Are there any \nfemales?'),
-          Switch(value: isSwitched2,
-                 onChanged: (value) {
-                  setState(() {
+              },
+            ),
+            const SizedBox(
+              width: 50,
+            ),
+            const Text('Are there any \nfemales?'),
+            Switch(
+              value: isSwitched2,
+              onChanged: (value) {
+                setState(() {
                   isSwitched2 = value;
                 });
-              },),
-        ],
-      ), 
-      const SizedBox(height: 20),
-      Row(
-        children: [
-          const SizedBox(width: 20),
-          const Text('Amount'),
-          const SizedBox(width: 20),
-          Expanded(child: TextField(controller: controller, 
-          decoration: const InputDecoration(
-                      hintText: 'Enter value',
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.all(8),
-                    ),
-                    keyboardType: TextInputType.number,)),          
-        ], 
-      ),
-    ],
-  );
-}
+              },
+            ),
+          ],
+        ),
+        const SizedBox(height: 20),
+        Row(
+          children: [
+            const SizedBox(width: 20),
+            const Text('Amount'),
+            const SizedBox(width: 20),
+            Expanded(
+                child: TextField(
+              controller: controller,
+              decoration: const InputDecoration(
+                hintText: 'Enter value',
+                border: OutlineInputBorder(),
+                contentPadding: EdgeInsets.all(8),
+              ),
+              keyboardType: TextInputType.number,
+            )),
+          ],
+        ),
+      ],
+    );
+  }
 
-
-Future<void> performPostRequest() async {
-    final url = Uri.parse('http://10.90.137.169:8000/calculator/zakat-livestock');
+  Future<void> performPostRequest() async {
+    final url =
+        Uri.parse('http://10.90.137.169:8000/calculator/zakat-livestock');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       "camels": ref.read(zakatOnLivestockProvider).camels,
@@ -202,7 +232,8 @@ Future<void> performPostRequest() async {
       final response = await http.post(url, headers: headers, body: body);
 
       if (response.statusCode == 200) {
-        final zakatvalueForHorses = jsonDecode(response.body)['value_for_horses'].toInt();
+        final zakatvalueForHorses =
+            jsonDecode(response.body)['value_for_horses'].toInt();
         Map<String, dynamic> parsedJson = jsonDecode(response.body);
         List<dynamic> animals = parsedJson['animals'];
         List<Animal> animalList = animals.map((json) {
@@ -213,10 +244,13 @@ Future<void> performPostRequest() async {
           );
         }).toList();
 
-        if(jsonDecode(response.body)['nisab_status'] != false)
-        {
-          ref.read(zakatOnLivestockProvider.notifier).setHorsesValue(zakatvalueForHorses);
-          ref.read(zakatOnLivestockProvider.notifier).setAnimalsForZakat(animalList);
+        if (jsonDecode(response.body)['nisab_status'] != false) {
+          ref
+              .read(zakatOnLivestockProvider.notifier)
+              .setHorsesValue(zakatvalueForHorses);
+          ref
+              .read(zakatOnLivestockProvider.notifier)
+              .setAnimalsForZakat(animalList);
         }
       } else {
         print('Request failed with status: ${response.statusCode}.');
@@ -225,15 +259,12 @@ Future<void> performPostRequest() async {
     } catch (e) {
       print('Error: $e');
     }
-  } 
+  }
 
-
-int setValues(String value){
-  
-    if(value.isEmpty){
+  int setValues(String value) {
+    if (value.isEmpty) {
       return 0;
     }
     return int.parse(value);
   }
-
 }
