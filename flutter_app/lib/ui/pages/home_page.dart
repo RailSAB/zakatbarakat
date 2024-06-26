@@ -59,7 +59,8 @@ class _HomePageState extends ConsumerState<HomePage> {
         Padding(padding: const EdgeInsets.all(16.0),
         child: ElevatedButton(
           onPressed: () {Navigator.pushNamed(context, '/funds');},
-          child: const Text("View Funds", style: TextStyle(fontSize: 20),),
+          style: ButtonStyle(minimumSize: MaterialStateProperty.all(Size(double.infinity,50))),
+          child: const Text("View Funds",style: TextStyle(fontSize:20,color: Colors.black)),
         )
         ),
         ]
@@ -87,7 +88,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(100, 60)
                   ),
-                  child: Image.asset('/Users/anastasiakucumova/swp/zakatcalcteam55/flutter_app/pngtree-vector-property-search-icon-png-image_4015722.jpg', height: 50, width: 50),
+                  child: Image.asset('/Users/anastasiakucumova/swp/zakatcalcteam55/flutter_app/icons8-home-50.png', height: 45, width: 45),
                 ),
                 const SizedBox(height: 10), // Indentation under the button
                 const Text("Property", style: TextStyle(fontSize: 20)),
