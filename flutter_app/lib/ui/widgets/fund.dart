@@ -5,20 +5,27 @@ class Fund extends StatelessWidget {
   final String title;
   final NetworkImage image;
   final String description;
+  final Uri url;
 
   const Fund({
     super.key,
     required this.title,
     required this.description,
     required this.image,
+    required this.url
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () async {
-        // Implement URL launching logic if needed
-      },
+        if (await canLaunchUrl(url)) {
+          await launchUrl(url);
+        } else {
+          throw 'Could not launch $url';
+        }
+      }
+,
       child: Container(
         padding: const EdgeInsets.all(8),
         decoration: const BoxDecoration(

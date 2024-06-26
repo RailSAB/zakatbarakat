@@ -17,35 +17,35 @@ class Item {
     required this.name,
     required this.description,
     required this.logo,
-    //required this.link,
+    required this.link,
   });
 
   String name;
   String description;
   NetworkImage logo;
-  //Uri link;
+  Uri link;
 }
 
 class _FundsState extends ConsumerState<FundsPage> {
   final List<Item> _data = [];
 
   Future getData() async {
-    final response = await http.get(Uri.parse('https://freetestapi.com/api/v1/books?limit=5'));
+    final response = await http.get(Uri.parse('http://10.90.137.169:8000/funds/get-funds'));
     try {
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
 
         for (var item in jsonData) {
-          String name = item["title"];
+          String name = item["name"];
           String description = item["description"];
-          NetworkImage logo = NetworkImage(item["cover_image"]);
-          //Uri link = Uri.parse(item["link"]);
+          NetworkImage logo = NetworkImage(item["logo_link"]);
+          Uri link = Uri.parse(item["link"]);
 
           _data.add(Item(
             name: name,
             description: description,
             logo: logo,
-            //link: link,
+            link: link,
           ));
         }
       } else {
@@ -82,7 +82,7 @@ class _FundsState extends ConsumerState<FundsPage> {
                               title: _data[index].name,
                               description: _data[index].description,
                               image: _data[index].logo,
-                              //url: _data[index].link,
+                              url: _data[index].link,
                             ),
                             const SizedBox(height: 5,),
                           ],
