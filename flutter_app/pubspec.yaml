@@ -41,6 +41,8 @@ dependencies:
   http: ^1.2.1
   currency_picker: ^2.0.21
   url_launcher: ^6.3.0
+  connectivity_plus: ^3.0.3
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:

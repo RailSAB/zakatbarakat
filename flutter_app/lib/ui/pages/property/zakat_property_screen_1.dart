@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/zakat_on_property_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 
 class PropertyPage extends ConsumerStatefulWidget {
   const PropertyPage({super.key});
@@ -34,9 +35,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Property Page'),
-      ),
+      appBar: const CustomAppBar(pageTitle: 'Zakat on Property'),
       body: Center(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis

@@ -1,7 +1,7 @@
-import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_app/providers/zakat_ushr_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 
 class UshrOverallPage extends ConsumerStatefulWidget {
   const UshrOverallPage({super.key});
@@ -11,15 +11,12 @@ class UshrOverallPage extends ConsumerStatefulWidget {
 }
 
 class _UshrOverallState extends ConsumerState<UshrOverallPage> {
-
   final numberController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Overall'),
-      ),
+      appBar: const CustomAppBar(pageTitle: 'Overall'),
       body: Center(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis
@@ -64,11 +61,17 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
     return toReturn;
   }
 
-  Widget button(){
-    return ElevatedButton(onPressed: () {Navigator.pushNamed(context, '/home');}, 
-    style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
-    child: const Text('Go to Home page', style: TextStyle(fontSize: 24),),);
+
+  Widget button() {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.pushNamed(context, '/home');
+      },
+      style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
+      child: const Text(
+        'Go to Home page',
+        style: TextStyle(fontSize: 24),
+      ),
+    );
   }
-
-
 }

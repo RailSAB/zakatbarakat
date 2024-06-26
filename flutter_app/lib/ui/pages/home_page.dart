@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/currency_model.dart';
-import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:currency_picker/currency_picker.dart';
+import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
 
 class HomePage extends ConsumerStatefulWidget {
@@ -13,41 +11,13 @@ class HomePage extends ConsumerStatefulWidget {
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:  Center(child: 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Center(child:Text('Home Page')),
-            ElevatedButton(
-              onPressed: (){
-                showCurrencyPicker(
-                  context: context,
-                  showFlag: true,
-                  showCurrencyName: true,
-                  showCurrencyCode: true,
-                  onSelect: (Currency currency) {
-                    ref.read(currencyProvider.notifier).setCurrency(currency);
-                  },
-                  favorite: ['USD', 'RUB'],
-                  currencyFilter: CurrencyModel.currencies.values.toList(),
-                );
-              }, 
-              child: const Text('Choose Currency'),
-
-              )
-          ],
-        ),
-      ),
-      ),
+      appBar: const CustomAppBar(pageTitle: 'Home Page'),
       body: Center(
-        child:Column(
-          children: [ 
-          Padding(
+          child: Column(children: [
+        Padding(
           padding: const EdgeInsets.all(32.0),
           child: title(),
         ),
@@ -70,7 +40,11 @@ class _HomePageState extends ConsumerState<HomePage> {
     );
   }
 
-  Widget title() => const Text('Calculate Zakat', style: TextStyle(fontSize: 30), textAlign: TextAlign.center,);
+  Widget title() => const Text(
+        'Calculate Zakat',
+        style: TextStyle(fontSize: 30),
+        textAlign: TextAlign.center,
+      );
 
   Widget buttons() {
   return Center(

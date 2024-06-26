@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/zakat_ushr_provider.dart';
 import 'package:flutter_app/ui/widgets/dynamic_table.dart';
+import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UshrPage extends ConsumerStatefulWidget {
@@ -19,9 +20,7 @@ class _UshrState extends ConsumerState<UshrPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Ushr Page'),
-        ),
+        appBar: const CustomAppBar(pageTitle: 'Zakat on Ushr'),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,14 +102,14 @@ class _UshrState extends ConsumerState<UshrPage> {
                 padding: EdgeInsets.all(16.0),
                 child: Column(
                   children: [
-                         Text(
-                          'Enter your harvest',
-                          style: TextStyle(fontSize: 24),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                    Text(
+                      'Enter your harvest',
+                      style: TextStyle(fontSize: 24),
+                      textAlign: TextAlign.center,
                     ),
+                  ],
                 ),
+              ),
 
               // get request to api that dysplays table
               // initial table is empty with 1 row
