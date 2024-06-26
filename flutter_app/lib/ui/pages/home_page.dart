@@ -14,6 +14,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(104, 200, 215, 231),
       appBar: const CustomAppBar(pageTitle: 'Home Page'),
       body: Center(
           child: Column(children: [
@@ -36,7 +37,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         ]
         )
       ),
-      bottomNavigationBar: const CustomBottomNavBar(index: 0,),
     );
   }
 
