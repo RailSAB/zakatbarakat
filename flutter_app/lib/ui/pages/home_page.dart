@@ -37,6 +37,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         ]
         )
       ),
+      bottomNavigationBar: const CustomBottomNavBar(index: 0,),
     );
   }
 
@@ -62,7 +63,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(100, 60)
                   ),
-                  child: Image.asset('/Users/anastasiakucumova/swp/zakatcalcteam55/flutter_app/icons8-home-50.png', height: 45, width: 45),
+                  child: Image.asset('/icons8-home-50.png', height: 45, width: 45),
                 ),
                 const SizedBox(height: 10), // Indentation under the button
                 const Text("Property", style: TextStyle(fontSize: 20)),
