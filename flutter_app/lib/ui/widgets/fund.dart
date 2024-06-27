@@ -42,7 +42,7 @@ class Fund extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.5), 
+            color: Color.fromARGB(255, 227, 241, 255),
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
               BoxShadow(

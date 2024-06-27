@@ -59,7 +59,9 @@ class _FundsState extends ConsumerState<FundsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      
       appBar: const CustomAppBar(pageTitle: 'Recommended Funds'),
+      backgroundColor: Color.fromARGB(104, 200, 215, 231),
       body: Padding(
         padding: const EdgeInsets.all(16.0), // Added padding around the body
         child: Column(
@@ -67,12 +69,15 @@ class _FundsState extends ConsumerState<FundsPage> {
           children: <Widget>[
             const Text('Recommended Funds', style: TextStyle(fontSize: 30)),
             const SizedBox(height: 20), // Replaced SizedBox with Padding
-            Expanded(
+            SingleChildScrollView(
               child: FutureBuilder(
                 future: getData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return ListView.builder(
+                      shrinkWrap: true, 
+                      physics: const NeverScrollableScrollPhysics(),
+                      
                       itemCount: _data.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
@@ -106,8 +111,11 @@ class _FundsState extends ConsumerState<FundsPage> {
   Widget button() {
     return ElevatedButton(
       onPressed: () { Navigator.pushNamed(context, '/home'); },
-      style: ElevatedButton.styleFrom(minimumSize: const Size(double.infinity, 60)), // Adjusted for full width
-      child: const Text('Go to Home page', style: TextStyle(fontSize: 24)),
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(double.infinity, 60), 
+        backgroundColor: Color.fromRGBO(255, 255, 255, 1), 
+      ),
+      child: const Text('Go to Home page', style: TextStyle(fontSize: 24, color: Colors.black)),
     );
   }
 }
