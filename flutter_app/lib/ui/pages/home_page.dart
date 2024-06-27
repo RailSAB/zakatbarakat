@@ -41,7 +41,11 @@ class _HomePageState extends ConsumerState<HomePage> {
         ]
         )
       ),
+    bottomNavigationBar: const CustomBottomNavBar(
+        index: 0,
+      ),
     );
+    
   }
 
   Widget title() => const Text(

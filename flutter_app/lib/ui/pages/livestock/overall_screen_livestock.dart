@@ -1,3 +1,4 @@
+
 import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -16,65 +17,80 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(pageTitle: 'Overall LiveStock Zakat'),
-        body: Center(
+      appBar: const CustomAppBar(pageTitle: 'Overall LiveStock Zakat'),
+      backgroundColor: Color.fromARGB(104, 200, 215, 231),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(32.0),
-          child: sum(),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(child: sum()),
+            buildNavigationButton(context, '/funds', "View Funds"),
+            buildNavigationButton(context, '/home', "Go to Home page"),
+          ],
         ),
-        Padding(padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed: () {Navigator.pushNamed(context, '/funds');},
-          child: const Text("View Funds", style: TextStyle(fontSize: 20),),
-        )
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: button(),
-        ),
-      ],
-    )
-    ));
+      ),
+    );
   }
 
-  Widget title() => const Text(
-        'Overall:',
-        style: TextStyle(fontSize: 30),
-      );
+  Widget buildNavigationButton(BuildContext context, String route, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, route);
+        },
+        style: ElevatedButton.styleFrom(
+          minimumSize: const Size(double.infinity, 60),
+          textStyle: const TextStyle(fontSize: 20),
+        ),
+        child: Text(text),
+      ),
+    );
+  }
 
   Widget sum() {
-    return Column(children: [
-      if (ref.watch(zakatOnLivestockProvider).animalsForZakat.isNotEmpty)
-        ...(ref
-            .watch(zakatOnLivestockProvider)
-            .animalsForZakat
-            .map((animal) => Text(
-                  style: const TextStyle(fontSize: 30),
-                  "Animal type: ${animal.type}, Quantity: ${animal.quantity}, Age: ${animal.age != 0 ? animal.age : "any"}",
-                  textAlign: TextAlign.center,
-                ))
-            .toList()),
-      Text(
-        style: const TextStyle(fontSize: 30),
-        "Overall: ${ref.watch(zakatOnLivestockProvider).zakatForHorses} RUB",
-        textAlign: TextAlign.center,
-      ),
-    ]);
-  }
+    final animalsForZakat = ref.watch(zakatOnLivestockProvider).animalsForZakat;
+    final zakatForHorses = ref.watch(zakatOnLivestockProvider).zakatForHorses;
 
-  Widget button() {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.pushNamed(context, '/home');
-      },
-      style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
-      child: const Text(
-        'Go to Home page',
-        style: TextStyle(fontSize: 24),
-      ),
+    return ListView(
+      children: [
+        if (animalsForZakat.isNotEmpty)
+          ...animalsForZakat.map((animal) => Card(
+                margin: const EdgeInsets.all(8.0),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Animal type: ${animal.type}",
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        "Quantity: ${animal.quantity}",
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                      Text(
+                        "Age: ${animal.age != 0 ? animal.age : "any"}",
+                        style: const TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                ),
+              )),
+        Card(
+          margin: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              "Overall: ${ref.watch(zakatOnLivestockProvider).zakatForHorses} RUB",
+              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
