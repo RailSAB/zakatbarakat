@@ -17,7 +17,7 @@ import 'package:flutter_app/ui/pages/faq/faq_page.dart';
 import 'package:get/get.dart';
 
 void main() {
-  runApp(const ProviderScope(child:  ExampleApp()));
+  runApp(const ProviderScope(child: ExampleApp()));
   DependencyInjection.init();
 }
 
@@ -28,7 +28,6 @@ class ExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primarySwatch: Colors.deepPurple,),
       home: const HomePage(),
       routes: {
         '/home': (context) => const HomePage(),
@@ -40,7 +39,9 @@ class ExampleApp extends StatelessWidget {
         '/livestock2': (context) => const Livestock2Page(),
         '/propertyoverall': (context) => const PropertyOverallPage(),
         '/livestockoverall': (context) => const LivestockOverallPage(),
-        '/harvestTable': (context) => const DynamicTable(taskId: '1',), 
+        '/harvestTable': (context) => const DynamicTable(
+              taskId: '1',
+            ),
         //dont understand why this needs taskID, and what taskID should we use
         '/ushrOverall': (context) => const UshrOverallPage(),
         '/funds': (context) => const FundsPage(),
