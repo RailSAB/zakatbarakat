@@ -17,7 +17,7 @@ class _PropertyOverallState extends ConsumerState<PropertyOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(pageTitle: 'Overall on Property Zakat'),
+        appBar: CustomAppBar(pageTitle: 'Overall on Property Zakat', appBarHeight: 70),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment

@@ -16,7 +16,7 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(pageTitle: 'Overall'),
+      appBar: CustomAppBar(pageTitle: 'Overall', appBarHeight: 70),
       body: Center(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis

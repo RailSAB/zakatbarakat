@@ -16,7 +16,7 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(pageTitle: 'Overall LiveStock Zakat'),
+        appBar: CustomAppBar(pageTitle: 'Overall LiveStock Zakat', appBarHeight: 70),
         body: Center(
         child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis

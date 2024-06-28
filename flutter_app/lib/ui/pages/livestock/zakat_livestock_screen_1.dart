@@ -34,7 +34,7 @@ class _LivestockState extends ConsumerState<LivestockPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(pageTitle: 'Zakat on Livestock'),
+        appBar: CustomAppBar(pageTitle: 'Zakat on Livestock', appBarHeight: 70),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment

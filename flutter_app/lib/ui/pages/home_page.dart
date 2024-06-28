@@ -15,8 +15,11 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(104, 200, 215, 231),
-      appBar: const CustomAppBar(pageTitle: 'Home Page'),
+      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
+      appBar: CustomAppBar(
+        pageTitle: 'Home Page',
+        appBarHeight: 70,
+      ),
       body: Center(
           child: Column(children: [
         Padding(
@@ -28,20 +31,24 @@ class _HomePageState extends ConsumerState<HomePage> {
           padding: const EdgeInsets.all(16.0),
           child: buttons(),
         ),
-        Padding(padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed: () {Navigator.pushNamed(context, '/funds');},
-          style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(Size(double.infinity, 50)), 
-          backgroundColor: MaterialStateProperty.all<Color>(Colors.white), 
-  ),
-          child: const Text("View Funds",style: TextStyle(fontSize:20,color: Colors.black)),
-        )
-        ),
-        ]
-        )
+        Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/funds');
+              },
+              style: ButtonStyle(
+                minimumSize:
+                    WidgetStateProperty.all(const Size(double.infinity, 50)),
+                backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+              ),
+              child: const Text("View Funds",
+                  style: TextStyle(fontSize: 20, color: Colors.black)),
+            )),
+      ])),
+      bottomNavigationBar: const CustomBottomNavBar(
+        index: 0,
       ),
-      bottomNavigationBar: const CustomBottomNavBar(index: 0,),
     );
   }
 
@@ -52,63 +59,76 @@ class _HomePageState extends ConsumerState<HomePage> {
       );
 
   Widget buttons() {
-  return Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center, // Center Alignment
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround, // Distributes the space evenly around the buttons
-          mainAxisSize: MainAxisSize.min, // Sets the minimum width for the Row
-          children: [
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {Navigator.pushNamed(context, '/property');},
-                  style: ButtonStyle(
-                     minimumSize: MaterialStateProperty.all(Size(100, 60)), 
-                     backgroundColor: MaterialStateProperty.all<Color>(Colors.white), 
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center, // Center Alignment
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment
+                .spaceAround, // Distributes the space evenly around the buttons
+            mainAxisSize:
+                MainAxisSize.min, // Sets the minimum width for the Row
+            children: [
+              Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/property');
+                    },
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(const Size(100, 60)),
+                      backgroundColor:
+                          WidgetStateProperty.all<Color>(Colors.white),
+                    ),
+                    child: Image.asset('images/property.png',
+                        height: 45, width: 45),
                   ),
-                  child: Image.asset('property.png', height: 45, width: 45),
-                ),
-                const SizedBox(height: 10), // Indentation under the button
-                const Text("Property", style: TextStyle(fontSize: 20)),
-              ],
-            ),
-            Spacer(), // Creates a free space between the buttons
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {Navigator.pushNamed(context, '/livestock');},
-                  style: ButtonStyle(
-                     minimumSize: MaterialStateProperty.all(Size(100, 60)), 
-                     backgroundColor: MaterialStateProperty.all<Color>(Colors.white), 
+                  const SizedBox(height: 10),
+                  const Text("Property", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+              const Spacer(),
+              Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/livestock');
+                    },
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(const Size(100, 60)),
+                      backgroundColor:
+                          WidgetStateProperty.all<Color>(Colors.white),
+                    ),
+                    child: Image.asset('images/lifestock.png',
+                        height: 50, width: 50),
                   ),
-                  child: Image.asset('lifestock.png', height: 50, width: 50),
-                ),
-                const SizedBox(height: 10), // Indentation under the button
-                const Text("Livestock", style: TextStyle(fontSize: 20)),
-              ],
-            ),
-            Spacer(), // Creates a free space between the buttons
-            Column(
-              children:[
-                ElevatedButton(
-                onPressed:() {Navigator.pushNamed(context, '/ushr');},
-                 style: ButtonStyle(
-                     minimumSize: MaterialStateProperty.all(Size(100, 60)), 
-                     backgroundColor: MaterialStateProperty.all<Color>(Colors.white), 
+                  const SizedBox(height: 10), // Indentation under the button
+                  const Text("Livestock", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+              const Spacer(),
+              Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/ushr');
+                    },
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(const Size(100, 60)),
+                      backgroundColor:
+                          WidgetStateProperty.all<Color>(Colors.white),
+                    ),
+                    child:
+                        Image.asset('images/ushr.png', height: 50, width: 50),
                   ),
-                 child: Image.asset('ushr.png',height:50 ,width: 50),
-                 ),
-                 const SizedBox(height: 10),
-                 const Text("Ushr", style: TextStyle(fontSize: 20)),
-
-              ],
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
+                  const SizedBox(height: 10),
+                  const Text("Ushr", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }

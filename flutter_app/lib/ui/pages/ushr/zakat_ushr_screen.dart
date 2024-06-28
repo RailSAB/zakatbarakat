@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/zakat_ushr_provider.dart';
-import 'package:flutter_app/ui/widgets/dynamic_table.dart';
+import 'package:flutter_app/ui/widgets/dynamic_table_ushr.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,7 +20,7 @@ class _UshrState extends ConsumerState<UshrPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: const CustomAppBar(pageTitle: 'Zakat on Ushr'),
+        appBar: CustomAppBar(pageTitle: 'Zakat on Ushr', appBarHeight: 70),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -46,7 +46,9 @@ class _UshrState extends ConsumerState<UshrPage> {
                           onChanged: (value) {
                             setState(() {
                               isSwitched1 = value;
-                              ref.read(zakatUshrProvider.notifier).setIrregated(value);
+                              ref
+                                  .read(zakatUshrProvider.notifier)
+                                  .setIrregated(value);
                             });
                           },
                         ),
@@ -81,7 +83,9 @@ class _UshrState extends ConsumerState<UshrPage> {
                           onChanged: (value) {
                             setState(() {
                               isSwitched2 = value;
-                              ref.read(zakatUshrProvider.notifier).setUshrLand(value);
+                              ref
+                                  .read(zakatUshrProvider.notifier)
+                                  .setUshrLand(value);
                             });
                           },
                         ),

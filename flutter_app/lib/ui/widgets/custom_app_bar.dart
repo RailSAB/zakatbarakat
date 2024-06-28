@@ -6,11 +6,10 @@ import 'package:currency_picker/currency_picker.dart';
 
 class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
   final String pageTitle;
-  final double appBarHeight;
+  double appBarHeight;
 
-  const CustomAppBar(
-      {Key? key, required this.pageTitle, this.appBarHeight = 70.0})
-      : super(key: key);
+  CustomAppBar(
+      {super.key, required this.pageTitle, required this.appBarHeight});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,7 +19,12 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       backgroundColor: Colors.white,
       title: Text(
         pageTitle,
-        style: TextStyle(),
+        textAlign: TextAlign.center,
+        // style: const TextStyle(
+        //   fontFamily: 'Inter',
+        //   fontSize: 25,
+        //   fontWeight: FontWeight.w400,
+        // ),
       ),
       actions: <Widget>[
         Row(
@@ -76,6 +80,22 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
         ),
       ],
       toolbarHeight: appBarHeight,
+      bottom: pageTitle == "Zakat on Property"
+          ? const TabBar(
+              labelStyle: TextStyle(fontSize: 15),
+              indicatorColor: Color.fromARGB(200, 153, 202, 255),
+              labelColor: Colors.black,
+              tabs: <Widget>[
+                Tab(
+                  text: "FINANCE",
+                ),
+                Tab(
+                  text: "PROPERTY",
+                ),
+                Tab(text: "OTHER"),
+              ],
+            )
+          : null,
     );
   }
 

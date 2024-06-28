@@ -1,43 +1,47 @@
-
+import 'package:flutter_app/models/currency_model.dart';
 
 class ZakatOnPropertyModel {
-  int cash;
-  int cashOnBankCards;
-  int goldJewellery;
-  int silverJewellery;
-  int purchasedProductForResaling;
-  int unfinishedProduct;
-  int producedProductForResaling;
-  int purchasedNotForResaling;
-  int usedAfterNisab;
-  int rentMoney;
-  int stocksForResaling;
-  int incomeFromStocks;
-  int taxesValue;
+  Map<String, Map<CurrencyModel, int>> _zakat_on_property_model;
 
-  int zakatValue;
-  int nisabValue = 0;
+  static const List<String> defaultKeys = [
+    'cash',
+    'cashOnBankCards',
+    'goldJewellery',
+    'silverJewellery',
+    'purchasedProductForResaling',
+    'unfinishedProduct',
+    'producedProductForResaling',
+    'purchasedNotForResaling',
+    'usedAfterNisab',
+    'rentMoney',
+    'stocksForResaling',
+    'incomeFromStocks',
+    'taxesValue'
+  ];
 
-  ZakatOnPropertyModel({
-    this.cash = 0,
-    this.cashOnBankCards = 0,
-    this.goldJewellery = 0,
-    this.silverJewellery = 0,
-    this.purchasedProductForResaling = 0,
-    this.unfinishedProduct = 0,
-    this.producedProductForResaling = 0,
-    this.purchasedNotForResaling = 0,
-    this.usedAfterNisab = 0,
-    this.rentMoney = 0,
-    this.stocksForResaling = 0,
-    this.incomeFromStocks = 0,
-    this.taxesValue = 0,
-    this.zakatValue = 0,
-    this.nisabValue = 0
-  });
+  ZakatOnPropertyModel()
+      : _zakat_on_property_model = {
+          for (String key in defaultKeys) key: {},
+          'zakatValue': {},
+          'nisabValue': {},
+        };
 
-  
+  int get zakatValue => _zakat_on_property_model['zakatValue']?['USD'] ?? 0;
+  int get nisabValue => _zakat_on_property_model['nisabValue']?['USD'] ?? 0;
 
+  void setZakatValue(CurrencyModel currency, {int zakat = 0}) {
+    _zakat_on_property_model['zakatValue']?[currency] = zakat;
+  }
 
+  void setNisabValue(CurrencyModel currency, {int nisab = 0}) {
+    _zakat_on_property_model['nisabValue']?[currency] = nisab;
+  }
+
+  int getValue(String category, CurrencyModel currency) {
+    return _zakat_on_property_model[category]?[currency] ?? 0;
+  }
+
+  void setValue(String category, CurrencyModel currency, int value) {
+    _zakat_on_property_model[category]?[currency] = value;
+  }
 }
-  

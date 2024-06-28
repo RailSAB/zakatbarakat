@@ -9,7 +9,7 @@ import 'package:flutter_app/ui/pages/livestock/zakat_livestock_screen_2.dart.dar
 import 'package:flutter_app/ui/pages/property/zakat_property_screen_2.dart';
 import 'package:flutter_app/ui/pages/property/zakat_property_screen_3.dart';
 import 'package:flutter_app/ui/pages/property/overall_screen_property.dart';
-import 'package:flutter_app/ui/widgets/dynamic_table.dart';
+import 'package:flutter_app/ui/widgets/dynamic_table_ushr.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/pages/ushr/overall_screen_ushr.dart';
 import 'package:flutter_app/ui/pages/funds/funds.dart';
@@ -34,8 +34,8 @@ class ExampleApp extends StatelessWidget {
         '/livestock': (context) => const LivestockPage(),
         '/property': (context) => const PropertyPage(),
         '/ushr': (context) => const UshrPage(),
-        '/property2': (context) => const Property2Page(),
-        '/property3': (context) => const Property3Page(),
+        //'/property2': (context) => const Property2Page(),
+        //'/property3': (context) => const Property3Page(),
         '/livestock2': (context) => const Livestock2Page(),
         '/propertyoverall': (context) => const PropertyOverallPage(),
         '/livestockoverall': (context) => const LivestockOverallPage(),
