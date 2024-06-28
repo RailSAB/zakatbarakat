@@ -1,6 +1,8 @@
-import 'package:flutter_app/providers/zakat_ushr_provider.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_app/providers/zakat_ushr_provider.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 
 class UshrOverallPage extends ConsumerStatefulWidget {
@@ -16,62 +18,82 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color.fromARGB(104, 200, 215, 231),
       appBar: CustomAppBar(pageTitle: 'Overall', appBarHeight: 70),
       body: Center(
+        child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween, // This aligns items along the vertical axis
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.all(32.0),
-          child: sum(),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Expanded(child: sum()),
+            buildNavigationButton(context, '/funds', "View Funds"),
+            buildNavigationButton(context, '/home', "Go to Home page"),
+          ],
         ),
-        Padding(padding: const EdgeInsets.all(16.0),
-        child: ElevatedButton(
-          onPressed: () {Navigator.pushNamed(context, '/funds');},
-          child: const Text("View Funds", style: TextStyle(fontSize: 20),),
-        )
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: button(),
-        ),
-      ],
-    )
+      ),
     )
     );
   }
 
-  Widget title() => const Text('Overall:', style: TextStyle(fontSize: 30),);
+  Widget buildNavigationButton(BuildContext context, String route, String text) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: ElevatedButton(
+        onPressed: () {
+          Navigator.pushNamed(context, route);
+        },
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.black,
+          minimumSize: const Size(double.infinity, 60),
+          textStyle: const TextStyle(fontSize: 20),
+        ),
+        child: Text(text),
+      ),
+    );
+  }
 
-  Widget sum(){
-    if(ref.watch(zakatUshrProvider).crops.isEmpty || ref.watch(zakatUshrProvider).isUshrLand == false) {
+  Widget sum() {
+    final isUshrLand = ref.watch(zakatUshrProvider).isUshrLand;
+    final crops = ref.watch(zakatUshrProvider).crops;
+
+    if (crops.isEmpty || !isUshrLand) {
       ref.read(zakatUshrProvider.notifier).setCrops([]);
-      return const Text(style: TextStyle(fontSize: 30), "You don't have any zakat", textAlign: TextAlign.center,);
+      return const Center(
+        child: Text(
+          "You don't have any zakat",
+          style: TextStyle(fontSize: 30),
+          textAlign: TextAlign.center,
+        ),
+      );
     }
-    final toReturn =Column(
-      children: [
-        ...(ref.watch(zakatUshrProvider).crops.map((crop) => 
-          Text(style: const TextStyle(fontSize: 30), "Crop type: ${crop.type}, Quantity: ${crop.quantity}", textAlign: TextAlign.center,)
-        ).toList()),
-      ]
+
+    final toReturn = ListView(
+      children: crops.map((crop) {
+        return Card(
+          margin: const EdgeInsets.all(8.0),
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Crop type: ${crop.type}",
+                  style: const TextStyle(fontSize: 20),
+                ),
+                Text(
+                  "Quantity: ${crop.quantity}",
+                  style: const TextStyle(fontSize: 20),
+                ),
+              ],
+            ),
+          ),
+        );
+      }).toList(),
     );
 
     ref.read(zakatUshrProvider.notifier).setCrops([]);
-
     return toReturn;
-  }
-
-
-  Widget button() {
-    return ElevatedButton(
-      onPressed: () {
-        Navigator.pushNamed(context, '/home');
-      },
-      style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
-      child: const Text(
-        'Go to Home page',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
   }
 }

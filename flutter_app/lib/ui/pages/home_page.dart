@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
@@ -50,6 +49,7 @@ class _HomePageState extends ConsumerState<HomePage> {
         index: 0,
       ),
     );
+    
   }
 
   Widget title() => const Text(

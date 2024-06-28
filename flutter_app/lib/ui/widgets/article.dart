@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_app/ui/pages/knowledge_base/article_page.dart';
+import 'package:flutter_app/ui/pages/knowledge_base/json_item.dart';
 
-class Fund extends StatelessWidget {
+
+class Article extends StatelessWidget {
    
-  final String title;
-  final NetworkImage image;
-  final String description;
-  final Uri url;
+  final String? id;
+  final List<String>? tags;
+  final String? title;
+  final String? text;
+  final Content content;
 
-  const Fund({
-    Key? key,
+  const Article({
+    super.key,
+    required this.id,
+    required this.tags,
     required this.title,
-    required this.description,
-    required this.image,
-    required this.url,
-  }) : super(key: key);
+    required this.text,
+    required this.content,
+  });
   
 
   @override
@@ -22,15 +26,17 @@ class Fund extends StatelessWidget {
     
    
     return GestureDetector(
-      
-      
-      
       onTap: () async {
-        if (await canLaunchUrl(url)) {
-          await launchUrl(url);
-        } else {
-          throw 'Could not launch $url';
-        }
+         Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ArticlePage(
+            id: id,
+            tags: tags,
+            title: title,
+            text: text,
+            content: content,
+          )),
+        );
       },
       
       child: Material(
@@ -42,9 +48,9 @@ class Fund extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 227, 241, 255),
+            color: Colors.white.withOpacity(0.5), 
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 blurRadius: 8,
@@ -52,25 +58,12 @@ class Fund extends StatelessWidget {
               ),
             ],
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  child: Image(image: image, fit: BoxFit.cover),
-                ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
+          child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
-                      style: TextStyle(
+                      title!,
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
@@ -79,8 +72,8 @@ class Fund extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      description,
-                      style: TextStyle(
+                      text!,
+                      style: const TextStyle(
                         fontSize: 10,
                         color: Colors.black54,
                       ),
@@ -92,10 +85,7 @@ class Fund extends StatelessWidget {
                   ],
                 ),
               ),
-            ],
           ),
-        ),
-      ),
-    );
+        );
   }
 }

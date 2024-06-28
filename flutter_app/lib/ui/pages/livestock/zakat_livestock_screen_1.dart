@@ -1,7 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
+import 'package:flutter_app/ui/widgets/footer.dart';
 
 class LivestockPage extends ConsumerStatefulWidget {
   const LivestockPage({super.key});
@@ -18,7 +20,6 @@ class _LivestockState extends ConsumerState<LivestockPage> {
   void initState() {
     super.initState();
     for (int i = 0; i < 3; i++) {
-      // Assuming you want 3 fields
       controllers.add(TextEditingController());
     }
   }
@@ -34,51 +35,55 @@ class _LivestockState extends ConsumerState<LivestockPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(pageTitle: 'Zakat on Livestock', appBarHeight: 70),
-        body: Center(
-            child: Column(
+      backgroundColor: Color.fromARGB(104, 200, 215, 231),
+      appBar: CustomAppBar(pageTitle: 'Zakat on Livestock', appBarHeight: 70),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
           mainAxisAlignment: MainAxisAlignment
               .spaceBetween, // This aligns items along the vertical axis
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: title(),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: notificationBox(),
-            ),
+            const SizedBox(height: 20),
+            title(),
+            const SizedBox(height: 20),
+            notificationBox(),
+            const SizedBox(height: 20),
             body(),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: button(),
-            ),
+            const SizedBox(height: 20),
+            button(),
           ],
-        )));
+          
+        ),
+        
+      ),
+      bottomNavigationBar: const CustomBottomNavBar(index: 0),
+    );
+    
   }
 
   Widget title() => const Text(
         'Zakat on Livestock',
-        style: TextStyle(fontSize: 30),
+        style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
         textAlign: TextAlign.center,
       );
 
   Widget notificationBox() {
     return Container(
-        width: 600,
-        height: 90,
-        decoration: BoxDecoration(
-          color: Colors.grey,
-          borderRadius: BorderRadius.circular(20),
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        color: Color.fromARGB(255, 176, 216, 253),
+        borderRadius: BorderRadius.circular(12),
+
+      ),
+      child: const Center(
+        child: Text(
+          "It does not count if the livestock is used for work, riding; "
+          "the animal was harmed; the owner has NOT fed the herd on his own for more than 7 months",
+          style: TextStyle(fontSize: 16, color: Colors.black87),
+          textAlign: TextAlign.center,
         ),
-        child: const Center(
-          child: Text(
-            "It does not count if the livestock is used for work, riding; "
-            "the animal was harmed; the owner has NOT fed the herd on his own for more than 7 months",
-            style: TextStyle(fontSize: 16),
-            textAlign: TextAlign.center,
-          ),
-        ));
+      ),
+    );
   }
 
   Widget button() {
@@ -95,10 +100,19 @@ class _LivestockState extends ConsumerState<LivestockPage> {
             .setGoats(setValues(controllers[2].text));
         Navigator.pushNamed(context, '/livestock2');
       },
-      style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
+      style: ElevatedButton.styleFrom(
+       
+        minimumSize: const Size(400, 60),
+        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          
+          
+        ),
+      ),
       child: const Text(
         'Continue',
-        style: TextStyle(fontSize: 24),
+        style: TextStyle(fontSize: 24,color: Colors.black),
       ),
     );
   }
@@ -106,38 +120,37 @@ class _LivestockState extends ConsumerState<LivestockPage> {
   Widget body() {
     return Column(
       children: [
-        ...[
-          for (int i = 0; i < 3; i++) enterField(controllers[i], elemTitle[i])
-        ], // Explicitly converting the Set to a List
+        for (int i = 0; i < controllers.length; i++)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: enterField(controllers[i], elemTitle[i]),
+          )
       ],
     );
   }
 
   Widget enterField(TextEditingController controller, String text) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 20),
         Text(
           text,
-          style: const TextStyle(fontSize: 24),
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         ),
-        const SizedBox(height: 20),
-        Row(
-          children: [
-            const SizedBox(width: 20),
-            const Text('Amount'),
-            const SizedBox(width: 20),
-            Expanded(
-                child: TextField(
-              controller: controller,
-              decoration: const InputDecoration(
-                hintText: 'Enter value',
-                border: OutlineInputBorder(),
-                contentPadding: EdgeInsets.all(8),
-              ),
-              keyboardType: TextInputType.number,
-            )),
-          ],
+        const SizedBox(height: 8),
+        TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            hintText: 'Enter value',
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            contentPadding: const EdgeInsets.symmetric(
+              vertical: 14,
+              horizontal: 16,
+            ),
+          ),
+          keyboardType: TextInputType.number,
         ),
       ],
     );
@@ -150,3 +163,4 @@ class _LivestockState extends ConsumerState<LivestockPage> {
     return int.parse(value);
   }
 }
+

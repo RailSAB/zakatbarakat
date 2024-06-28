@@ -25,8 +25,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       if (_selectedIndex == 0) {
         Navigator.pushNamed(context, '/home');
       } else if (_selectedIndex == 1) {
-        // Uncomment and adjust the route as necessary
-        //Navigator.pushNamed(context, '/book');
+        Navigator.pushNamed(context, '/kb');
       } else if (_selectedIndex == 2) {
         Navigator.pushNamed(context, '/faq');
       }
@@ -43,6 +42,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       ],
       currentIndex: _selectedIndex,
       backgroundColor: Colors.white,
+      selectedItemColor: Colors.black,
+       unselectedItemColor: Colors.black,
       onTap: (index) => _onItemTapped(index),
     );
   }

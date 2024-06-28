@@ -155,7 +155,9 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(textFieldRounded),
+                              borderSide: BorderSide(color: Colors.blue),
                             ),
+                            
                             labelText: 'Name',
                           ),
                         ),
@@ -179,8 +181,10 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(textFieldRounded),
+                              borderSide: BorderSide(color: Colors.blue),
                             ),
                             labelText: 'Weight',
+                            
                           ),
                         ),
                       ),
@@ -211,12 +215,13 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                     performPostRequest();
                   }
                 },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(400, 60),
+                style: ButtonStyle(
+                   minimumSize: MaterialStateProperty.all(Size(400, 60)), 
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                 ),
                 child: const Text(
                   'Calculate',
-                  style: TextStyle(fontSize: 24),
+                  style: TextStyle(fontSize: 24,color: Colors.black),
                 ),
               ),
             ),
