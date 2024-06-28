@@ -155,7 +155,9 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(textFieldRounded),
+                              borderSide: BorderSide(color: Colors.blue),
                             ),
+                            
                             labelText: 'Name',
                           ),
                         ),
@@ -179,8 +181,10 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(textFieldRounded),
+                              borderSide: BorderSide(color: Colors.blue),
                             ),
                             labelText: 'Weight',
+                            
                           ),
                         ),
                       ),

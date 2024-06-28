@@ -43,6 +43,8 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       ],
       currentIndex: _selectedIndex,
       backgroundColor: Colors.white,
+      selectedItemColor: Colors.black,
+       unselectedItemColor: Colors.black,
       onTap: (index) => _onItemTapped(index),
     );
   }
