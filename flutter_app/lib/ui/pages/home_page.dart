@@ -40,10 +40,9 @@ class _HomePageState extends ConsumerState<HomePage> {
         ),
         ]
         )
+        
       ),
-      bottomNavigationBar: const CustomBottomNavBar(
-        index: 0,
-      ),
+      
       
     );
     

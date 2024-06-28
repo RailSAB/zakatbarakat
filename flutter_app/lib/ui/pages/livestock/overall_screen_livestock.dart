@@ -4,6 +4,8 @@ import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
+import 'package:flutter_app/ui/widgets/footer.dart';
+
 
 class LivestockOverallPage extends ConsumerStatefulWidget {
   const LivestockOverallPage({super.key});
@@ -33,6 +35,10 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
           ],
         ),
       ),
+       bottomNavigationBar: const CustomBottomNavBar(
+        index: 0,
+      ),
+
     );
   }
 
