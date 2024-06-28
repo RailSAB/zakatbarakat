@@ -16,7 +16,6 @@ import 'package:flutter_app/ui/pages/funds/funds.dart';
 import 'package:flutter_app/ui/pages/faq/faq_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter_app/ui/pages/knowledge_base/kb_main_frame.dart';
-import 'package:flutter_app/ui/pages/knowledge_base/article_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: ExampleApp()));

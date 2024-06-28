@@ -1,28 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/pages/knowledge_base/kb_main_frame.dart';
+import 'package:flutter_app/ui/pages/knowledge_base/json_item.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
-
-//----------------- markdown classes -----------------------
-class Content {
-  final List<Operation> ops;
-
-  Content({required this.ops});
-}
-
-class Operation {
-  final String insert;
-  final Map<String, dynamic> attributes;
-
-  Operation({required this.insert, required this.attributes});
-}
-//----------------- markdown classes -----------------------
+import 'package:flutter_app/ui/widgets/footer.dart';
 
 
 class ArticlePage extends StatefulWidget {
-  final String id;
-  final List<String> tags;
-  final String title;
-  final String text;
+  final String? id;
+  final List<String>? tags;
+  final String? title;
+  final String? text;
   final Content content;
 
   const ArticlePage(
@@ -34,75 +20,45 @@ class ArticlePage extends StatefulWidget {
     required this.content});
 
   @override
-  State <ArticlePage> createState() => _ArticlePageState();
+  State <ArticlePage> createState() => _ArticlePageState(this);
 }
 
 class _ArticlePageState extends State <ArticlePage> {
-  late Item item; // Assume this is initialized somewhere
+
+  late ArticlePage item;
+  _ArticlePageState(this.item);
 
   @override
   Widget build(BuildContext context) {
   return Scaffold(
-      appBar: AppBar(
-        title: Text(item.title),
-      ),
+      appBar: const CustomAppBar(pageTitle: 'Article',),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              item.title,
-            ),
-           ...item.content.ops.map((op) {
-              if (op.attributes.containsKey('bold')) {
-                return Text(
+            Text(item.title ?? '', style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),),
+            ...item.content.ops.map((op) {
+                double fontSize = 16; // Default font size
+                if (op.attributes!= {}) {
+                  if (op.attributes.containsKey('bold')) {
+                    return Text(
+                      op.insert,
+                      style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.bold),
+                    );
+                } else if (op.attributes.containsKey('header')) {
+                  fontSize += op.attributes['header'] as int;
+                }
+              } 
+              return Text(
                   op.insert,
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                );
-              } else if (op.attributes.containsKey('header')) {
-                // Simplified header handling. For actual headings, consider using a package like flutter_markdown.
-                return Text(
-                  op.insert,
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                );
-              } else {
-                return Text(op.insert);
-              }
+                  style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.normal),
+               );
             }).toList(),
           ],
         ),
       ),
+      bottomNavigationBar: const CustomBottomNavBar(index: 1,),
     );
   }
 }
-
-
-
-
-
-/*
-extension MarkdownParser on String {
-  TextStyle getMarkdownStyle(String input) {
-    final RegExp regex = RegExp(r'<style>(.*?)</style>');
-    final Iterable<RegExpMatch> matches = regex.allMatches(input);
-    final List<TextStyle> styles = [];
-    
-    for (final match in matches) {
-      final style = match.group(1)!;
-      switch (style) {
-        case 'bold':
-          styles.add(const TextStyle(fontWeight: FontWeight.bold));
-          break;
-        case 'italic':
-          styles.add(const TextStyle(fontStyle: FontStyle.italic));
-          break;
-        default:
-          break;
-      }
-    }
-    
-    return styles.isNotEmpty? styles.last : const TextStyle(); 
-  }
-}
-*/

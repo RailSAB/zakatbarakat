@@ -30,7 +30,7 @@ class _FundsState extends ConsumerState<FundsPage> {
   final List<Item> _data = [];
 
   Future getData() async {
-    final response = await http.get(Uri.parse('http://10.90.137.169:8000/funds/get-funds'));
+    final response = await http.get(Uri.parse('http://158.160.153.243:8000/funds/get-funds'));
     try {
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);

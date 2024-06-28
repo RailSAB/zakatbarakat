@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/ui/pages/knowledge_base/article_page.dart';
+import 'package:flutter_app/ui/pages/knowledge_base/json_item.dart';
 
 
 class Article extends StatelessWidget {
    
-  final String id;
-  final List<String> tags;
-  final String title;
-  final String text;
+  final String? id;
+  final List<String>? tags;
+  final String? title;
+  final String? text;
   final Content content;
 
   const Article({
@@ -25,11 +26,17 @@ class Article extends StatelessWidget {
     
    
     return GestureDetector(
-      
-      
-      
       onTap: () async {
-        ArticlePage(id: id, tags: tags, title: title, text: text, content: content);
+         Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ArticlePage(
+            id: id,
+            tags: tags,
+            title: title,
+            text: text,
+            content: content,
+          )),
+        );
       },
       
       child: Material(
@@ -55,7 +62,7 @@ class Article extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      title,
+                      title!,
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
@@ -65,7 +72,7 @@ class Article extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      text,
+                      text!,
                       style: const TextStyle(
                         fontSize: 10,
                         color: Colors.black54,
