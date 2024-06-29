@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/models/itemkb_model.dart';
 import 'package:flutter_app/ui/pages/knowledge_base/article_page.dart';
-import 'package:flutter_app/ui/pages/knowledge_base/json_item.dart';
 
 
 class Article extends StatelessWidget {
