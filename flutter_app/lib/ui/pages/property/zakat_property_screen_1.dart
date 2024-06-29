@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_app/providers/zakat_on_property_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/dynamic_table_property.dart';
+import 'package:http/http.dart' as http;
 
 class PropertyPage extends ConsumerStatefulWidget {
   const PropertyPage({super.key});
@@ -21,6 +25,8 @@ class _PropertyState extends ConsumerState<PropertyPage> {
 
   List<String> elemTitle = ["Cash", "Bank card", "Silver", "Gold"];
   final numberController = TextEditingController();
+  
+
 
   @override
   void initState() {
@@ -28,6 +34,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
     // for (int i = 0; i < 4; i++) {
     //   controllers.add(TextEditingController());
     // }
+    
   }
 
   @override
@@ -49,6 +56,12 @@ class _PropertyState extends ConsumerState<PropertyPage> {
       length: 3,
       child: Scaffold(
         appBar: CustomAppBar(pageTitle: 'Zakat on Property', appBarHeight: 115),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+          },
+          child: const Icon(Icons.calculate),
+        )
+        ,
         body: TabBarView(
           children: <Widget>[
             //________________________FINANCE________________________
@@ -468,6 +481,50 @@ class _PropertyState extends ConsumerState<PropertyPage> {
       ),
     );
   }
+
+
+  Future<void> calculateZakat() async {
+    final response = await http.post(
+      Uri.parse("http://158.160.153.243:8000/calculator/zakat-property"),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        "cash": ref.read(zakatOnPropertyProvider).cash,
+        "cash_on_bank_cards": ref.read(zakatOnPropertyProvider).cashOnBankCards,
+        "silver_jewelry": ref.read(zakatOnPropertyProvider).silverJewellery,
+        "gold_jewelry": ref.read(zakatOnPropertyProvider).goldJewellery,
+        "purchased_product_for_resaling": ref
+            .read(zakatOnPropertyProvider)
+            .purchasedProductForResaling,
+        "unfinished_product": ref.read(zakatOnPropertyProvider).unfinishedProduct,
+        "produced_product_for_resaling": ref
+            .read(zakatOnPropertyProvider)
+            .producedProductForResaling,
+        "purchased_not_for_resaling": ref
+            .read(zakatOnPropertyProvider)
+            .purchasedNotForResaling,
+        "used_after_nisab": ref.read(zakatOnPropertyProvider).usedAfterNisab,
+        "rent_money": ref.read(zakatOnPropertyProvider).rentMoney,
+        "stocks_for_resaling": ref
+            .read(zakatOnPropertyProvider)
+            .stocksForResaling,
+        "income_from_stocks": ref
+            .read(zakatOnPropertyProvider)
+            .incomeFromStocks,
+        "taxes_value": ref.read(zakatOnPropertyProvider).taxesValue,
+        "currency": ref.read(currencyProvider).code,
+      }),
+    );
+
+    if (response.statusCode == 200) {
+      final jsonResponse = jsonDecode(response.body);
+      setState(() {
+        ref.read(zakatOnPropertyProvider.notifier).setZakatValue(jsonResponse['zakat_value']);
+        ref.read(zakatOnPropertyProvider.notifier).setNisabStatus(jsonResponse['nisab_value']);
+        // swap to overall page
+      });
+    }
+  }
+
   // Widget build(BuildContext context) {
   //   return Scaffold(
   //       backgroundColor: const Color.fromARGB(104, 200, 215, 231),
