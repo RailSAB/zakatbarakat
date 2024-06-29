@@ -12,43 +12,42 @@ class ZakatOnPropertyNotifier extends StateNotifier<ZakatOnPropertyModel> {
   final ZakatOnPropertyModel _model = ZakatOnPropertyModel();
 
   void addCash(int value, CurrencyModel currency) =>
-      state.setValue('cash', currency, value); //1
+      state.addCash(value, currency); //1
 
   void addCashOnBankCards(int value, CurrencyModel currency) =>
-      state.setValue('cashOnBankCards', currency, value); //2
+      state.addCashOnBankCards(value, currency);
 
   void addGoldJewellery(int value, CurrencyModel currency) =>
-      state.setValue('goldJewellery', currency, value); //3
+      state.addGoldJewellery(value, currency); //3
 
   void addSilverJewellery(int value, CurrencyModel currency) =>
-      state.setValue('silverJewellery', currency, value); //4
+      state.addSilverJewellery(value, currency); //4
   void addPurchasedProductForResaling(int value, CurrencyModel currency) =>
-      state.setValue('purchasedProductForResaling', currency, value); //5
+      state.addPurchasedProductForResaling(value, currency); //5
   void addUnfinishedProduct(int value, CurrencyModel currency) =>
-      state.setValue('unfinishedProduct', currency, value); //6
+      state.addUnfinishedProduct(value, currency); //6
   void addProducedProductForResaling(int value, CurrencyModel currency) =>
-      state.setValue('producedProductForResaling', currency, value); //7
+      state.addProducedProductForResaling(value, currency); //7
   void addPurchasedNotForResaling(int value, CurrencyModel currency) =>
-      state.setValue('purchasedNotForResaling', currency, value); //8
+      state.addPurchasedNotForResaling(value, currency); //8
 
   void addUsedAfterNisab(int value, CurrencyModel currency) =>
-      state.setValue('usedAfterNisab', currency, value); //9
+      state.addUsedAfterNisab(value, currency); //9
 
   void addRentMoney(int value, CurrencyModel currency) =>
-      state.setValue('rentMoney', currency, value); //10
+      state.addRentMoney(value, currency); //10
   void addStocksForResaling(int value, CurrencyModel currency) =>
-      state.setValue('stocksForResaling', currency, value); //11
+      state.addStocksForResaling(value, currency); //11
   void addIncomeFromStocks(int value, CurrencyModel currency) =>
-      state.setValue('incomeFromStocks', currency, value); //12
+      state.addIncomeFromStocks(value, currency); //12
   void addTaxesValue(int value, CurrencyModel currency) =>
-      state.setValue('taxesValue', currency, value); //13
+      state.addTaxesValue(value, currency); //13
 
-  void setNisabValue(CurrencyModel currency) => state.setNisabValue(currency);
+  void setZakatValue(int value) => state.setZakatValue(value: value);
+  void setNisabStatus(bool status) => state.setNisabStatus(status: status);
 
-  void setZakatValue(CurrencyModel currency) => state.setZakatValue(currency);
-
-  int getZakatValue(CurrencyModel currency) =>
-      state.getValue('zakatValue', currency);
+  // int getZakatValue() =>
+  //     state.getValue('zakatValue', currency);
 
   void add(String category, CurrencyModel currency, int value) {
     switch (category) {
@@ -92,11 +91,11 @@ class ZakatOnPropertyNotifier extends StateNotifier<ZakatOnPropertyModel> {
         addTaxesValue(value, currency);
         break;
       case 'zakatValue':
-        setZakatValue(currency);
+        setZakatValue(value);
         break;
-      case 'nisabValue':
-        setNisabValue(currency);
-        break;
+      // case 'nisabValue':
+      //   setNisabValue(currency);
+      //   break;
       default:
         break;
     }
