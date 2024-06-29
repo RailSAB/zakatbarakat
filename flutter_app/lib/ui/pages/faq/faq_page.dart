@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/currency_model.dart';
-import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
 import 'package:http/http.dart' as http;
 

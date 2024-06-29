@@ -1,12 +1,11 @@
-import 'dart:convert';
-
-import 'package:currency_picker/currency_picker.dart';
+// import 'dart:convert';
+// import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_app/providers/zakat_on_property_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 
 class DynamicTable extends ConsumerStatefulWidget {
   final String taskId;

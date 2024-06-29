@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/ui/pages/knowledge_base/json_item.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
+import '../../../models/itemkb_model.dart';
 
 
 class ArticlePage extends StatefulWidget {
