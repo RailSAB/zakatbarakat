@@ -26,6 +26,7 @@ class _KBState extends ConsumerState<KBPage> {
 Widget build(BuildContext context) {
   return Scaffold(
     appBar: CustomAppBar(pageTitle: 'Knowledge Base', appBarHeight: 70,),
+    backgroundColor: const Color.fromARGB(104, 200, 215, 231),
     body: Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(

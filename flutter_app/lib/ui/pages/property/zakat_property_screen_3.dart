@@ -147,7 +147,7 @@
 
 //   Future<void> performPostRequest() async {
 //     final url =
-//         Uri.parse('http://10.90.137.169:8000/calculator/zakat-property');
+//         Uri.parse('http://158.160.153.243:8000/calculator/zakat-property');
 //     final headers = {'Content-Type': 'application/json'};
 //     final body = jsonEncode({
 //       "cash": ref.read(zakatOnPropertyProvider).cash,

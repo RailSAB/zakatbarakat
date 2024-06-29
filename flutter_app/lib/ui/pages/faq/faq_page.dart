@@ -58,6 +58,7 @@ class _FAQPageState extends ConsumerState<FAQPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(pageTitle: 'Frequently Asked Questions', appBarHeight: 70),
+      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
        body: Padding(
         padding: const EdgeInsets.all(16.0), // Adjust the padding value as needed
         child: Column(

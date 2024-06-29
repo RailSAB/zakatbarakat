@@ -20,7 +20,7 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(pageTitle: 'Overall LiveStock Zakat', appBarHeight: 70),
+      appBar: CustomAppBar(pageTitle: 'Overall Livestock Zakat', appBarHeight: 70),
       backgroundColor: Color.fromARGB(104, 200, 215, 231),
       
       body: Padding(
@@ -64,9 +64,9 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
     final zakatForHorses = ref.watch(zakatOnLivestockProvider).zakatForHorses;
 
     return ListView(
-      children: [
-        if (animalsForZakat.isNotEmpty)
-          ...animalsForZakat.map((animal) => Card(
+  children: [
+    if (animalsForZakat.isNotEmpty)
+     ...animalsForZakat.map((animal) => Card(
                 margin: const EdgeInsets.all(8.0),
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -88,20 +88,20 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
                     ],
                   ),
                 ),
-              )),
-        Card(
-          margin: const EdgeInsets.all(8.0),
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              "Overall: ${ref.watch(zakatOnLivestockProvider).zakatForHorses}",
-              style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-            
-              textAlign: TextAlign.center,
-            ),
+          )),
+    if (zakatForHorses!= 0)
+      Card(
+        margin: const EdgeInsets.all(8.0),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Text(
+            "Zakat for Horses: $zakatForHorses",
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            textAlign: TextAlign.center,
           ),
         ),
-      ],
-    );
+      ),
+  ],
+);
   }
 }

@@ -80,7 +80,7 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
   }
 
   Future<void> performPostRequest() async {
-    // final url = Uri.parse('http://10.90.137.169:8000/calculator/zakat-ushr');
+    // final url = Uri.parse('http://158.160.153.243:8000/calculator/zakat-ushr');
     // final headers = {'Content-Type': 'application/json'};
 
     // final body = jsonEncode({

@@ -44,7 +44,7 @@ class Fund extends StatelessWidget {
           decoration: BoxDecoration(
             color: Color.fromARGB(255, 227, 241, 255),
             borderRadius: BorderRadius.circular(16),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 blurRadius: 8,
@@ -70,7 +70,7 @@ class Fund extends StatelessWidget {
                   children: [
                     Text(
                       title,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: Colors.black87,
@@ -80,7 +80,7 @@ class Fund extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       description,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 10,
                         color: Colors.black54,
                       ),
