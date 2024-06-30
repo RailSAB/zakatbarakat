@@ -25,27 +25,17 @@ class _PropertyState extends ConsumerState<PropertyPage> {
 
   List<String> elemTitle = ["Cash", "Bank card", "Silver", "Gold"];
   final numberController = TextEditingController();
-  
-
-
   @override
   void initState() {
     super.initState();
-    // for (int i = 0; i < 4; i++) {
-    //   controllers.add(TextEditingController());
-    // }
-    
+  
   }
-
-  @override
+@override
   void dispose() {
     gold_controller.dispose();
     cash_controller.dispose();
     bank_card_controller.dispose();
     silver_controller.dispose();
-    // for (var controller in controllers) {
-    //   controller.dispose();
-    // }
     super.dispose();
   }
 
@@ -60,8 +50,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
           onPressed: () {
           },
           child: const Icon(Icons.calculate),
-        )
-        ,
+        ),
         body: TabBarView(
           children: <Widget>[
             //________________________FINANCE________________________
@@ -220,9 +209,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                   ],
                 ),
               ),
-            ),
-
-            //________________________PROPERTY________________________
+            ),//________________________PROPERTY________________________
             Stack(
               children: [
                 Positioned(
@@ -321,9 +308,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                   ),
                 ),
               ],
-            ),
-
-            //________________________OTHER________________________
+            ),//________________________OTHER________________________
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -481,9 +466,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
       ),
     );
   }
-
-
-  Future<void> calculateZakat() async {
+Future<void> calculateZakat() async {
     final response = await http.post(
       Uri.parse("http://158.160.153.243:8000/calculator/zakat-property"),
       headers: {'Content-Type': 'application/json'},
@@ -514,7 +497,6 @@ class _PropertyState extends ConsumerState<PropertyPage> {
         "currency": ref.read(currencyProvider).code,
       }),
     );
-
     if (response.statusCode == 200) {
       final jsonResponse = jsonDecode(response.body);
       setState(() {
@@ -524,139 +506,4 @@ class _PropertyState extends ConsumerState<PropertyPage> {
       });
     }
   }
-
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //       backgroundColor: const Color.fromARGB(104, 200, 215, 231),
-  //       appBar: const CustomAppBar(pageTitle: 'Zakat on Property'),
-  //       body: SafeArea(
-  //           child: Column(children: [
-  //         const Padding(
-  //           padding: EdgeInsets.all(100.0),
-  //           child: Column(children: [
-  //             Text('ZAKAT',
-  //                 textAlign: TextAlign.center,
-  //                 style: TextStyle(
-  //                   fontSize: 24,
-  //                   shadows: <Shadow>[
-  //                     Shadow(
-  //                       offset: Offset(2.0, 2.0),
-  //                       blurRadius: 2.0,
-  //                       color: Colors.grey,
-  //                     ),
-  //                   ],
-  //                 )),
-  //             Text('on property',
-  //                 textAlign: TextAlign.center,
-  //                 style: TextStyle(
-  //                   fontSize: 18,
-  //                 )),
-  //           ]),
-  //         ),
-  //         Expanded(
-  //             child: Column(
-  //           children: [
-
-  //           ],
-  //         ))
-  //       ]))
-
-  //       // body: Center(
-  //       //     child: Column(
-  //       //   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //       //   children: <Widget>[
-  //       //     Padding(
-  //       //       padding: const EdgeInsets.all(16.0),
-  //       //       child: body(),
-  //       //     ),
-  //       //     Padding(
-  //       //       padding: const EdgeInsets.all(16.0),
-  //       //       child: button(),
-  //       //     ),
-  //       //   ],
-  //       // )
-  //       // )
-  //       // body: ,
-  //       );
-  // }
-
-//   Widget button() {
-//     return ElevatedButton(
-//       onPressed: () {
-//         ref
-//             .read(zakatOnPropertyProvider.notifier)
-//             .setCash(setValues(controllers[0].text));
-//         ref
-//             .read(zakatOnPropertyProvider.notifier)
-//             .setCashOnBankCards(setValues(controllers[1].text));
-//         ref
-//             .read(zakatOnPropertyProvider.notifier)
-//             .setGoldJewellery(setValues(controllers[3].text));
-//         ref
-//             .read(zakatOnPropertyProvider.notifier)
-//             .setSilverJewellery(setValues(controllers[2].text));
-
-//         Navigator.pushNamed(context, '/property2');
-//       },
-//       style: ElevatedButton.styleFrom(minimumSize: const Size(400, 60)),
-//       child: const Text(
-//         'Continue',
-//         style: TextStyle(fontSize: 24),
-//       ),
-//     );
-//   }
-
-//   Widget body() {
-//     return Column(
-//       children: [
-//         ...[
-//           const Text('Money', style: TextStyle(fontSize: 24)),
-//           const SizedBox(height: 20),
-//           for (int i = 0; i < 2; i++) enterField(controllers[i], elemTitle[i]),
-//           const SizedBox(height: 40),
-//           const Text('Jewlery', style: TextStyle(fontSize: 24)),
-//           const SizedBox(height: 20),
-//           for (int i = 2; i < 4; i++) enterField(controllers[i], elemTitle[i])
-//         ], // Explicitly converting the Set to a List
-//       ],
-//     );
-//   }
-
-//   Widget enterField(TextEditingController controller, String text) {
-//     return Column(
-//       children: [
-//         const SizedBox(height: 10),
-//         Row(
-//           children: [
-//             Text(
-//               text,
-//               style: const TextStyle(fontSize: 20),
-//             ),
-//             const SizedBox(width: 20),
-//             Expanded(
-//                 child: TextField(
-//               controller: controller,
-//               decoration: const InputDecoration(
-//                 hintText: 'Enter value',
-//                 border: OutlineInputBorder(),
-//                 contentPadding: EdgeInsets.all(8),
-//               ),
-//               keyboardType: TextInputType.number,
-//             )),
-//           ],
-//         ),
-//         const SizedBox(
-//           height: 20,
-//         ),
-//       ],
-//     );
-//   }
-
-//   int setValues(String value) {
-//     if (value.isEmpty) {
-//       return 0;
-//     }
-//     return int.parse(value);
-//   }
-// }
-}
+  }
