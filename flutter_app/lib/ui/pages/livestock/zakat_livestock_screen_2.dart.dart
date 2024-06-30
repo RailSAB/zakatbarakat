@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 import 'package:flutter_app/models/zakat_on_livestock_model.dart';
 import 'package:flutter_app/providers/currency_provider.dart';
@@ -130,11 +131,21 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
         Row(
           children: [
             const Text('Bred for sale?'),
-            Switch(value: isSwitched1, onChanged: (value) => setState(() => isSwitched1 = value)),
+            Switch(
+              value: isSwitched1,
+              onChanged: (value) => setState(() => isSwitched1 = value),
+              activeTrackColor: Color.fromARGB(255, 176, 216, 253), 
+              activeColor: Color.fromARGB(255, 70, 130, 180), 
+            ),
             
             const Spacer(),
             const Text('Any females?'),
-            Switch(value: isSwitched2, onChanged: (value) => setState(() => isSwitched2 = value)),
+            Switch(
+              value: isSwitched2,
+              onChanged: (value) => setState(() => isSwitched2 = value),
+              activeTrackColor: Color.fromARGB(255, 176, 216, 253), 
+              activeColor: Color.fromARGB(255, 70, 130, 180), 
+            ),
           ],
         ),
         const SizedBox(height: 8),
@@ -159,7 +170,10 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
         textStyle: const TextStyle(fontSize: 18, color:Colors.black),
         minimumSize: const Size(double.infinity, 60),
       ),
-      child: const Text('Calculate'),
+      child: const Text(
+        'Calculate',
+        style: TextStyle(color: Colors.black), 
+      ),
     );
   }
 
