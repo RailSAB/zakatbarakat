@@ -3,7 +3,7 @@ import 'package:flutter_app/models/itemkb_model.dart';
 import 'package:flutter_app/ui/pages/knowledge_base/article_page.dart';
 
 
-class Article extends StatelessWidget {
+class ArticleCard extends StatelessWidget {
    
   final String? id;
   final List<String>? tags;
@@ -11,7 +11,7 @@ class Article extends StatelessWidget {
   final String? text;
   final Content content;
 
-  const Article({
+  const ArticleCard({
     super.key,
     required this.id,
     required this.tags,

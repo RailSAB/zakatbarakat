@@ -3,8 +3,8 @@ import 'package:flutter_app/models/itemkb_model.dart';
 import 'package:http/http.dart' as http;
 
 
-  Future<List<Item>> getData() async {
-  final List<Item> _data = [];
+  Future<List<Article>> getArticles() async {
+  final List<Article> _articles = [];
     try {
       final response = await http.get(Uri.parse('http://158.160.153.243:8000/knowledge-base/get-articles'));
       if (response.statusCode == 200) {
@@ -35,7 +35,7 @@ import 'package:http/http.dart' as http;
           Content content = Content(ops: ops);
           // print('Content: $content');
 
-          _data.add(Item(
+          _articles.add(Article(
             id: id,
             tags: tags,
             title: title,
@@ -43,7 +43,7 @@ import 'package:http/http.dart' as http;
             content: content,
           ));
         }
-        return _data.toList();
+        return _articles.toList();
       } else {
         throw Exception('Failed to load data');
       }
@@ -52,3 +52,29 @@ import 'package:http/http.dart' as http;
       throw Exception('Null data');
     }
   }
+
+  Future<List<QA>> getQuestions() async {
+  final List<QA> questions = [];
+  final response = await http.get(Uri.parse('http://158.160.153.243:8000/qna/get-questions'));
+  try {
+    if (response.statusCode == 200) {
+      var jsonData = jsonDecode(response.body);
+
+      for (var item in jsonData) {
+        String headerText = item["question"];
+        String expandedText = item["answer"];
+
+        questions.add(QA(
+          headerText: headerText,
+          expandedText: expandedText,
+        ));
+      }
+      return questions.toList();
+    } else {
+      throw Exception('Failed to load data');
+    }
+  } catch (e) {
+    print(e.toString());
+    throw Exception('Null data');
+  }
+}

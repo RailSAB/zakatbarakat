@@ -127,7 +127,7 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    InkWell(
+                    GestureDetector(
                       child: const Icon(Icons.remove_circle),
                       onTap: () {
                         _removeItem(i);
@@ -199,7 +199,7 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                InkWell(
+                GestureDetector(
                   onTap: () {
                     _addField();
                   },

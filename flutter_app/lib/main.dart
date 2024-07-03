@@ -13,7 +13,6 @@ import 'package:flutter_app/ui/pages/property/overall_screen_property.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/pages/ushr/overall_screen_ushr.dart';
 import 'package:flutter_app/ui/pages/funds/funds.dart';
-import 'package:flutter_app/ui/pages/faq/faq_page.dart';
 import 'package:get/get.dart';
 import 'package:flutter_app/ui/pages/knowledge_base/kb_main_frame.dart';
 
@@ -46,7 +45,6 @@ class ExampleApp extends StatelessWidget {
         //dont understand why this needs taskID, and what taskID should we use
         '/ushrOverall': (context) => const UshrOverallPage(),
         '/funds': (context) => const FundsPage(),
-        '/faq': (context) => const FAQPage(),
         '/kb': (context) => const KBPage(),
       },
     );

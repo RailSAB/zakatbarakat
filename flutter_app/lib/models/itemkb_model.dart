@@ -1,3 +1,18 @@
+class Item{}
+
+class QA {
+  QA({
+    required this.headerText,
+    required this.expandedText,
+    this.isExpanded = false,
+  });
+
+  String? headerText;
+  String? expandedText;
+  bool isExpanded;
+}
+
+
 class Content {
   final List<Operation> ops;
 
@@ -20,7 +35,7 @@ class Operation {
   }
 }
 
-class Item {
+class Article extends Item{
 
   final String? id;
   final List<String>? tags;
@@ -28,7 +43,7 @@ class Item {
   final String? text;
   final Content content;
 
-  Item({
+  Article({
     this.id,
     this.tags,
     this.title,
