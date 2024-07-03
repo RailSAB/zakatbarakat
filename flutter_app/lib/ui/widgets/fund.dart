@@ -42,7 +42,7 @@ class Fund extends StatelessWidget {
           width: double.infinity,
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 227, 241, 255),
+            color: const Color.fromARGB(255, 227, 241, 255),
             borderRadius: BorderRadius.circular(16),
             boxShadow: const [
               BoxShadow(
@@ -57,7 +57,7 @@ class Fund extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: Container(
+                child: SizedBox(
                   width: 100,
                   height: 100,
                   child: Image(image: image, fit: BoxFit.cover),

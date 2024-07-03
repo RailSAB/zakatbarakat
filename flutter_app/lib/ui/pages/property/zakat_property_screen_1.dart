@@ -1,8 +1,5 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_app/providers/zakat_on_property_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -126,7 +123,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           padding: const EdgeInsets.all(16.0),
                           height: 155,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(126, 224, 224, 224),
+                            color: const Color.fromARGB(126, 224, 224, 224),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Row(
@@ -157,7 +154,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           padding: const EdgeInsets.all(16.0),
                           height: 155,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(126, 224, 224, 224),
+                            color: const Color.fromARGB(126, 224, 224, 224),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Row(
@@ -182,7 +179,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           padding: const EdgeInsets.all(16.0),
                           height: 155,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(126, 224, 224, 224),
+                            color: const Color.fromARGB(126, 224, 224, 224),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Row(
@@ -222,7 +219,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                         padding: const EdgeInsets.all(16.0),
                         height: 155,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(126, 224, 224, 224),
+                          color: const Color.fromARGB(126, 224, 224, 224),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Row(
@@ -248,7 +245,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                         padding: const EdgeInsets.all(16.0),
                         height: 155,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(126, 224, 224, 224),
+                          color: const Color.fromARGB(126, 224, 224, 224),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Row(
@@ -283,7 +280,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                         padding: const EdgeInsets.all(16.0),
                         height: 155,
                         decoration: BoxDecoration(
-                          color: Color.fromARGB(126, 224, 224, 224),
+                          color: const Color.fromARGB(126, 224, 224, 224),
                           borderRadius: BorderRadius.circular(10),
                         ),
                         child: const Row(
@@ -381,7 +378,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           padding: const EdgeInsets.all(16.0),
                           height: 155,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(126, 224, 224, 224),
+                            color: const Color.fromARGB(126, 224, 224, 224),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Row(
@@ -407,7 +404,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           padding: const EdgeInsets.all(16.0),
                           height: 155,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(126, 224, 224, 224),
+                            color: const Color.fromARGB(126, 224, 224, 224),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Row(
@@ -433,7 +430,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           padding: const EdgeInsets.all(16.0),
                           height: 155,
                           decoration: BoxDecoration(
-                            color: Color.fromARGB(126, 224, 224, 224),
+                            color: const Color.fromARGB(126, 224, 224, 224),
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: const Row(

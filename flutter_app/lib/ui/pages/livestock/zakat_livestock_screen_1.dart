@@ -35,7 +35,7 @@ class _LivestockState extends ConsumerState<LivestockPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(104, 200, 215, 231),
+      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
       appBar: CustomAppBar(pageTitle: 'Zakat on Livestock', appBarHeight: 70),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -71,7 +71,7 @@ class _LivestockState extends ConsumerState<LivestockPage> {
     return Container(
       padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
-        color: Color.fromARGB(255, 176, 216, 253),
+        color: const Color.fromARGB(255, 176, 216, 253),
         borderRadius: BorderRadius.circular(12),
 
       ),
@@ -103,7 +103,7 @@ class _LivestockState extends ConsumerState<LivestockPage> {
       style: ElevatedButton.styleFrom(
        
         minimumSize: const Size(400, 60),
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           

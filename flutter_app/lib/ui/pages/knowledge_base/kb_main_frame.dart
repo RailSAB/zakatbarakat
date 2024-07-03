@@ -27,13 +27,14 @@ class _KBState extends ConsumerState<KBPage> {
   }
 
   Future<void> _search(String query) async {
+    setState(() {
+    _isSearching = true; // Set to true when starting the search
+  });
+  
     if (query.isEmpty) {
     ref.refresh(searchResultProvider.notifier).resetSearchResults();
     return;
   }
-  setState(() {
-    _isSearching = true; // Set to true when starting the search
-  });
 
     //get articles
     final url = Uri.parse('http://158.160.153.243:8000/knowledge-base/search-article/');

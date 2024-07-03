@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 
 
   Future<List<Article>> getArticles() async {
-  final List<Article> _articles = [];
+  final List<Article> articles = [];
     try {
       final response = await http.get(Uri.parse('http://158.160.153.243:8000/knowledge-base/get-articles'));
       if (response.statusCode == 200) {
@@ -35,7 +35,7 @@ import 'package:http/http.dart' as http;
           Content content = Content(ops: ops);
           // print('Content: $content');
 
-          _articles.add(Article(
+          articles.add(Article(
             id: id,
             tags: tags,
             title: title,
@@ -43,12 +43,11 @@ import 'package:http/http.dart' as http;
             content: content,
           ));
         }
-        return _articles.toList();
+        return articles.toList();
       } else {
         throw Exception('Failed to load data');
       }
     } catch (e) {
-      print('Error fetching data: $e');
       throw Exception('Null data');
     }
   }
@@ -74,7 +73,6 @@ import 'package:http/http.dart' as http;
       throw Exception('Failed to load data');
     }
   } catch (e) {
-    print(e.toString());
     throw Exception('Null data');
   }
 }

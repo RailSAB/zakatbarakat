@@ -18,7 +18,7 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(104, 200, 215, 231),
+      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
       appBar: CustomAppBar(pageTitle: 'Overall', appBarHeight: 70),
       body: Center(
         child: Padding(

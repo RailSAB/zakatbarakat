@@ -55,7 +55,7 @@ class _ArticlePageState extends State <ArticlePage> {
                   op.insert,
                   style: TextStyle(fontSize: fontSize, fontWeight: FontWeight.normal),
                );
-            }).toList(),
+            }),
           ],
         ),
       ),

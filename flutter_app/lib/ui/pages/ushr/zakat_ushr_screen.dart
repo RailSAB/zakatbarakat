@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
 
 class UshrPage extends ConsumerStatefulWidget {
-  const UshrPage({Key? key}) : super(key: key);
+  const UshrPage({super.key});
 
   @override
   ConsumerState<UshrPage> createState() => _UshrState();
@@ -105,8 +105,8 @@ class _UshrState extends ConsumerState<UshrPage> {
                 });
               },
               activeColor: Colors.white,
-              activeTrackColor: Color.fromARGB(255, 125, 204, 246),
-              inactiveThumbColor: Color.fromARGB(60, 134, 132, 132),
+              activeTrackColor: const Color.fromARGB(255, 125, 204, 246),
+              inactiveThumbColor: const Color.fromARGB(60, 134, 132, 132),
               inactiveTrackColor: Colors.white,
             ),
           ],
@@ -144,8 +144,8 @@ class _UshrState extends ConsumerState<UshrPage> {
                 });
               },
                activeColor: Colors.white,
-              activeTrackColor: Color.fromARGB(255, 125, 204, 246),
-              inactiveThumbColor: Color.fromARGB(60, 134, 132, 132),
+              activeTrackColor: const Color.fromARGB(255, 125, 204, 246),
+              inactiveThumbColor: const Color.fromARGB(60, 134, 132, 132),
               inactiveTrackColor: Colors.white,
             ),
           ],

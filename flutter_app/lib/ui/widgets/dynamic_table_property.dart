@@ -1,7 +1,6 @@
 // import 'dart:convert';
 // import 'package:currency_picker/currency_picker.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_app/providers/zakat_on_property_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,21 +61,21 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
     });
   }
 
-  bool _submit() {
-    final isValid = _formKey.currentState!.validate();
-    if (!isValid) {
-      return false;
-    }
-    _formKey.currentState!.save();
+  // bool _submit() {
+  //   final isValid = _formKey.currentState!.validate();
+  //   if (!isValid) {
+  //     return false;
+  //   }
+  //   _formKey.currentState!.save();
 
-    for (int i = 0; i < _quantity.length; i++) {
-      ref
-          .read(zakatOnPropertyProvider.notifier)
-          .add(widget.category, _currency[i], int.parse(_quantity[i].text));
-    }
+  //   for (int i = 0; i < _quantity.length; i++) {
+  //     ref
+  //         .read(zakatOnPropertyProvider.notifier)
+  //         .add(widget.category, _currency[i], int.parse(_quantity[i].text));
+  //   }
 
-    return true;
-  }
+  //   return true;
+  // }
 
   Future<void> performPostRequest() async {
     // final url = Uri.parse('http://158.160.153.243:8000/calculator/zakat-ushr');
