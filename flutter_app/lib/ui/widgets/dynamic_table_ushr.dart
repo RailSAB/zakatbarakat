@@ -37,6 +37,7 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
     });
   }
 
+  @override
   void dispose() {
     _scrollController.dispose();
     super.dispose();
@@ -155,7 +156,7 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(textFieldRounded),
-                              borderSide: BorderSide(color: Colors.blue),
+                              borderSide: const BorderSide(color: Colors.blue),
                             ),
                             
                             labelText: 'Name',
@@ -181,7 +182,7 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                             border: OutlineInputBorder(
                               borderRadius:
                                   BorderRadius.circular(textFieldRounded),
-                              borderSide: BorderSide(color: Colors.blue),
+                              borderSide: const BorderSide(color: Colors.blue),
                             ),
                             labelText: 'Weight',
                             
@@ -216,8 +217,8 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                   }
                 },
                 style: ButtonStyle(
-                   minimumSize: MaterialStateProperty.all(Size(400, 60)), 
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                   minimumSize: WidgetStateProperty.all(const Size(400, 60)), 
+                  backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
                 ),
                 child: const Text(
                   'Calculate',

@@ -27,7 +27,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       } else if (_selectedIndex == 1) {
         Navigator.pushNamed(context, '/kb');
       } else if (_selectedIndex == 2) {
-        // Navigator.pushNamed(context, '/faq');
+        Navigator.pushNamed(context, '/org');
       }
     });
   }
@@ -38,7 +38,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
         BottomNavigationBarItem(icon: Icon(Icons.book), label: 'Knowledge Base'),
-        BottomNavigationBarItem(icon: Icon(Icons.question_answer), label: 'Q&A'),
+        BottomNavigationBarItem(icon: Icon(Icons.people), label: 'Organizations'),
       ],
       currentIndex: _selectedIndex,
       backgroundColor: Colors.white,

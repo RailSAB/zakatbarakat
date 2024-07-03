@@ -106,7 +106,6 @@
 //   }
 // }
 
-import 'package:flutter/widgets.dart';
 import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
@@ -128,7 +127,7 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(pageTitle: 'Overall Livestock Zakat', appBarHeight: 70),
-      backgroundColor: Color.fromARGB(104, 200, 215, 231),
+      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
       
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -157,7 +156,7 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
           Navigator.pushNamed(context, route);
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color.fromARGB(255, 255, 255, 255),
+          backgroundColor: const Color.fromARGB(255, 255, 255, 255),
           minimumSize: const Size(double.infinity, 60),
           textStyle: const TextStyle(fontSize: 20, color: Colors.black),
         ),

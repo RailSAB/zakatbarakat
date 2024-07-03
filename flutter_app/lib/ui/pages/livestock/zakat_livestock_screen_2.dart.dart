@@ -44,7 +44,7 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(104, 200, 215, 231),
+      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
       appBar: CustomAppBar(pageTitle: 'Zakat on Livestock', appBarHeight: 70),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -80,7 +80,7 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
       padding: const EdgeInsets.all(16.0),
 
       decoration: BoxDecoration(
-       color: Color.fromARGB(255, 176, 216, 253),
+       color: const Color.fromARGB(255, 176, 216, 253),
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: const Text(
@@ -134,8 +134,8 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
             Switch(
               value: isSwitched1,
               onChanged: (value) => setState(() => isSwitched1 = value),
-              activeTrackColor: Color.fromARGB(255, 176, 216, 253), 
-              activeColor: Color.fromARGB(255, 70, 130, 180), 
+              activeTrackColor: const Color.fromARGB(255, 176, 216, 253), 
+              activeColor: const Color.fromARGB(255, 70, 130, 180), 
             ),
             
             const Spacer(),
@@ -143,8 +143,8 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
             Switch(
               value: isSwitched2,
               onChanged: (value) => setState(() => isSwitched2 = value),
-              activeTrackColor: Color.fromARGB(255, 176, 216, 253), 
-              activeColor: Color.fromARGB(255, 70, 130, 180), 
+              activeTrackColor: const Color.fromARGB(255, 176, 216, 253), 
+              activeColor: const Color.fromARGB(255, 70, 130, 180), 
             ),
           ],
         ),
@@ -165,7 +165,7 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
     return ElevatedButton(
       onPressed: _calculateZakat,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color.fromARGB(255, 255, 255, 255),
+        backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         padding: const EdgeInsets.symmetric(vertical: 20),
         textStyle: const TextStyle(fontSize: 18, color:Colors.black),
         minimumSize: const Size(double.infinity, 60),
@@ -211,7 +211,6 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
     try {
       return await http.post(url, headers: headers, body: body);
     } catch (e) {
-      print('Error: $e');
       return null;
     }
   }

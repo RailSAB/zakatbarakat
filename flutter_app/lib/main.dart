@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/controller/dependency_injection.dart';
 import 'package:flutter_app/ui/pages/livestock/overall_screen_livestock.dart';
 import 'package:flutter_app/ui/pages/livestock/zakat_livestock_screen_1.dart';
+import 'package:flutter_app/ui/pages/organizations/organizations.dart';
 import 'package:flutter_app/ui/pages/property/zakat_property_screen_1.dart';
 import 'package:flutter_app/ui/pages/ushr/zakat_ushr_screen.dart';
 import 'package:flutter_app/ui/pages/home_page.dart';
@@ -46,6 +47,7 @@ class ExampleApp extends StatelessWidget {
         '/ushrOverall': (context) => const UshrOverallPage(),
         '/funds': (context) => const FundsPage(),
         '/kb': (context) => const KBPage(),
+        '/org': (context) => const Organizations(),
       },
     );
   }
