@@ -10,12 +10,10 @@ import 'package:http/http.dart' as http;
       final response = await http.get(Uri.parse('http://158.160.153.243:8000/organization/get-organizations'));
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
-        // print('Total Items: ${jsonData.length}');
+        print('Total Items: ${jsonData.length}');
 
         for (var itemData in jsonData) {
           String? id = itemData['id'] as String?;
-          // print('Item ID: $id');
-        
         List<String>? countries;
         if (itemData.containsKey('countries') && itemData['countries']!= null) {
           var dynamicTags = itemData['countries'];
@@ -23,6 +21,7 @@ import 'package:http/http.dart' as http;
         } else {
           countries = [];
         } 
+        print('countries: ${countries}');
 
         List<String>? categories;
         if (itemData.containsKey('categories') && itemData['categories']!= null) {
@@ -33,7 +32,7 @@ import 'package:http/http.dart' as http;
         } 
 
           String? name = itemData['name'] as String?;
-          Uri link = itemData['link'] as Uri;
+          Uri link = Uri.parse(itemData["link"]);
           String? description = itemData['description'] as String?;
           NetworkImage? logo = itemData['logo'] != null ? NetworkImage(itemData['logo']) : null;
 

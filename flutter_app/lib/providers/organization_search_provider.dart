@@ -18,6 +18,7 @@ class OrgSearch extends ChangeNotifier {
   Future<void> reset() async {
     final newResults = await getOrganizations();
     _searchResults = newResults;
+    print('notify provider');
     notifyListeners();
   }
 }

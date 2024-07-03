@@ -25,8 +25,6 @@ class OrganizationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-   
     return GestureDetector(
       onTap: () async {
         if (await canLaunchUrl(link)) {
