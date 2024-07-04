@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/organization_model.dart';
 import 'package:flutter_app/providers/organization_search_provider.dart';
-import 'package:flutter_app/providers/search_provider.dart';
+import 'package:flutter_app/ui/pages/organizations/json_organization.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
 import 'package:flutter_app/ui/widgets/organization_card.dart';
@@ -20,8 +20,8 @@ class Organizations extends ConsumerStatefulWidget {
 
 class _OrganizationsState extends ConsumerState<Organizations> {
   bool _isSearching = true; 
-  List<String> categories = ['Finance', 'Technology', 'Healthcare'];
-  List<String> countries = ['USA', 'UK', 'Canada', 'Australia'];
+  List<String> categories = []; // Initialize with an empty list
+  List<String> countries = []; // Initialize with an empty list
   List<String> selectedCategories = [];
   List<String> selectedCountries = [];
 
@@ -29,6 +29,8 @@ class _OrganizationsState extends ConsumerState<Organizations> {
   void initState() {
     super.initState();
     ref.refresh(orgSearchProvider.notifier).reset();
+    loadCategories();
+    loadCountries();
     _isSearching = false;
   }
 
@@ -105,78 +107,86 @@ class _OrganizationsState extends ConsumerState<Organizations> {
     }
   }
 
+  void loadCategories() async {
+    categories = await getCategories();
+  }
+
+  void loadCountries() async { 
+    countries = await getCountries();
+  }
+
 @override
 Widget build(BuildContext context) {
-  try{
-  return Consumer(
-    builder: (context, watch, _) { 
-      final res = ref.watch(orgSearchProvider).searchResults;
-      return Scaffold(
-        appBar: CustomAppBar(pageTitle: 'Organizations', appBarHeight: 70,),
-        backgroundColor: const Color.fromARGB(104, 200, 215, 231),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              const SizedBox(height: 20),
-              TextField(
-                onSubmitted: (value) => _search(value),
-                decoration: const InputDecoration(
-                  labelText: 'Search',
-                  prefixIcon: Icon(Icons.search),
-                ),
+    try {
+      return Consumer(
+        builder: (context, watch, _) { 
+          final res = ref.watch(orgSearchProvider).searchResults;
+          return Scaffold(
+            appBar: CustomAppBar(pageTitle: 'Organizations', appBarHeight: 70,),
+            backgroundColor: const Color.fromARGB(104, 200, 215, 231),
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(height: 20),
+                  TextField(
+                    onSubmitted: (value) => _search(value),
+                    decoration: const InputDecoration(
+                      labelText: 'Search',
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  SelectableFields(
+                      items: categories.isNotEmpty ? categories : [], // Use conditional access
+                      onSelectionChanged: (updatedSelectedCategories) {
+                        setState(() {
+                          selectedCategories = updatedSelectedCategories;
+                        });
+                      }, selectedItems: selectedCategories,
+                    ),
+                  const SizedBox(height: 20),
+                  SelectableFields(
+                      items: countries.isNotEmpty ? countries : [], // Use conditional access
+                      onSelectionChanged: (updatedSelectedCountries) {
+                        setState(() {
+                          selectedCountries = updatedSelectedCountries;
+                        });
+                      }, selectedItems: selectedCountries,
+                    ),
+                  Expanded(
+                    child: 
+                        _isSearching ? const Center(child: CircularProgressIndicator()) : 
+                        ListView.builder(
+                            itemCount: res.length,
+                            itemBuilder: (BuildContext context, int index) {
+                                return Column(
+                                children: [
+                                  const SizedBox(height: 5,),
+                                  OrganizationCard(
+                                    id: res[index].id,
+                                    name: res[index].name,
+                                    link: res[index].link,
+                                    description: res[index].description,
+                                    logo: res[index].logo,
+                                    categories: res[index].categories,
+                                    countries: res[index].countries,
+                                  ),
+                                  const SizedBox(height: 5,),
+                                ],
+                              );
+                              }
+                          )
+                  ),
+                ],
               ),
-              const SizedBox(height: 20),
-              SelectableFields(
-                  items: categories,
-                  onSelectionChanged: (updatedSelectedCategories) {
-                    setState(() {
-                      selectedCategories = updatedSelectedCategories;
-                    });
-                  }, selectedItems: selectedCountries,
-                ),
-              const SizedBox(height: 20),
-              SelectableFields(
-                  items: countries,
-                  onSelectionChanged: (updatedSelectedCountries) {
-                    setState(() {
-                      selectedCountries = updatedSelectedCountries;
-                    });
-                  }, selectedItems: selectedCountries,
-                ),
-              Expanded(
-                child: 
-                    _isSearching ? const Center(child: CircularProgressIndicator()) : 
-                    ListView.builder(
-                        itemCount: res.length,
-                        itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                            children: [
-                              const SizedBox(height: 5,),
-                              OrganizationCard(
-                                id: res[index].id,
-                                name: res[index].name,
-                                link: res[index].link,
-                                description: res[index].description,
-                                logo: res[index].logo,
-                                categories: res[index].categories,
-                                countries: res[index].countries,
-                              ),
-                              const SizedBox(height: 5,),
-                            ],
-                          );
-                          }
-                      )
-              ),
-            ],
-          ),
-        ),
-        bottomNavigationBar: const CustomBottomNavBar(index: 2),
-      );
-    },
-  );} catch (e) {
-    throw Exception('Null data');
+            ),
+            bottomNavigationBar: const CustomBottomNavBar(index: 2),
+          );
+        },
+      );} catch (e) {
+        throw Exception('Null data');
+      }
   }
-}
 }

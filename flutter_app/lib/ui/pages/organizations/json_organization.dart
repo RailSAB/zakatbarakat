@@ -54,3 +54,44 @@ import 'package:http/http.dart' as http;
       throw Exception('Null data');
     }
   }
+
+
+Future<List<String>> getCategories() async {
+  final List<String> categories = [];
+    try {
+      final response = await http.get(Uri.parse('http://158.160.153.243:8000/utility/get-categories'));
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        for (var itemData in jsonData) {
+          String? name = itemData as String?;
+          categories.add(name!);
+        }
+        print('categories: ${categories}');
+        return categories.toList();
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('Null data'); 
+    }
+}
+
+Future<List<String>> getCountries() async {
+  final List<String> countries = [];
+    try {
+      final response = await http.get(Uri.parse('http://158.160.153.243:8000/utility/get-countries'));
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+        for (var itemData in jsonData) {
+          String? name = itemData as String?;
+          countries.add(name!);
+        }
+        print('countries: ${countries}');
+        return countries.toList();
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('Null data'); 
+    }
+}
