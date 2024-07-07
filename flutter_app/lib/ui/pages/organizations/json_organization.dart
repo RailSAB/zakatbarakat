@@ -46,6 +46,7 @@ import 'package:http/http.dart' as http;
             categories: categories,
           ));
         }
+        print('organizations: ${organizations}');
         return organizations.toList();
       } else {
         throw Exception('Failed to load data');
@@ -66,7 +67,6 @@ Future<List<String>> getCategories() async {
           String? name = itemData as String?;
           categories.add(name!);
         }
-        print('categories: ${categories}');
         return categories.toList();
       } else {
         throw Exception('Failed to load data');
@@ -86,7 +86,6 @@ Future<List<String>> getCountries() async {
           String? name = itemData as String?;
           countries.add(name!);
         }
-        print('countries: ${countries}');
         return countries.toList();
       } else {
         throw Exception('Failed to load data');

@@ -6,7 +6,7 @@ import 'package:flutter_app/ui/pages/organizations/json_organization.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
 import 'package:flutter_app/ui/widgets/organization_card.dart';
-import 'package:flutter_app/ui/widgets/selectableFields.dart';
+// import 'package:flutter_app/ui/widgets/selectableFields.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
@@ -43,6 +43,9 @@ class _OrganizationsState extends ConsumerState<Organizations> {
   });
   if (query.isEmpty) {
     ref.refresh(orgSearchProvider.notifier).reset();
+    setState(() {
+      _isSearching = false;
+    });
     return;
   }
 
@@ -121,14 +124,16 @@ class _OrganizationsState extends ConsumerState<Organizations> {
     try {
       return Consumer(
         builder: (context, watch, _) {
-          final res = []; // Заглушка для примерного списка организаций
-          final filteredByCategory = selectedCategories.isNotEmpty
-              ? res.where((org) => org.categories != null && org.categories!.any((cat) => selectedCategories.contains(cat))).toList()
-              : res;
+          //final res = []; // Заглушка для примерного списка организаций
+          //final filteredByCategory = selectedCategories;
+          // .isNotEmpty
+          //     ? res.where((org) => org.categories != null && org.categories!.any((cat) => selectedCategories.contains(cat))).toList()
+          //     : res;
 
-          final filteredResults = selectedCountries.isNotEmpty
-              ? filteredByCategory.where((org) => org.countries != null && org.countries!.any((country) => selectedCountries.contains(country))).toList()
-              : filteredByCategory;
+          final filteredResults = ref.watch(orgSearchProvider).searchResults;
+          // .isNotEmpty
+          //     ? filteredByCategory.where((org) => org.countries != null && org.countries!.any((country) => selectedCountries.contains(country))).toList()
+          //     : filteredByCategory;
 
           return Scaffold(
             appBar: CustomAppBar(pageTitle: 'Organizations', appBarHeight: 70),
@@ -199,7 +204,7 @@ class _OrganizationsState extends ConsumerState<Organizations> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  Text(
+                  const Text(
                     'Organizations',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
@@ -228,7 +233,7 @@ class _OrganizationsState extends ConsumerState<Organizations> {
                                 );
                               },
                             )
-                          : Center(child: Text('Results are not found')),
+                          : const Center(child: Text('Results are not found')),
                   ),
                 ],
               ),
