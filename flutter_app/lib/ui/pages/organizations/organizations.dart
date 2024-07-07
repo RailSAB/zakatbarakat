@@ -34,7 +34,9 @@ class _OrganizationsState extends ConsumerState<Organizations> {
         .addPostFrameCallback((_) => loadCategories());
     WidgetsBinding.instance
         .addPostFrameCallback((_) => loadCountries());
-    _isSearching = false;
+    setState(() {
+      _isSearching = false;
+    });
   }
 
     Future<void> _search(String query, {int page = 1}) async {
@@ -118,107 +120,120 @@ class _OrganizationsState extends ConsumerState<Organizations> {
     setState(() {});
   }
 
- @override
 @override
-  Widget build(BuildContext context) {
-    try {
-      return Consumer(
-        builder: (context, watch, _) {
-          //final res = []; // Заглушка для примерного списка организаций
-          //final filteredByCategory = selectedCategories;
-          // .isNotEmpty
-          //     ? res.where((org) => org.categories != null && org.categories!.any((cat) => selectedCategories.contains(cat))).toList()
-          //     : res;
+Widget build(BuildContext context) {
+  try {
+    return Consumer(
+      builder: (context, ref, _) {
+        final filteredResults = ref.watch(orgSearchProvider).searchResults;
 
-          final filteredResults = ref.watch(orgSearchProvider).searchResults;
-          // .isNotEmpty
-          //     ? filteredByCategory.where((org) => org.countries != null && org.countries!.any((country) => selectedCountries.contains(country))).toList()
-          //     : filteredByCategory;
-
-          return Scaffold(
-            appBar: CustomAppBar(pageTitle: 'Organizations', appBarHeight: 70),
-            backgroundColor: const Color.fromARGB(104, 200, 215, 231),
-            body: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  const SizedBox(height: 20),
-                  TextField(
-                    onSubmitted: (value) => _search(value),
-                    decoration: const InputDecoration(
-                      labelText: 'Search',
-                      prefixIcon: Icon(Icons.search),
-                    ),
+        return Scaffold(
+          appBar: CustomAppBar(
+            pageTitle: 'Organizations',
+            appBarHeight: 70,
+          ),
+          backgroundColor: const Color.fromARGB(104, 200, 215, 231),
+          body: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(height: 20),
+                TextField(
+                  onSubmitted: (value) => _search(value),
+                  decoration: const InputDecoration(
+                    labelText: 'Search',
+                    prefixIcon: Icon(Icons.search),
                   ),
-                  const SizedBox(height: 20),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: categories.map((category) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                if (selectedCategories.contains(category)) {
-                                  selectedCategories.remove(category);
-                                } else {
-                                  selectedCategories.add(category);
-                                }
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: selectedCategories.contains(category) ? Colors.blue : Colors.grey,
-                            ),
-                            child: Text(category),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Row(
-                      children: countries.map((country) {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              setState(() {
-                                if (selectedCountries.contains(country)) {
-                                  selectedCountries.remove(country);
-                                } else {
-                                  selectedCountries.add(country);
-                                }
-                              });
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: selectedCountries.contains(country) ? Colors.blue : Colors.grey,
-                            ),
-                            child: Text(country),
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Organizations',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 10),
-                  Expanded(
-                    child: _isSearching
-                        ? const Center(child: CircularProgressIndicator())
-                        : filteredResults.isNotEmpty
+                ),
+                const SizedBox(height: 20),
+                Wrap(
+                  spacing: 8.0, // Spacing between buttons
+                  runSpacing: 8.0, // Spacing between rows of buttons
+                  children: categories.map((category) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          if (selectedCategories.contains(category)) {
+                            selectedCategories.remove(category);
+                          } else {
+                            selectedCategories.add(category);
+                          }
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: selectedCategories.contains(category)
+                            ? const Color.fromARGB(255, 96, 218, 255)
+                            : const Color.fromARGB(255, 5, 127, 208),
+                        textStyle: const TextStyle(
+                          fontSize: 14, // Increased font size
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20), // Increased padding
+                      ),
+                      child: Text(
+                        category,
+                        style: TextStyle(
+                          color: selectedCategories.contains(category)
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+                Wrap(
+                  spacing: 8.0, // Spacing between buttons
+                  runSpacing: 8.0, // Spacing between rows of buttons
+                  children: countries.map((country) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          if (selectedCountries.contains(country)) {
+                            selectedCountries.remove(country);
+                          } else {
+                            selectedCountries.add(country);
+                          }
+                        });
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: selectedCountries.contains(country)
+                            ? const Color.fromARGB(255, 96, 218, 255)
+                            : const Color.fromARGB(255, 5, 127, 208),
+                        textStyle: const TextStyle(
+                          fontSize: 14, // Increased font size
+                          color: Colors.white,
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20), // Increased padding
+                      ),
+                      child: Text(
+                        country,
+                        style: TextStyle(
+                          color: selectedCountries.contains(country)
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 20),
+                const Text(
+                  'Organizations',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold), // Increased font size
+                ),
+                const SizedBox(height: 30),
+                Expanded(
+                  child: _isSearching
+                      ? const Center(child: CircularProgressIndicator())
+                      : filteredResults.isNotEmpty
                           ? ListView.builder(
                               itemCount: filteredResults.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return Column(
                                   children: [
-                                    const SizedBox(height: 5),
+                                    const SizedBox(height: 10),
                                     OrganizationCard(
                                       id: filteredResults[index].id,
                                       name: filteredResults[index].name,
@@ -234,18 +249,18 @@ class _OrganizationsState extends ConsumerState<Organizations> {
                               },
                             )
                           : const Center(child: Text('Results are not found')),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
-            bottomNavigationBar: const CustomBottomNavBar(index: 2),
-          );
-        },
-      );
-    } catch (e) {
-      throw Exception('Null data');
-    }
+          ),
+          bottomNavigationBar: const CustomBottomNavBar(index: 2),
+        );
+      },
+    );
+  } catch (e) {
+    throw Exception('Null data');
   }
+}
 }
 // import 'dart:convert';
 // import 'package:flutter/material.dart';
