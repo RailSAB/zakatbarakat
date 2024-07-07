@@ -90,7 +90,7 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                   text: "FINANCE",
                 ),
                 Tab(
-                  text: "PROPERTY",
+                  text: "REAL ESTATE",
                 ),
                 Tab(text: "OTHER"),
               ],

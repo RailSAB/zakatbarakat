@@ -21,8 +21,6 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final _scrollController = ScrollController();
-
   //style
   double textFieldBottomPadding = 15,
       textFieldRounded = 10,
@@ -36,22 +34,11 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
     });
   }
 
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
   _addField() {
     setState(() {
       _quantity.add(TextEditingController());
       _currency.add(CurrencyModel(name: 'Russian Ruble', code: "RUB"));
     });
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    );
   }
 
   _removeItem(int index) {
@@ -77,129 +64,121 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
   //   return true;
   // }
 
-  Future<void> performPostRequest() async {
-    // final url = Uri.parse('http://158.160.153.243:8000/calculator/zakat-ushr');
-    // final headers = {'Content-Type': 'application/json'};
-
-    // final body = jsonEncode({
-    //   "crops": ref.read(zakatUshrProvider).crops.map((crop) => crop.toJson()).toList(),
-    //   "is_ushr_land": ref.read(zakatUshrProvider).isUshrLand,
-    //   "is_irrigated": ref.read(zakatUshrProvider).isIrregated,
-    // });
-
-    // try {
-    //   final response = await http.post(url, headers: headers, body: body);
-
-    //   if (response.statusCode == 200) {
-    //     Map<String, dynamic> parsedJson = jsonDecode(response.body);
-    //     List<dynamic> crops = parsedJson['zakat_ushr_value'];
-    //     List<Crop> cropList = crops.map((json) {
-    //       return Crop(
-    //         type: json['type'],
-    //         quantity: json['quantity'].round(),
-    //       );
-    //     }).toList();
-    //     ref.read(zakatUshrProvider.notifier).setCrops(cropList);
-    //   } else {
-    //     print('Request failed with status: ${response.statusCode}.');
-    //   }
-    //   Navigator.pushNamed(context, '/ushrOverall');
-    // } catch (e) {
-    //   print('Error: $e');
-    // }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Form(
+      // return Container(
+      //   padding: const EdgeInsets.all(16.0),
+      //   height: 155,
+      //   decoration: BoxDecoration(
+      //     color: const Color.fromARGB(126, 224, 224, 224),
+      //     borderRadius: BorderRadius.circular(10),
+      //   ),
+      //   child: Form(
       key: _formKey,
-      child: SingleChildScrollView(
-        controller: _scrollController,
-        child: Column(
-          children: [
-            for (int i = 0; i < _quantity.length; i++)
-              Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      child: const Icon(Icons.remove_circle),
-                      onTap: () {
-                        _removeItem(i);
-                      },
-                    )
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Expanded(
-                      flex: 2,
-                      child: SizedBox(
-                        width: 220,
-                        height: 50,
-                        child: TextFormField(
-                            controller: _quantity[i],
-                            validator: (value) {
-                              if (value == '') {
-                                return 'Please enter value';
-                              } else {
-                                return null;
-                              }
-                            },
-                            keyboardType: TextInputType.number,
-                            onChanged: (value) {},
-                            decoration: const InputDecoration(
-                                border: OutlineInputBorder(),
-                                labelText: 'Enter value',
-                                labelStyle: TextStyle(fontSize: 13))),
-                      ),
+      child: Column(
+        children: [
+          for (int i = 0; i < _quantity.length; i++)
+            Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  GestureDetector(
+                    child: const Icon(Icons.remove_circle),
+                    onTap: () {
+                      _removeItem(i);
+                    },
+                  )
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: SizedBox(
+                      width: 220,
+                      height: 50,
+                      child: TextFormField(
+                          controller: _quantity[i],
+                          validator: (value) {
+                            if (value == '') {
+                              return 'Please enter value';
+                            } else {
+                              return null;
+                            }
+                          },
+                          keyboardType: TextInputType.number,
+                          onChanged: (value) {},
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder(),
+                              labelText: 'Enter value',
+                              labelStyle: TextStyle(fontSize: 13))),
                     ),
-                    const SizedBox(width: 35),
-                    Expanded(
-                      flex: 2,
-                      child: SizedBox(
+                  ),
+                  const SizedBox(width: 35),
+                  Expanded(
+                    flex: 2,
+                    child: SizedBox(
                         height: 50,
-                        child: DropdownMenu<CurrencyModel>(
-                          initialSelection: _currency[i],
-                          onSelected: (CurrencyModel? value) {
+                        child: DropdownMenu<String>(
+                          initialSelection: _currency[i].code,
+                          onSelected: (String? value) {
                             setState(() {
                               if (value != null) {
-                                _currency[i] = value;
+                                _currency[i] = CurrencyModel(
+                                    name: _currency[i].name, code: value);
                               }
                             });
                           },
                           dropdownMenuEntries:
                               CurrencyModel.currencies.entries.map((entry) {
-                            return DropdownMenuEntry<CurrencyModel>(
-                              value: CurrencyModel(
-                                  name: entry.key, code: entry.value),
+                            return DropdownMenuEntry<String>(
+                              value: entry.key,
                               label: entry.value,
                             );
                           }).toList(),
+                        )
+                        // child: DropdownMenu<CurrencyModel>(
+                        //   initialSelection: _currency[i],
+                        //   onSelected: (CurrencyModel? value) {
+                        //     setState(() {
+                        //       if (value != null) {
+                        //         _currency[i] = value;
+                        //       }
+                        //     });
+                        //   },
+                        //   dropdownMenuEntries:
+                        //       CurrencyModel.currencies.entries.map((entry) {
+                        //     return DropdownMenuEntry<CurrencyModel>(
+                        //       value: CurrencyModel(
+                        //           name: entry.key, code: entry.value),
+                        //       label: entry.value,
+                        //     );
+                        //   }).toList(),
+                        // ),
                         ),
-                      ),
-                    ),
-                  ],
-                ),
-                const Divider(
-                  thickness: 1,
-                )
-              ]),
-            const SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                GestureDetector(
-                  onTap: () {
-                    _addField();
-                  },
-                  child: const Icon(Icons.add_circle),
-                )
-              ],
-            ),
-          ],
-        ),
+                  ),
+                ],
+              ),
+              const Divider(
+                thickness: 1,
+              )
+            ]),
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  _addField();
+                },
+                child: const Icon(Icons.add_circle),
+              )
+            ],
+          ),
+        ],
+        // ),
       ),
     );
   }
