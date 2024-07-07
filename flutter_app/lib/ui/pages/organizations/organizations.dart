@@ -28,9 +28,12 @@ class _OrganizationsState extends ConsumerState<Organizations> {
   @override
   void initState() {
     super.initState();
-    ref.refresh(orgSearchProvider.notifier).reset();
-    loadCategories();
-    loadCountries();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => ref.refresh(orgSearchProvider.notifier).reset());
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => loadCategories());
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => loadCountries());
     _isSearching = false;
   }
 

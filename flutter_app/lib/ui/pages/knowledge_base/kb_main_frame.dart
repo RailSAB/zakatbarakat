@@ -20,9 +20,9 @@ class _KBState extends ConsumerState<KBPage> {
 
   @override
   void initState() {
-    _isSearching = true;
     super.initState();
-    ref.refresh(searchResultProvider.notifier).resetSearchResults();
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => ref.refresh(searchResultProvider.notifier).resetSearchResults());
     _isSearching = false;
   }
 
