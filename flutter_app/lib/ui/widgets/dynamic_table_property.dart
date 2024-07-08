@@ -71,7 +71,6 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
 
   @override
   Widget build(BuildContext context) {
-
     return Form(
       // return Container(
       //   padding: const EdgeInsets.all(16.0),
@@ -108,8 +107,10 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                       child: TextFormField(
                           controller: _quantity[i],
                           validator: (value) {
-                            if (value == '') {
-                              return 'Please enter value';
+                            if (value == '' ||
+                                int.tryParse(value ?? '') == null ||
+                                int.parse(value!) <= 0) {
+                              return 'Please enter a positive number';
                             } else {
                               return null;
                             }
