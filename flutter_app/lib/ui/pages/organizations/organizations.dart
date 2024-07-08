@@ -40,11 +40,16 @@ class _OrganizationsState extends ConsumerState<Organizations> {
   }
 
   Future<void> _search(List<String> categories, List<String> countries) async {
+    if(categories.isEmpty && countries.isEmpty) {
+      ref.refresh(orgSearchProvider.notifier).reset();
+      return;
+    }
+
     setState(() {
       _isSearching = true; 
     });
 
-    final url = Uri.parse('http://158.160.153.243:8000/organization/search-organizations');
+    final url = Uri.parse('http://158.160.153.243:8000/organization/search-organization/');
     final headers = {'Content-Type': 'application/json'}; 
     final body = jsonEncode({"categories": categories, "countries": countries}); 
     final response = await http.post(url, headers: headers, body: body);
