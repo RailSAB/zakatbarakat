@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_app/providers/zakat_on_livestock_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +14,8 @@ class LivestockPage extends ConsumerStatefulWidget {
 class _LivestockState extends ConsumerState<LivestockPage> {
   final List<TextEditingController> controllers = [];
   final List<String> elemTitle = ["Sheep/Rams", "Cows/Bulls", "Goats"];
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -37,28 +38,28 @@ class _LivestockState extends ConsumerState<LivestockPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(104, 200, 215, 231),
       appBar: CustomAppBar(pageTitle: 'Zakat on Livestock', appBarHeight: 70),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment
-              .spaceBetween, // This aligns items along the vertical axis
-          children: <Widget>[
-            const SizedBox(height: 20),
-            title(),
-            const SizedBox(height: 20),
-            notificationBox(),
-            const SizedBox(height: 20),
-            body(),
-            const SizedBox(height: 20),
-            button(),
-          ],
-          
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment
+                .spaceBetween, // This aligns items along the vertical axis
+            children: <Widget>[
+              const SizedBox(height: 20),
+              title(),
+              const SizedBox(height: 20),
+              notificationBox(),
+              const SizedBox(height: 20),
+              body(),
+              const SizedBox(height: 20),
+              button(),
+            ],
+          ),
         ),
-        
       ),
       bottomNavigationBar: const CustomBottomNavBar(index: 0),
     );
-    
   }
 
   Widget title() => const Text(
@@ -73,7 +74,6 @@ class _LivestockState extends ConsumerState<LivestockPage> {
       decoration: BoxDecoration(
         color: const Color.fromARGB(255, 176, 216, 253),
         borderRadius: BorderRadius.circular(12),
-
       ),
       child: const Center(
         child: Text(
@@ -89,30 +89,29 @@ class _LivestockState extends ConsumerState<LivestockPage> {
   Widget button() {
     return ElevatedButton(
       onPressed: () {
-        ref
-            .read(zakatOnLivestockProvider.notifier)
-            .setSheep(setValues(controllers[0].text));
-        ref
-            .read(zakatOnLivestockProvider.notifier)
-            .setCows(setValues(controllers[1].text));
-        ref
-            .read(zakatOnLivestockProvider.notifier)
-            .setGoats(setValues(controllers[2].text));
-        Navigator.pushNamed(context, '/livestock2');
+        if (_formKey.currentState!.validate()) {
+          ref
+              .read(zakatOnLivestockProvider.notifier)
+              .setSheep(setValues(controllers[0].text));
+          ref
+              .read(zakatOnLivestockProvider.notifier)
+              .setCows(setValues(controllers[1].text));
+          ref
+              .read(zakatOnLivestockProvider.notifier)
+              .setGoats(setValues(controllers[2].text));
+          Navigator.pushNamed(context, '/livestock2');
+        }
       },
       style: ElevatedButton.styleFrom(
-       
         minimumSize: const Size(400, 60),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
-          
-          
         ),
       ),
       child: const Text(
         'Continue',
-        style: TextStyle(fontSize: 24,color: Colors.black),
+        style: TextStyle(fontSize: 24, color: Colors.black),
       ),
     );
   }
@@ -138,8 +137,18 @@ class _LivestockState extends ConsumerState<LivestockPage> {
           style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
           controller: controller,
+          validator: (value) {
+            if (!RegExp(r'^[+-]?[0-9]+$').hasMatch(value!) &&
+                value.isNotEmpty) {
+              return 'Please enter only digits';
+            }
+            if (int.parse(value) <= 0) {
+              return 'Please enter a positive integer';
+            }
+            return null;
+          },
           decoration: InputDecoration(
             hintText: 'Enter value',
             border: OutlineInputBorder(
@@ -163,4 +172,3 @@ class _LivestockState extends ConsumerState<LivestockPage> {
     return int.parse(value);
   }
 }
-

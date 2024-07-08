@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:flutter_app/models/zakat_on_livestock_model.dart';
 import 'package:flutter_app/providers/currency_provider.dart';
@@ -49,8 +48,7 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment
-              .spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             _buildHeader(),
             const SizedBox(height: 20),
@@ -62,7 +60,7 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
           ],
         ),
       ),
-       bottomNavigationBar: const CustomBottomNavBar(index: 0),
+      bottomNavigationBar: const CustomBottomNavBar(index: 0),
     );
   }
 
@@ -78,9 +76,8 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(16.0),
-
       decoration: BoxDecoration(
-       color: const Color.fromARGB(255, 176, 216, 253),
+        color: const Color.fromARGB(255, 176, 216, 253),
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: const Text(
@@ -98,7 +95,9 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
         for (int i = 0; i < elemTitles.length; i++)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0),
-            child: elemTitles[i] == "Horses" ? _buildHorsesField(controllers[i]) : _buildInputField(controllers[i], elemTitles[i]),
+            child: elemTitles[i] == "Horses"
+                ? _buildHorsesField(controllers[i])
+                : _buildInputField(controllers[i], elemTitles[i]),
           ),
       ],
     );
@@ -108,9 +107,16 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        Text(label,
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
+          validator: (value) {
+            if (value != null && value.isNotEmpty && int.parse(value) <= 0) {
+              return 'Please enter a positive integer';
+            }
+            return null;
+          },
           controller: controller,
           decoration: const InputDecoration(
             labelText: 'Enter amount',
@@ -126,7 +132,8 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Horses', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const Text('Horses',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         const SizedBox(height: 8),
         Row(
           children: [
@@ -134,23 +141,28 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
             Switch(
               value: isSwitched1,
               onChanged: (value) => setState(() => isSwitched1 = value),
-              activeTrackColor: const Color.fromARGB(255, 176, 216, 253), 
-              activeColor: const Color.fromARGB(255, 70, 130, 180), 
+              activeTrackColor: const Color.fromARGB(255, 176, 216, 253),
+              activeColor: const Color.fromARGB(255, 70, 130, 180),
             ),
-            
             const Spacer(),
             const Text('Any females?'),
             Switch(
               value: isSwitched2,
               onChanged: (value) => setState(() => isSwitched2 = value),
-              activeTrackColor: const Color.fromARGB(255, 176, 216, 253), 
-              activeColor: const Color.fromARGB(255, 70, 130, 180), 
+              activeTrackColor: const Color.fromARGB(255, 176, 216, 253),
+              activeColor: const Color.fromARGB(255, 70, 130, 180),
             ),
           ],
         ),
         const SizedBox(height: 8),
-        TextField(
+        TextFormField(
           controller: controller,
+          validator: (value) {
+            if (value != null && value.isNotEmpty && int.parse(value) <= 0) {
+              return 'Please enter a positive integer';
+            }
+            return null;
+          },
           decoration: const InputDecoration(
             labelText: 'Enter amount',
             border: OutlineInputBorder(),
@@ -167,12 +179,12 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         padding: const EdgeInsets.symmetric(vertical: 20),
-        textStyle: const TextStyle(fontSize: 18, color:Colors.black),
+        textStyle: const TextStyle(fontSize: 18, color: Colors.black),
         minimumSize: const Size(double.infinity, 60),
       ),
       child: const Text(
         'Calculate',
-        style: TextStyle(color: Colors.black), 
+        style: TextStyle(color: Colors.black),
       ),
     );
   }
@@ -180,9 +192,15 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
   Future<void> _calculateZakat() async {
     ref.read(zakatOnLivestockProvider.notifier).setForSale(isSwitched1);
     ref.read(zakatOnLivestockProvider.notifier).setFemale(isSwitched2);
-    ref.read(zakatOnLivestockProvider.notifier).setHorsesValue(_parseValue(controllers[0].text));
-    ref.read(zakatOnLivestockProvider.notifier).setBuffaloes(_parseValue(controllers[1].text));
-    ref.read(zakatOnLivestockProvider.notifier).setCamels(_parseValue(controllers[2].text));
+    ref
+        .read(zakatOnLivestockProvider.notifier)
+        .setHorsesValue(_parseValue(controllers[0].text));
+    ref
+        .read(zakatOnLivestockProvider.notifier)
+        .setBuffaloes(_parseValue(controllers[1].text));
+    ref
+        .read(zakatOnLivestockProvider.notifier)
+        .setCamels(_parseValue(controllers[2].text));
 
     final response = await _performPostRequest();
     if (response != null && response.statusCode == 200) {
@@ -194,7 +212,8 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
   }
 
   Future<http.Response?> _performPostRequest() async {
-    final url = Uri.parse('http://158.160.153.243:8000/calculator/zakat-livestock');
+    final url =
+        Uri.parse('http://158.160.153.243:8000/calculator/zakat-livestock');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       "camels": ref.read(zakatOnLivestockProvider).camels,
@@ -226,7 +245,9 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
     }).toList();
 
     if (response['nisab_status'] != false) {
-      ref.read(zakatOnLivestockProvider.notifier).setHorsesValue(zakatValueForHorses);
+      ref
+          .read(zakatOnLivestockProvider.notifier)
+          .setHorsesValue(zakatValueForHorses);
       ref.read(zakatOnLivestockProvider.notifier).setAnimalsForZakat(animals);
     }
   }
