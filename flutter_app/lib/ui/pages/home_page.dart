@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_app/ui/widgets/news_card.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
+import 'package:flutter_app/ui/widgets/currency_selection.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -29,7 +31,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   final List<News> newsArticles = [];
 
   Future getData() async {
-    final response = await http.get(Uri.parse('http://158.160.153.243:8000/news/get-news'));
+    final response =
+        await http.get(Uri.parse('http://158.160.153.243:8000/news/get-news'));
     try {
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
@@ -55,14 +58,14 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: const Color.fromARGB(104, 200, 215, 231),
-    appBar: CustomAppBar(
-      pageTitle: 'Home Page',
-      appBarHeight: 70,
-    ),
-    body: ListView(
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
+      appBar: CustomAppBar(
+        pageTitle: 'Home Page',
+        appBarHeight: 70,
+      ),
+      body: ListView(
         children: [
           Padding(
             padding: const EdgeInsets.all(32.0),
@@ -74,7 +77,8 @@ Widget build(BuildContext context) {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
                 image: const DecorationImage(
-                  image: AssetImage('images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'),
+                  image: AssetImage(
+                      'images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -93,7 +97,8 @@ Widget build(BuildContext context) {
                 Navigator.pushNamed(context, '/funds');
               },
               style: ButtonStyle(
-                minimumSize: WidgetStateProperty.all(const Size(double.infinity, 50)),
+                minimumSize:
+                    WidgetStateProperty.all(const Size(double.infinity, 50)),
                 backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
               ),
               child: const Text("View Funds",
@@ -109,26 +114,30 @@ Widget build(BuildContext context) {
             ),
           ),
           // Using ListView.builder to dynamically generate list items for news articles
-          // 
+          //
           SingleChildScrollView(
-              child: FutureBuilder(
+            child: FutureBuilder(
                 future: getData(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.done) {
                     return ListView.builder(
-                      shrinkWrap: true, 
+                      shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: newsArticles.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
                           children: [
-                            const SizedBox(height: 5,),
+                            const SizedBox(
+                              height: 5,
+                            ),
                             NewsCard(
                               name: newsArticles[index].name,
                               description: newsArticles[index].description,
                               link: newsArticles[index].link,
                             ),
-                            const SizedBox(height: 5,),
+                            const SizedBox(
+                              height: 5,
+                            ),
                           ],
                         );
                       },
@@ -137,86 +146,98 @@ Widget build(BuildContext context) {
                     return const Center(child: CircularProgressIndicator());
                   }
                 }),
-            ),
+          ),
         ],
       ),
-    bottomNavigationBar: const CustomBottomNavBar(
-      index: 0,
-    ),
-  );
-}
-
-Widget title() => const Text(
-      'Calculate Zakat',
-      style: TextStyle(fontSize: 30),
-      textAlign: TextAlign.center,
+      bottomNavigationBar: const CustomBottomNavBar(
+        index: 0,
+      ),
     );
+  }
 
-Widget buttons() {
-  return Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center, // Center Alignment
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround, // Distributes the space evenly around the buttons
-          mainAxisSize: MainAxisSize.min, // Sets the minimum width for the Row
-          children: [
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/property');
-                  },
-                  style: ButtonStyle(
-                    minimumSize: WidgetStateProperty.all(const Size(100, 60)),
-                    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+  Widget title() => const Text(
+        'Calculate Zakat',
+        style: TextStyle(fontSize: 30),
+        textAlign: TextAlign.center,
+      );
+
+  Widget buttons() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CurrencySelectionScreen(
+                            onCurrencySelected: (selectedCurrencies) {},
+                          ),
+                        ),
+                      );
+                      //Navigator.pushNamed(context, '/property');
+                    },
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(const Size(100, 60)),
+                      backgroundColor:
+                          WidgetStateProperty.all<Color>(Colors.white),
+                    ),
+                    child: Image.asset('images/property.png',
+                        height: 45, width: 45),
                   ),
-                  child: Image.asset('images/property.png',
-                      height: 45, width: 45),
-                ),
-                const SizedBox(height: 10),
-                const Text("Property", style: TextStyle(fontSize: 20)),
-              ],
-            ),
-            const Spacer(),
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/livestock');
-                  },
-                  style: ButtonStyle(
-                    minimumSize: WidgetStateProperty.all(const Size(100, 60)),
-                    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                  const SizedBox(height: 10),
+                  const Text("Property", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+              const Spacer(),
+              Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/livestock');
+                    },
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(const Size(100, 60)),
+                      backgroundColor:
+                          WidgetStateProperty.all<Color>(Colors.white),
+                    ),
+                    child: Image.asset('images/lifestock.png',
+                        height: 50, width: 50),
                   ),
-                  child: Image.asset('images/lifestock.png',
-                      height: 50, width: 50),
-                ),
-                const SizedBox(height: 10), // Indentation under the button
-                const Text("Livestock", style: TextStyle(fontSize: 20)),
-              ],
-            ),
-            const Spacer(),
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/ushr');
-                  },
-                  style: ButtonStyle(
-                    minimumSize: WidgetStateProperty.all(const Size(100, 60)),
-                    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+                  const SizedBox(height: 10), // Indentation under the button
+                  const Text("Livestock", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+              const Spacer(),
+              Column(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/ushr');
+                    },
+                    style: ButtonStyle(
+                      minimumSize: WidgetStateProperty.all(const Size(100, 60)),
+                      backgroundColor:
+                          WidgetStateProperty.all<Color>(Colors.white),
+                    ),
+                    child:
+                        Image.asset('images/ushr.png', height: 50, width: 50),
                   ),
-                  child: Image.asset('images/ushr.png', height: 50, width: 50),
-                ),
-                const SizedBox(height: 10),
-                const Text("Ushr", style: TextStyle(fontSize: 20)),
-              ],
-            ),
-          ],
-        ),
-      ],
-    ),
-  );
-}
+                  const SizedBox(height: 10),
+                  const Text("Ushr", style: TextStyle(fontSize: 20)),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }

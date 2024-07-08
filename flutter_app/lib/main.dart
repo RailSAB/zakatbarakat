@@ -30,7 +30,9 @@ class ExampleApp extends StatelessWidget {
       routes: {
         '/home': (context) => const HomePage(),
         '/livestock': (context) => const LivestockPage(),
-        '/property': (context) => const PropertyPage(),
+        '/property': (context) => const PropertyPage(
+              selectedCurrencies: [],
+            ),
         '/ushr': (context) => const UshrPage(),
         //'/property2': (context) => const Property2Page(),
         //'/property3': (context) => const Property3Page(),

@@ -9,7 +9,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class DynamicTable extends ConsumerStatefulWidget {
   final String taskId;
   final String category;
-  const DynamicTable({super.key, required this.taskId, required this.category});
+  final List<CurrencyModel> currencies;
+  const DynamicTable(
+      {super.key,
+      required this.taskId,
+      required this.category,
+      required this.currencies});
 
   @override
   ConsumerState<DynamicTable> createState() => _DynamicTableState();
@@ -37,7 +42,7 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
   _addField() {
     setState(() {
       _quantity.add(TextEditingController());
-      _currency.add(CurrencyModel(name: 'Russian Ruble', code: "RUB"));
+      _currency.add(widget.currencies.first);
     });
   }
 
@@ -66,6 +71,7 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
 
   @override
   Widget build(BuildContext context) {
+
     return Form(
       // return Container(
       //   padding: const EdgeInsets.all(16.0),
@@ -120,44 +126,40 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                   Expanded(
                     flex: 2,
                     child: SizedBox(
-                        height: 50,
-                        child: DropdownMenu<String>(
-                          initialSelection: _currency[i].code,
-                          onSelected: (String? value) {
-                            setState(() {
-                              if (value != null) {
-                                _currency[i] = CurrencyModel(
-                                    name: _currency[i].name, code: value);
-                              }
-                            });
-                          },
-                          dropdownMenuEntries:
-                              CurrencyModel.currencies.entries.map((entry) {
-                            return DropdownMenuEntry<String>(
-                              value: entry.key,
-                              label: entry.value,
-                            );
-                          }).toList(),
-                        )
-                        // child: DropdownMenu<CurrencyModel>(
-                        //   initialSelection: _currency[i],
-                        //   onSelected: (CurrencyModel? value) {
-                        //     setState(() {
-                        //       if (value != null) {
-                        //         _currency[i] = value;
-                        //       }
-                        //     });
-                        //   },
-                        //   dropdownMenuEntries:
-                        //       CurrencyModel.currencies.entries.map((entry) {
-                        //     return DropdownMenuEntry<CurrencyModel>(
-                        //       value: CurrencyModel(
-                        //           name: entry.key, code: entry.value),
-                        //       label: entry.value,
-                        //     );
-                        //   }).toList(),
-                        // ),
-                        ),
+                      height: 50,
+                      // child: DropdownMenu<String>(
+                      //   initialSelection: _currency[i].code,
+                      //   onSelected: (String? value) {
+                      //     setState(() {
+                      //       if (value != null) {
+                      //         _currency[i] = CurrencyModel(
+                      //             name: _currency[i].name, code: value);
+                      //       }
+                      //     });
+                      //   },
+                      //   dropdownMenuEntries:
+                      //       CurrencyModel.currencies.entries.map((entry) {
+                      //     return DropdownMenuEntry<String>(
+                      //       value: entry.key,
+                      //       label: entry.value,
+                      //     );
+                      //   }).toList(),
+                      // )
+                      child: DropdownButton<CurrencyModel>(
+                        value: _currency[i],
+                        onChanged: (CurrencyModel? newValue) {
+                          setState(() {
+                            _currency[i] = newValue!;
+                          });
+                        },
+                        items: widget.currencies.map((CurrencyModel currency) {
+                          return DropdownMenuItem<CurrencyModel>(
+                            value: currency,
+                            child: Text(currency.code),
+                          );
+                        }).toList(),
+                      ),
+                    ),
                   ),
                 ],
               ),

@@ -6,19 +6,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/dynamic_table_property.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_app/models/currency_model.dart';
 
 class PropertyPage extends ConsumerStatefulWidget {
-  const PropertyPage({super.key});
+  final List<CurrencyModel> selectedCurrencies;
+  const PropertyPage({super.key, required this.selectedCurrencies});
 
   @override
   ConsumerState<PropertyPage> createState() => _PropertyState();
 }
 
 class _PropertyState extends ConsumerState<PropertyPage> {
-  TextEditingController cash_controller = TextEditingController();
-  TextEditingController bank_card_controller = TextEditingController();
-  TextEditingController silver_controller = TextEditingController();
-  TextEditingController gold_controller = TextEditingController();
+  TextEditingController cashController = TextEditingController();
+  TextEditingController bankCardController = TextEditingController();
+  TextEditingController silverController = TextEditingController();
+  TextEditingController goldController = TextEditingController();
 
   List<String> elemTitle = ["Cash", "Bank card", "Silver", "Gold"];
   final numberController = TextEditingController();
@@ -29,15 +31,17 @@ class _PropertyState extends ConsumerState<PropertyPage> {
 
   @override
   void dispose() {
-    gold_controller.dispose();
-    cash_controller.dispose();
-    bank_card_controller.dispose();
-    silver_controller.dispose();
+    goldController.dispose();
+    cashController.dispose();
+    bankCardController.dispose();
+    silverController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    final selectedCurrencies = widget.selectedCurrencies;
+
     return DefaultTabController(
       initialIndex: 0,
       length: 3,
@@ -92,9 +96,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'cash',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 25),
                         Row(children: [
@@ -131,9 +136,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'taxesValue',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 25),
                         Row(children: [
@@ -170,9 +176,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'stocksForResaling',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 25),
                         Row(children: [
@@ -209,9 +216,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'incomeFromStocks',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 40),
                       ],
@@ -220,7 +228,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                 ),
               ),
             ),
-            //________________________PROPERTY________________________
+            //________________________REAL ESTATE________________________
             SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 50.0),
@@ -263,9 +271,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'purchasedNotForResaling',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 25),
                         Row(children: [
@@ -302,9 +311,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'usedAfterNisab',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 25),
                         Row(children: [
@@ -341,9 +351,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'rentMoney',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 40),
                       ],
@@ -366,9 +377,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                               fontSize: 30,
                             )),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'silverJewellery',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 25),
                         const Text('Gold',
@@ -376,9 +388,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                               fontSize: 30,
                             )),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'goldJewellery',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 25),
                         Row(children: [
@@ -415,9 +428,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'purchasedProductForResaling',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 25),
                         Row(children: [
@@ -454,9 +468,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'unfinishedProduct',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 25),
                         Row(children: [
@@ -493,9 +508,10 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                           ),
                         ]),
                         const SizedBox(height: 10),
-                        const DynamicTable(
+                        DynamicTable(
                           taskId: '1',
                           category: 'producedProductForResaling',
+                          currencies: selectedCurrencies,
                         ),
                         const SizedBox(height: 40),
                       ],
@@ -505,8 +521,8 @@ class _PropertyState extends ConsumerState<PropertyPage> {
               ),
             ),
           ],
+        ),
       ),
-    ),
     );
   }
 
