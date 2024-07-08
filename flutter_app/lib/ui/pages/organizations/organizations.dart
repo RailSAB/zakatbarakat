@@ -39,33 +39,26 @@ class _OrganizationsState extends ConsumerState<Organizations> {
     });
   }
 
-    Future<void> _search(String query, {int page = 1}) async {
-  setState(() {
-    _isSearching = true; 
-  });
-  if (query.isEmpty) {
-    ref.refresh(orgSearchProvider.notifier).reset();
+  Future<void> _search(List<String> categories, List<String> countries) async {
     setState(() {
-      _isSearching = false;
+      _isSearching = true; 
     });
-    return;
-  }
 
-  final url = Uri.parse('http://158.160.153.243:8000/organization/search-organizations');
-  final headers = {'Content-Type': 'application/json'}; 
-  final body = jsonEncode({"searchString": query, "page": page}); 
-  final response = await http.post(url, headers: headers, body: body);
+    final url = Uri.parse('http://158.160.153.243:8000/organization/search-organizations');
+    final headers = {'Content-Type': 'application/json'}; 
+    final body = jsonEncode({"categories": categories, "countries": countries}); 
+    final response = await http.post(url, headers: headers, body: body);
 
-  if (response.statusCode == 200) {
-    List<Organization> items = _decodeOrganization(response);
-    ref.read(orgSearchProvider.notifier).searchResults = items;
-  } else {
-    throw Exception('Failed to load search results');
-  }
+    if (response.statusCode == 200) {
+      List<Organization> items = _decodeOrganization(response);
+      ref.read(orgSearchProvider.notifier).searchResults = items;
+    } else {
+      throw Exception('Failed to load search results');
+    }
 
-  setState(() {
-    _isSearching = false; 
-  });
+    setState(() {
+      _isSearching = false; 
+    });
 }
 
 
@@ -126,7 +119,6 @@ Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
         final filteredResults = ref.watch(orgSearchProvider).searchResults;
-
         return Scaffold(
           appBar: CustomAppBar(
             pageTitle: 'Organizations',
@@ -138,14 +130,6 @@ Widget build(BuildContext context) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 20),
-                TextField(
-                  onSubmitted: (value) => _search(value),
-                  decoration: const InputDecoration(
-                    labelText: 'Search',
-                    prefixIcon: Icon(Icons.search),
-                  ),
-                ),
                 const SizedBox(height: 20),
                 Wrap(
                   spacing: 8.0, // Spacing between buttons
@@ -160,6 +144,7 @@ Widget build(BuildContext context) {
                             selectedCategories.add(category);
                           }
                         });
+                        _search(selectedCategories, selectedCountries);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: selectedCategories.contains(category)
@@ -196,6 +181,7 @@ Widget build(BuildContext context) {
                             selectedCountries.add(country);
                           }
                         });
+                        _search(selectedCategories, selectedCountries);
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: selectedCountries.contains(country)

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/itemkb_model.dart';
 import 'package:flutter_app/providers/search_provider.dart';
+import 'package:flutter_app/ui/pages/knowledge_base/send_request.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/article.dart';
@@ -149,7 +150,7 @@ Widget build(BuildContext context) {
                 child: 
                     _isSearching ? const Center(child: CircularProgressIndicator()) 
                     : ListView.builder(
-                        itemCount: searchResults.length + questions.length,
+                        itemCount: searchResults.length + questions.length + 1,
                         itemBuilder: (BuildContext context, int index) {
                           if(index < questions.length) {
                             return ExpansionTile(
@@ -160,7 +161,7 @@ Widget build(BuildContext context) {
                               ),
                               ],
                             );
-                          } else{
+                          } else if(index < searchResults.length + questions.length) {
                             return Column(
                             children: [
                               const SizedBox(height: 5,),
@@ -174,6 +175,30 @@ Widget build(BuildContext context) {
                               const SizedBox(height: 5,),
                             ],
                           );
+                          } else{
+                            return Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                            const SizedBox(height: 20),
+                            const Text(
+                               "Didn't find an answer to your question?",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 18),
+                             ),
+                          const SizedBox(height: 20),
+                          ElevatedButton(
+                             onPressed: () {
+                               // Navigate to the new page for sending requests
+                            Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SendRequest()),
+                             );
+                            },
+                          child: const Text("Send Request"),
+                        ),
+                        const SizedBox(height: 20),
+                          ],
+                        );
                           }
                         },
                       )
