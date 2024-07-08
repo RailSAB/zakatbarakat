@@ -1,24 +1,51 @@
 # Zakat Barakat
 
+## Table of contents
+
+- [Project Description](#project-description)
+- [Demo](#demo)
+- [How to use](#how-to-use)
+- [Features](#features)
+- [Project Installation](#project-installation)
+- [Deployment](#deployment)
+- [Frameworks](#frameworks)
+- [API](#api)
 
 ## Project Description
-Zakat is a type of almsgiving in Islam, an every wealthy enough Muslim that passed the Nisab threshold must pay Zakat. However, calculating Zakat involve several difficulties that makes its payment not likely to be performed. Existing Zakat Calculator oversimplify the process. Moreover, they lack knowledge about Zakat and q&a service. Therefore, our project aims at creating an appropriate Zakat calculator with embedded knowledge base
+
+Zakat is a type of almsgiving in Islam, an every wealthy enough Muslim that passed the Nisab threshold must pay Zakat. However, calculating Zakat involves several difficulties that makes its payment not likely to be performed. Existing Zakat Calculators oversimplify the process. Moreover, they lack knowledge about Zakat and Q&A service. Therefore, our project aims at creating an appropriate Zakat calculator with embedded knowledge base
+
 ## Demo
 
 ## How to use
+
 Application is simple and straightforward to follow. User can calculate Zakat by following the calculator and entering its assets. Moreover, the user can go to the knowledge base to view the articles related to Zakat and Islam. Additionally, the user after calculating the amount of Zakat can access the verified charity funds to make donations
 
 ## Features
+
 Calculating Zakat on Property, calculating Zakat on Livestock, Calculating Zakat Ushr, accessing the knowledge base, accessing the articles, search for articles and questions, making a request for extra information, get the list of verified funds, get the list of organizations
 
-## Project Installation / Deployment
+## Project Installation
+
+## Deployment
 
 ## Frameworks
 
+Project is created with:
+
+- Flutter version: 3.22.2
+- Dart SDK version: 3.4.3
+
+Libraries:
+
+- Pydantic
+
 ## Web app
+
 Flutter,
 
 ## API
+
 FastAPI for endpoints creation, Weaviate as the database
 
 <!-- ## Getting started
