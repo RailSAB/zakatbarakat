@@ -26,6 +26,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
   final numberController = TextEditingController();
   @override
   void initState() {
+    print(widget.selectedCurrencies);
     super.initState();
   }
 

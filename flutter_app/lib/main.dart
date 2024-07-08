@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_app/controller/dependency_injection.dart';
+import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_app/ui/pages/livestock/overall_screen_livestock.dart';
 import 'package:flutter_app/ui/pages/livestock/zakat_livestock_screen_1.dart';
 import 'package:flutter_app/ui/pages/organizations/organizations.dart';
@@ -30,9 +32,7 @@ class ExampleApp extends StatelessWidget {
       routes: {
         '/home': (context) => const HomePage(),
         '/livestock': (context) => const LivestockPage(),
-        '/property': (context) => const PropertyPage(
-              selectedCurrencies: [],
-            ),
+        '/property': (context) =>  PropertyPage(selectedCurrencies: ModalRoute.of(context)!.settings.arguments as List<CurrencyModel>,),
         '/ushr': (context) => const UshrPage(),
         //'/property2': (context) => const Property2Page(),
         //'/property3': (context) => const Property3Page(),
