@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:flutter_app/ui/widgets/news_card.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
@@ -10,8 +13,47 @@ class HomePage extends ConsumerStatefulWidget {
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
+class News {
+  News({
+    required this.name,
+    required this.description,
+    required this.link,
+  });
+
+  String name;
+  String description;
+  Uri link;
+}
+
 class _HomePageState extends ConsumerState<HomePage> {
-  @override
+  final List<News> newsArticles = [];
+
+  Future getData() async {
+    final response = await http.get(Uri.parse('http://158.160.153.243:8000/news/get-news'));
+    try {
+      if (response.statusCode == 200) {
+        var jsonData = jsonDecode(response.body);
+
+        for (var item in jsonData) {
+          String name = item["name"];
+          String description = item["body"];
+          Uri link = Uri.parse(item["source_link"]);
+
+          newsArticles.add(News(
+            name: name,
+            description: description,
+            link: link,
+          ));
+        }
+        print(newsArticles.length);
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   @override
 Widget build(BuildContext context) {
   return Scaffold(
@@ -20,8 +62,8 @@ Widget build(BuildContext context) {
       pageTitle: 'Home Page',
       appBarHeight: 70,
     ),
-    body: Center(
-        child: Column(children: [
+    body: ListView(
+        children: [
           Padding(
             padding: const EdgeInsets.all(32.0),
             child: title(),
@@ -30,14 +72,14 @@ Widget build(BuildContext context) {
             padding: const EdgeInsets.all(16.0),
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15), // Закругление углов
-                image: DecorationImage(
-                  image: AssetImage('images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'), // Путь к вашему изображению
-                  fit: BoxFit.cover, // Обрезка изображения до размеров контейнера
+                borderRadius: BorderRadius.circular(15),
+                image: const DecorationImage(
+                  image: AssetImage('images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'),
+                  fit: BoxFit.cover,
                 ),
               ),
-              width: double.infinity, // Ширина контейнера равна ширине экрана
-              height: 150, // Высота контейнера
+              width: double.infinity,
+              height: 150,
             ),
           ),
           Padding(
@@ -51,17 +93,53 @@ Widget build(BuildContext context) {
                 Navigator.pushNamed(context, '/funds');
               },
               style: ButtonStyle(
-                minimumSize:
-                    WidgetStateProperty.all(const Size(double.infinity, 50)),
+                minimumSize: WidgetStateProperty.all(const Size(double.infinity, 50)),
                 backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
               ),
               child: const Text("View Funds",
                   style: TextStyle(fontSize: 20, color: Colors.black)),
             ),
           ),
-        ]
-        )
-        ),
+          // Adding a bold "News" text
+          const Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Text(
+              'News',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+          ),
+          // Using ListView.builder to dynamically generate list items for news articles
+          // 
+          SingleChildScrollView(
+              child: FutureBuilder(
+                future: getData(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return ListView.builder(
+                      shrinkWrap: true, 
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: newsArticles.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            const SizedBox(height: 5,),
+                            NewsCard(
+                              name: newsArticles[index].name,
+                              description: newsArticles[index].description,
+                              link: newsArticles[index].link,
+                            ),
+                            const SizedBox(height: 5,),
+                          ],
+                        );
+                      },
+                    );
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }),
+            ),
+        ],
+      ),
     bottomNavigationBar: const CustomBottomNavBar(
       index: 0,
     ),
