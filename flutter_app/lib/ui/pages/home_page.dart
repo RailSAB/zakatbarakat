@@ -59,7 +59,9 @@ Widget build(BuildContext context) {
                   style: TextStyle(fontSize: 20, color: Colors.black)),
             ),
           ),
-        ])),
+        ]
+        )
+        ),
     bottomNavigationBar: const CustomBottomNavBar(
       index: 0,
     ),
