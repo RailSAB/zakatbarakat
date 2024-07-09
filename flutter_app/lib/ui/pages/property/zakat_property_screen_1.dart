@@ -19,8 +19,18 @@ class PropertyPage extends ConsumerStatefulWidget {
 class _PropertyState extends ConsumerState<PropertyPage> {
   TextEditingController cashController = TextEditingController();
   TextEditingController bankCardController = TextEditingController();
-  TextEditingController silverController = TextEditingController();
-  TextEditingController goldController = TextEditingController();
+  TextEditingController silverMeasuringUnitController = TextEditingController();
+  TextEditingController goldMeasuringUnitController = TextEditingController();
+  TextEditingController silverValueController = TextEditingController();
+  TextEditingController goldValueController = TextEditingController();
+
+  String selectedMeasuringUnit = 'kg';
+
+  void selectUnit(String unit) {
+    setState(() {
+      selectedMeasuringUnit = unit;
+    });
+  }
 
   List<String> elemTitle = ["Cash", "Bank card", "Silver", "Gold"];
   final numberController = TextEditingController();
@@ -31,27 +41,24 @@ class _PropertyState extends ConsumerState<PropertyPage> {
 
   @override
   void dispose() {
-    goldController.dispose();
+    goldMeasuringUnitController.dispose();
+    goldValueController.dispose();
     cashController.dispose();
     bankCardController.dispose();
-    silverController.dispose();
+    silverMeasuringUnitController.dispose();
+    silverValueController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final selectedCurrencies = widget.selectedCurrencies;
-
     return DefaultTabController(
       initialIndex: 0,
       length: 3,
       child: Scaffold(
           appBar:
               CustomAppBar(pageTitle: 'Zakat on Property', appBarHeight: 115),
-          // floatingActionButton: FloatingActionButton(
-          //   onPressed: () {},
-          //   child: const Icon(Icons.calculate),
-          // ),
           body: TabBarView(
             children: <Widget>[
               //________________________FINANCE________________________
@@ -378,22 +385,164 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                                 fontSize: 30,
                               )),
                           const SizedBox(height: 10),
-                          DynamicTable(
-                            taskId: '1',
-                            category: 'silverJewellery',
-                            currencies: selectedCurrencies,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  width: 220,
+                                  height: 50,
+                                  child: TextFormField(
+                                      controller: silverValueController,
+                                      validator: (value) {
+                                        if (value!.isEmpty) return null;
+                                        if (!RegExp(r'^[+-]?[0-9]+$')
+                                                .hasMatch(value) &&
+                                            value.isNotEmpty) {
+                                          return 'Please enter only digits';
+                                        }
+                                        if (int.parse(value) <= 0 &&
+                                            value.isNotEmpty) {
+                                          return 'Please enter a positive integer';
+                                        }
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) {},
+                                      decoration: const InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: 'Enter value',
+                                          labelStyle: TextStyle(fontSize: 13))),
+                                ),
+                              ),
+                              const SizedBox(width: 35),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 50,
+                                  child: DropdownMenu<String>(
+                                    menuHeight: 200,
+                                    width: 300,
+                                    //controller: silverMeasuringUnitController,
+                                    requestFocusOnTap: true,
+                                    label: const Text('Measuring Unit'),
+                                    onSelected: (String? value) {
+                                      setState(() {
+                                        if (value != null) {
+                                          selectUnit(value);
+                                          silverMeasuringUnitController.text =
+                                              value;
+                                        }
+                                      });
+                                    },
+                                    dropdownMenuEntries: <String>[
+                                      'kg',
+                                      'oz',
+                                      'g'
+                                    ].map<DropdownMenuEntry<String>>(
+                                        (String value) {
+                                      return DropdownMenuEntry<String>(
+                                        value: value,
+                                        label: value,
+                                        style: MenuItemButton.styleFrom(
+                                          foregroundColor: const Color.fromARGB(
+                                              255, 0, 0, 0),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                          // DynamicTable(
+                          //   taskId: '1',
+                          //   category: 'silverJewellery',
+                          //   currencies: selectedCurrencies,
+                          // ),
                           const SizedBox(height: 25),
                           const Text('Gold',
                               style: TextStyle(
                                 fontSize: 30,
                               )),
                           const SizedBox(height: 10),
-                          DynamicTable(
-                            taskId: '1',
-                            category: 'goldJewellery',
-                            currencies: selectedCurrencies,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  width: 220,
+                                  height: 50,
+                                  child: TextFormField(
+                                      controller: goldValueController,
+                                      validator: (value) {
+                                        if (value!.isEmpty) return null;
+                                        if (!RegExp(r'^[+-]?[0-9]+$')
+                                                .hasMatch(value) &&
+                                            value.isNotEmpty) {
+                                          return 'Please enter only digits';
+                                        }
+                                        if (int.parse(value) <= 0 &&
+                                            value.isNotEmpty) {
+                                          return 'Please enter a positive integer';
+                                        }
+                                        return null;
+                                      },
+                                      keyboardType: TextInputType.number,
+                                      onChanged: (value) {},
+                                      decoration: const InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          labelText: 'Enter value',
+                                          labelStyle: TextStyle(fontSize: 13))),
+                                ),
+                              ),
+                              const SizedBox(width: 35),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                  height: 50,
+                                  child: DropdownMenu<String>(
+                                    menuHeight: 200,
+                                    width: 300,
+                                    //controller: silverMeasuringUnitController,
+                                    requestFocusOnTap: true,
+                                    label: const Text('Measuring Unit'),
+                                    onSelected: (String? value) {
+                                      setState(() {
+                                        if (value != null) {
+                                          selectUnit(value);
+                                          goldMeasuringUnitController.text =
+                                              value;
+                                        }
+                                      });
+                                    },
+                                    dropdownMenuEntries: <String>[
+                                      'kg',
+                                      'oz',
+                                      'g'
+                                    ].map<DropdownMenuEntry<String>>(
+                                        (String value) {
+                                      return DropdownMenuEntry<String>(
+                                        value: value,
+                                        label: value,
+                                        style: MenuItemButton.styleFrom(
+                                          foregroundColor: const Color.fromARGB(
+                                              255, 0, 0, 0),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
+                          // DynamicTable(
+                          //   taskId: '1',
+                          //   category: 'goldJewellery',
+                          //   currencies: selectedCurrencies,
+                          // ),
                           const SizedBox(height: 25),
                           Row(children: [
                             const Text('Purchased goods',
@@ -525,9 +674,9 @@ class _PropertyState extends ConsumerState<PropertyPage> {
           ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                calculateZakat();
-              }
+              //if (_formKey.currentState!.validate()) {
+              calculateZakat();
+              //}
             },
             child: const Icon(Icons.calculate),
           )),
