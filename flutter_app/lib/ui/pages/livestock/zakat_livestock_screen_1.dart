@@ -151,7 +151,7 @@ class _LivestockState extends ConsumerState<LivestockPage> {
             if (type == "Sheep/Rams" && int.parse(value) > 588) {
               return 'Maximum number of sheep is 588';
             }
-            if (type == "CCows/Bulls" && int.parse(value) > 109) {
+            if (type == "Cows/Bulls" && int.parse(value) > 109) {
               return 'Maximum number of cows is 109';
             }
             if (type == "Goats" && int.parse(value) > 588) {
