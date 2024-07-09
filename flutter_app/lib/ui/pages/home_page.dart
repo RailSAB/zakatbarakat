@@ -1,8 +1,8 @@
 import 'dart:convert';
-import 'package:flutter_app/ui/widgets/news_card.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_app/ui/widgets/news_card.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
 
@@ -20,9 +20,9 @@ class News {
     required this.link,
   });
 
-  String name;
-  String description;
-  Uri link;
+  final String name;
+  final String description;
+  final Uri link;
 }
 
 class _HomePageState extends ConsumerState<HomePage> {
@@ -45,178 +45,174 @@ class _HomePageState extends ConsumerState<HomePage> {
             link: link,
           ));
         }
-        print(newsArticles.length);
       } else {
         throw Exception('Failed to load data');
       }
     } catch (e) {
       print(e.toString());
     }
+    setState(() {}); 
   }
 
   @override
-Widget build(BuildContext context) {
-  return Scaffold(
-    backgroundColor: const Color.fromARGB(104, 200, 215, 231),
-    appBar: CustomAppBar(
-      pageTitle: 'Home Page',
-      appBarHeight: 70,
-    ),
-    body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: title(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                image: const DecorationImage(
-                  image: AssetImage('images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              width: double.infinity,
-              height: 150,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: buttons(),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/funds');
-              },
-              style: ButtonStyle(
-                minimumSize: WidgetStateProperty.all(const Size(double.infinity, 50)),
-                backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
-              ),
-              child: const Text("View Funds",
-                  style: TextStyle(fontSize: 20, color: Colors.black)),
-            ),
-          ),
-          // Adding a bold "News" text
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'News',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ),
-          // Using ListView.builder to dynamically generate list items for news articles
-          // 
-          SingleChildScrollView(
-              child: FutureBuilder(
-                future: getData(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.done) {
-                    return ListView.builder(
-                      shrinkWrap: true, 
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemCount: newsArticles.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            const SizedBox(height: 5,),
-                            NewsCard(
-                              name: newsArticles[index].name,
-                              description: newsArticles[index].description,
-                              link: newsArticles[index].link,
-                            ),
-                            const SizedBox(height: 5,),
-                          ],
-                        );
-                      },
-                    );
-                  } else {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                }),
-            ),
-        ],
+  void initState() {
+    super.initState();
+    getData(); 
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.grey[200],
+      appBar: CustomAppBar(
+        pageTitle: 'Home Page',
+        appBarHeight: 70,
       ),
-    bottomNavigationBar: const CustomBottomNavBar(
-      index: 0,
-    ),
-  );
-}
-
-Widget title() => const Text(
-      'Calculate Zakat',
-      style: TextStyle(fontSize: 30),
-      textAlign: TextAlign.center,
-    );
-
-Widget buttons() {
-  return Center(
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center, // Center Alignment
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround, // Distributes the space evenly around the buttons
-          mainAxisSize: MainAxisSize.min, // Sets the minimum width for the Row
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/property');
-                  },
-                  style: ButtonStyle(
-                    minimumSize: WidgetStateProperty.all(const Size(100, 60)),
-                    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                  ),
-                  child: Image.asset('images/property.png',
-                      height: 45, width: 45),
-                ),
-                const SizedBox(height: 10),
-                const Text("Property", style: TextStyle(fontSize: 20)),
-              ],
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 24.0),
+              child: title(),
             ),
-            const Spacer(),
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/livestock');
-                  },
-                  style: ButtonStyle(
-                    minimumSize: WidgetStateProperty.all(const Size(100, 60)),
-                    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  image: const DecorationImage(
+                    image: AssetImage('images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'),
+                    fit: BoxFit.cover,
                   ),
-                  child: Image.asset('images/lifestock.png',
-                      height: 50, width: 50),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10,
+                      offset: Offset(0, 4),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10), // Indentation under the button
-                const Text("Livestock", style: TextStyle(fontSize: 20)),
-              ],
+                width: double.infinity,
+                height: 150,
+              ),
             ),
-            const Spacer(),
-            Column(
-              children: [
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/ushr');
-                  },
-                  style: ButtonStyle(
-                    minimumSize: WidgetStateProperty.all(const Size(100, 60)),
-                    backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: buttons(),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/funds');
+                },
+                style: ButtonStyle(
+                  minimumSize:  MaterialStateProperty.all(const Size(double.infinity, 50)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
                   ),
-                  child: Image.asset('images/ushr.png', height: 50, width: 50),
+                  elevation:  MaterialStateProperty.all(10),
                 ),
-                const SizedBox(height: 10),
-                const Text("Ushr", style: TextStyle(fontSize: 20)),
-              ],
+                child: const Text(
+                  "View Funds",
+                  style: TextStyle(fontSize: 20, color: Colors.black),
+                ),
+              ),
             ),
+            const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                'News',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
+              ),
+            ),
+            if (newsArticles.isEmpty)
+              const Center(
+                child: CircularProgressIndicator(),
+              )
+            else
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, 
+                  crossAxisSpacing: 16.0, 
+                  mainAxisSpacing: 16.0,
+                  childAspectRatio: 1.0, 
+                ),
+                itemCount: newsArticles.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return NewsCard(
+                    name: newsArticles[index].name,
+                    description: newsArticles[index].description,
+                    link: newsArticles[index].link,
+                    
+                  );
+                },
+              ),
           ],
         ),
+      ),
+      bottomNavigationBar: const CustomBottomNavBar(
+        index: 0,
+      ),
+    );
+  }
+
+  Widget title() => const Text(
+        'Calculate Zakat',
+        style: TextStyle(
+          fontSize: 30,
+          fontWeight: FontWeight.bold,
+          color: Colors.black87,
+        ),
+        textAlign: TextAlign.center,
+      );
+
+  Widget buttons() {
+    return Center(
+      child: Wrap(
+        spacing: 20.0,
+        runSpacing: 20.0,
+        children: [
+          _createButton('Property', 'images/property.png', '/property'),
+          _createButton('Livestock', 'images/lifestock.png', '/livestock'),
+          _createButton('Ushr', 'images/ushr.png', '/ushr'),
+        ],
+      ),
+    );
+  }
+
+  Widget _createButton(String text, String assetPath, String route) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ElevatedButton(
+          onPressed: () {
+            Navigator.pushNamed(context, route);
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.white,
+            minimumSize: const Size(100, 90), 
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            elevation: 10,
+            padding: EdgeInsets.all(16),
+          ),
+          child: Image.asset(assetPath, height: 50, width: 50),
+        ),
+        const SizedBox(height: 10),
+        Text(
+          text,
+          style: const TextStyle(fontSize: 18, color: Colors.black87), 
+        ),
       ],
-    ),
-  );
-}
+    );
+  }
 }
