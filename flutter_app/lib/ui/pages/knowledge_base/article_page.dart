@@ -36,7 +36,7 @@ class _ArticlePageState extends State<ArticlePage> {
         pageTitle: 'Article',
         appBarHeight: 70,
       ),
-      backgroundColor: const Color(0xFFF0F4F8),
+      backgroundColor: Color.fromARGB(255, 249, 249, 249),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -61,7 +61,7 @@ class _ArticlePageState extends State<ArticlePage> {
                       children: item.tags!
                           .map((tag) => Chip(
                                 label: Text(tag),
-                                backgroundColor: Colors.blue[100],
+                                backgroundColor: Color.fromARGB(255, 255, 255, 255),
                               ))
                           .toList(),
                     ),
