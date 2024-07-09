@@ -22,10 +22,11 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
 
   final List<String> elemTitles = ["Horses", "Buffaloes", "Camels"];
 
+  final _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     super.initState();
-    // Initialize controllers for each title element
     for (var i = 0; i < elemTitles.length; i++) {
       controllers.add(TextEditingController());
     }
@@ -33,7 +34,6 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
 
   @override
   void dispose() {
-    // Dispose controllers
     for (var controller in controllers) {
       controller.dispose();
     }
@@ -45,19 +45,22 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(104, 200, 215, 231),
       appBar: CustomAppBar(pageTitle: 'Zakat on Livestock', appBarHeight: 70),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            _buildHeader(),
-            const SizedBox(height: 20),
-            _buildNotificationBox(),
-            const SizedBox(height: 20),
-            _buildFormFields(),
-            const SizedBox(height: 20),
-            _buildCalculateButton(),
-          ],
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildHeader(),
+              const SizedBox(height: 20),
+              _buildNotificationBox(),
+              const SizedBox(height: 20),
+              _buildFormFields(),
+              const SizedBox(height: 20),
+              _buildCalculateButton(),
+            ],
+          ),
         ),
       ),
       bottomNavigationBar: const CustomBottomNavBar(index: 0),
@@ -112,14 +115,25 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
         const SizedBox(height: 8),
         TextFormField(
           validator: (value) {
-            if (value != null && value.isNotEmpty && int.parse(value) <= 0) {
+            if (value!.isEmpty) return null;
+            if (!RegExp(r'^[+-]?[0-9]+$').hasMatch(value!) &&
+                value.isNotEmpty) {
+              return 'Please enter only digits';
+            }
+            if (int.parse(value) <= 0) {
               return 'Please enter a positive integer';
+            }
+            if (label == "Buffaloes" && int.parse(value) > 109) {
+              return 'Maximum number of buffaloes is 109';
+            }
+            if (label == "Camels" && int.parse(value) > 159) {
+              return 'Maximum number of camels is 159';
             }
             return null;
           },
           controller: controller,
           decoration: const InputDecoration(
-            labelText: 'Enter amount',
+            labelText: 'Enter value',
             border: OutlineInputBorder(),
           ),
           keyboardType: TextInputType.number,
@@ -158,13 +172,17 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
         TextFormField(
           controller: controller,
           validator: (value) {
-            if (value != null && value.isNotEmpty && int.parse(value) <= 0) {
+            if (value!.isEmpty) return null;
+            if (!RegExp(r'^[+-]?[0-9]+$').hasMatch(value) && value.isNotEmpty) {
+              return 'Please enter only digits';
+            }
+            if (int.parse(value) <= 0) {
               return 'Please enter a positive integer';
             }
             return null;
           },
           decoration: const InputDecoration(
-            labelText: 'Enter amount',
+            labelText: 'Enter value',
             border: OutlineInputBorder(),
           ),
           keyboardType: TextInputType.number,
@@ -175,7 +193,11 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
 
   Widget _buildCalculateButton() {
     return ElevatedButton(
-      onPressed: _calculateZakat,
+      onPressed: () {
+        if (_formKey.currentState!.validate()) {
+          _calculateZakat();
+        }
+      },
       style: ElevatedButton.styleFrom(
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
         padding: const EdgeInsets.symmetric(vertical: 20),

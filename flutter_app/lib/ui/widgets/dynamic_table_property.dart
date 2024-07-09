@@ -53,33 +53,9 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
     });
   }
 
-  // bool _submit() {
-  //   final isValid = _formKey.currentState!.validate();
-  //   if (!isValid) {
-  //     return false;
-  //   }
-  //   _formKey.currentState!.save();
-
-  //   for (int i = 0; i < _quantity.length; i++) {
-  //     ref
-  //         .read(zakatOnPropertyProvider.notifier)
-  //         .add(widget.category, _currency[i], int.parse(_quantity[i].text));
-  //   }
-
-  //   return true;
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Form(
-      // return Container(
-      //   padding: const EdgeInsets.all(16.0),
-      //   height: 155,
-      //   decoration: BoxDecoration(
-      //     color: const Color.fromARGB(126, 224, 224, 224),
-      //     borderRadius: BorderRadius.circular(10),
-      //   ),
-      //   child: Form(
       key: _formKey,
       child: Column(
         children: [
@@ -107,13 +83,15 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                       child: TextFormField(
                           controller: _quantity[i],
                           validator: (value) {
-                            if (value == '' ||
-                                int.tryParse(value ?? '') == null ||
-                                int.parse(value!) <= 0) {
-                              return 'Please enter a positive number';
-                            } else {
-                              return null;
+                            if (value!.isEmpty) return null;
+                            if (!RegExp(r'^[+-]?[0-9]+$').hasMatch(value) &&
+                                value.isNotEmpty) {
+                              return 'Please enter only digits';
                             }
+                            if (int.parse(value) <= 0 && value.isNotEmpty) {
+                              return 'Please enter a positive integer';
+                            }
+                            return null;
                           },
                           keyboardType: TextInputType.number,
                           onChanged: (value) {},
@@ -128,24 +106,6 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
                     flex: 2,
                     child: SizedBox(
                       height: 50,
-                      // child: DropdownMenu<String>(
-                      //   initialSelection: _currency[i].code,
-                      //   onSelected: (String? value) {
-                      //     setState(() {
-                      //       if (value != null) {
-                      //         _currency[i] = CurrencyModel(
-                      //             name: _currency[i].name, code: value);
-                      //       }
-                      //     });
-                      //   },
-                      //   dropdownMenuEntries:
-                      //       CurrencyModel.currencies.entries.map((entry) {
-                      //     return DropdownMenuEntry<String>(
-                      //       value: entry.key,
-                      //       label: entry.value,
-                      //     );
-                      //   }).toList(),
-                      // )
                       child: DropdownButton<CurrencyModel>(
                         value: _currency[i],
                         onChanged: (CurrencyModel? newValue) {
@@ -181,7 +141,6 @@ class _DynamicTableState extends ConsumerState<DynamicTable> {
             ],
           ),
         ],
-        // ),
       ),
     );
   }

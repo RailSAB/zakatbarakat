@@ -20,11 +20,6 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       title: Text(
         pageTitle,
         textAlign: TextAlign.center,
-        // style: const TextStyle(
-        //   fontFamily: 'Inter',
-        //   fontSize: 25,
-        //   fontWeight: FontWeight.w400,
-        // ),
       ),
       actions: <Widget>[
         Row(

@@ -122,13 +122,14 @@ class _LivestockState extends ConsumerState<LivestockPage> {
         for (int i = 0; i < controllers.length; i++)
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: enterField(controllers[i], elemTitle[i]),
+            child: enterField(controllers[i], elemTitle[i], elemTitle[i]),
           )
       ],
     );
   }
 
-  Widget enterField(TextEditingController controller, String text) {
+  Widget enterField(
+      TextEditingController controller, String text, String type) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -140,12 +141,21 @@ class _LivestockState extends ConsumerState<LivestockPage> {
         TextFormField(
           controller: controller,
           validator: (value) {
-            if (!RegExp(r'^[+-]?[0-9]+$').hasMatch(value!) &&
-                value.isNotEmpty) {
+            if (value!.isEmpty) return null;
+            if (!RegExp(r'^[+-]?[0-9]+$').hasMatch(value) && value.isNotEmpty) {
               return 'Please enter only digits';
             }
-            if (int.parse(value) <= 0) {
+            if (int.parse(value) <= 0 && value.isNotEmpty) {
               return 'Please enter a positive integer';
+            }
+            if (type == "Sheep/Rams" && int.parse(value) > 588) {
+              return 'Maximum number of sheep is 588';
+            }
+            if (type == "CCows/Bulls" && int.parse(value) > 109) {
+              return 'Maximum number of cows is 109';
+            }
+            if (type == "Goats" && int.parse(value) > 588) {
+              return 'Maximum number of goats is 588';
             }
             return null;
           },

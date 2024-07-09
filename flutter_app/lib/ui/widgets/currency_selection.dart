@@ -82,10 +82,6 @@ class _CurrencySelectionScreenState extends State<CurrencySelectionScreen> {
       ),
       bottomNavigationBar: ElevatedButton(
         onPressed: () {
-          print('popa');
-          for (CurrencyModel cur in selectedCurrencies) {
-            print(cur.name);
-          }
           Navigator.pushNamed(context, '/property',
               arguments: selectedCurrencies);
         },

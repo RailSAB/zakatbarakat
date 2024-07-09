@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_app/ui/widgets/news_card.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -182,7 +181,6 @@ class _HomePageState extends ConsumerState<HomePage> {
                           ),
                         ),
                       );
-                      //Navigator.pushNamed(context, '/property');
                     },
                     style: ButtonStyle(
                       minimumSize: WidgetStateProperty.all(const Size(100, 60)),
@@ -211,7 +209,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     child: Image.asset('images/lifestock.png',
                         height: 50, width: 50),
                   ),
-                  const SizedBox(height: 10), // Indentation under the button
+                  const SizedBox(height: 10),
                   const Text("Livestock", style: TextStyle(fontSize: 20)),
                 ],
               ),

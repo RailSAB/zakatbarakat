@@ -26,7 +26,6 @@ class _PropertyState extends ConsumerState<PropertyPage> {
   final numberController = TextEditingController();
   @override
   void initState() {
-    print(widget.selectedCurrencies);
     super.initState();
   }
 
@@ -47,485 +46,495 @@ class _PropertyState extends ConsumerState<PropertyPage> {
       initialIndex: 0,
       length: 3,
       child: Scaffold(
-        appBar: CustomAppBar(pageTitle: 'Zakat on Property', appBarHeight: 115),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.calculate),
-        ),
-        body: TabBarView(
-          children: <Widget>[
-            //________________________FINANCE________________________
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Money',
-                              style: TextStyle(
-                                fontSize: 30,
-                              )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Money'),
-                                    content: const Text(
-                                      'Specify your savings on bank cards, in cash, in cryptocurrency',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
+          appBar:
+              CustomAppBar(pageTitle: 'Zakat on Property', appBarHeight: 115),
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {},
+          //   child: const Icon(Icons.calculate),
+          // ),
+          body: TabBarView(
+            children: <Widget>[
+              //________________________FINANCE________________________
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Money',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Money'),
+                                      content: const Text(
+                                        'Specify your savings on bank cards, in cash, in cryptocurrency',
                                       ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'cash',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'cash',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Debt',
-                              style: TextStyle(
-                                fontSize: 30,
-                              )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Debt'),
-                                    content: const Text(
-                                      'Debts are deducted from the property if they have to be paid within the next 12 months',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Debt',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Debt'),
+                                      content: const Text(
+                                        'Debts are deducted from the property if they have to be paid within the next 12 months',
                                       ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'taxesValue',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'taxesValue',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Shares',
-                              style: TextStyle(
-                                fontSize: 30,
-                              )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Shares'),
-                                    content: const Text(
-                                      'Shares purchased for resale',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Shares',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Shares'),
+                                      content: const Text(
+                                        'Shares purchased for resale',
                                       ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'stocksForResaling',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'stocksForResaling',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Income',
-                              style: TextStyle(
-                                fontSize: 30,
-                              )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Income'),
-                                    content: const Text(
-                                      'Income from investments, if deferred in the form of savings',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Income',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Income'),
+                                      content: const Text(
+                                        'Income from investments, if deferred in the form of savings',
                                       ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'incomeFromStocks',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'incomeFromStocks',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 40),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(height: 40),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            //________________________REAL ESTATE________________________
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Property for sale',
-                              style: TextStyle(
-                                fontSize: 30,
-                              )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Property for sale'),
-                                    content: const Text(
-                                      'Bought without the intention of resale, but the first steps towards this have been taken',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
+              //________________________REAL ESTATE________________________
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Property for sale',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Property for sale'),
+                                      content: const Text(
+                                        'Bought without the intention of resale, but the first steps towards this have been taken',
                                       ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'purchasedNotForResaling',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'purchasedNotForResaling',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Spent Property',
-                              style: TextStyle(
-                                fontSize: 30,
-                              )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Spent property'),
-                                    content: const Text(
-                                      'Was used or spent after payment of zakat became obligatory.\n\nDO NOT COUNT, if stolen or lost',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Spent Property',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Spent property'),
+                                      content: const Text(
+                                        'Was used or spent after payment of zakat became obligatory.\n\nDO NOT COUNT, if stolen or lost',
                                       ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'usedAfterNisab',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'usedAfterNisab',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Income',
-                              style: TextStyle(
-                                fontSize: 30,
-                              )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Income'),
-                                    content: const Text(
-                                      'Income from premises for rent or sale',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Income',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Income'),
+                                      content: const Text(
+                                        'Income from premises for rent or sale',
                                       ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'rentMoney',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'rentMoney',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 40),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(height: 40),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            //________________________OTHER________________________
-            SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 50.0),
-                child: Column(
-                  children: [
-                    Column(
-                      children: [
-                        const SizedBox(height: 25),
-                        const Text('Silver',
-                            style: TextStyle(
-                              fontSize: 30,
-                            )),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'silverJewellery',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 25),
-                        const Text('Gold',
-                            style: TextStyle(
-                              fontSize: 30,
-                            )),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'goldJewellery',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Purchased goods',
+              //________________________OTHER________________________
+              SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 50.0),
+                  child: Column(
+                    children: [
+                      Column(
+                        children: [
+                          const SizedBox(height: 25),
+                          const Text('Silver',
                               style: TextStyle(
                                 fontSize: 30,
                               )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Purchased goods'),
-                                    content: const Text(
-                                      'Goods purchased for sale at market price',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'silverJewellery',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'purchasedProductForResaling',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Unfinished products',
+                          const SizedBox(height: 25),
+                          const Text('Gold',
                               style: TextStyle(
                                 fontSize: 30,
                               )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Unfinished products'),
-                                    content: const Text(
-                                      'Not fully produced products at market price',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                      ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'goldJewellery',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'unfinishedProduct',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 25),
-                        Row(children: [
-                          const Text('Produced goods',
-                              style: TextStyle(
-                                fontSize: 30,
-                              )),
-                          IconButton(
-                            icon: const Icon(Icons.help_outline),
-                            onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: const Text('Produced goods'),
-                                    content: const Text(
-                                      'Goods produced for sale at production price',
-                                    ),
-                                    actions: <Widget>[
-                                      TextButton(
-                                        child: const Text('Close',
-                                            style: TextStyle(
-                                                color: Color.fromARGB(
-                                                    255, 30, 128, 208))),
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Purchased goods',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Purchased goods'),
+                                      content: const Text(
+                                        'Goods purchased for sale at market price',
                                       ),
-                                    ],
-                                  );
-                                },
-                              );
-                            },
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'purchasedProductForResaling',
+                            currencies: selectedCurrencies,
                           ),
-                        ]),
-                        const SizedBox(height: 10),
-                        DynamicTable(
-                          taskId: '1',
-                          category: 'producedProductForResaling',
-                          currencies: selectedCurrencies,
-                        ),
-                        const SizedBox(height: 40),
-                      ],
-                    ),
-                  ],
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Unfinished products',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Unfinished products'),
+                                      content: const Text(
+                                        'Not fully produced products at market price',
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'unfinishedProduct',
+                            currencies: selectedCurrencies,
+                          ),
+                          const SizedBox(height: 25),
+                          Row(children: [
+                            const Text('Produced goods',
+                                style: TextStyle(
+                                  fontSize: 30,
+                                )),
+                            IconButton(
+                              icon: const Icon(Icons.help_outline),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Produced goods'),
+                                      content: const Text(
+                                        'Goods produced for sale at production price',
+                                      ),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          child: const Text('Close',
+                                              style: TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 30, 128, 208))),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ]),
+                          const SizedBox(height: 10),
+                          DynamicTable(
+                            taskId: '1',
+                            category: 'producedProductForResaling',
+                            currencies: selectedCurrencies,
+                          ),
+                          const SizedBox(height: 40),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),
-      ),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              if (_formKey.currentState!.validate()) {
+                calculateZakat();
+              }
+            },
+            child: const Icon(Icons.calculate),
+          )),
     );
   }
+
+  final _formKey = GlobalKey<FormState>();
 
   Future<void> calculateZakat() async {
     final response = await http.post(
