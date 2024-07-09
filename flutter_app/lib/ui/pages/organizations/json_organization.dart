@@ -46,7 +46,6 @@ import 'package:http/http.dart' as http;
             categories: categories,
           ));
         }
-        print('organizations: ${organizations}');
         return organizations.toList();
       } else {
         throw Exception('Failed to load data');

@@ -232,7 +232,8 @@ Widget _buildWrap(List<String> items, List<String> selectedItems, Function onTap
               selectedItems.add(item);
             }
           });
-          onTap(selectedItems, selectedCountries);
+          _search(selectedCategories, selectedCountries);
+          // onTap(selectedItems, selectedCountries);
         },
         child: Container(
           decoration: BoxDecoration(
