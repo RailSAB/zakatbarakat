@@ -5,7 +5,6 @@ import 'package:flutter_app/ui/widgets/news_card.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
-import 'package:flutter_app/ui/widgets/currency_selection.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -30,8 +29,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   final List<News> newsArticles = [];
 
   Future getData() async {
-    final response =
-        await http.get(Uri.parse('http://158.160.153.243:8000/news/get-news'));
+    final response = await http.get(Uri.parse('http://158.160.153.243:8000/news/get-news'));
     try {
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
@@ -61,7 +59,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     super.initState();
     getData(); 
   }
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +86,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                     image: AssetImage('images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'),
                     fit: BoxFit.cover,
                   ),
-                  boxShadow: const [
+                  boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
                       blurRadius: 10,
@@ -111,14 +109,14 @@ class _HomePageState extends ConsumerState<HomePage> {
                   Navigator.pushNamed(context, '/funds');
                 },
                 style: ButtonStyle(
-                  minimumSize:  WidgetStateProperty.all(const Size(double.infinity, 50)),
-                  backgroundColor: WidgetStateProperty.all<Color>(Colors.white),
-                  shape: WidgetStateProperty.all(
+                  minimumSize:  MaterialStateProperty.all(const Size(double.infinity, 50)),
+                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  elevation:  WidgetStateProperty.all(10),
+                  elevation:  MaterialStateProperty.all(10),
                 ),
                 child: const Text(
                   "View Funds",
@@ -138,22 +136,19 @@ class _HomePageState extends ConsumerState<HomePage> {
                 child: CircularProgressIndicator(),
               )
             else
-              GridView.builder(
+              ListView.builder(
                 shrinkWrap: true,
+                
                 physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, 
-                  crossAxisSpacing: 16.0, 
-                  mainAxisSpacing: 16.0,
-                  childAspectRatio: 1.0, 
-                ),
                 itemCount: newsArticles.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return NewsCard(
-                    name: newsArticles[index].name,
-                    description: newsArticles[index].description,
-                    link: newsArticles[index].link,
-                    
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0), // Добавляем расстояние
+                    child: NewsCard(
+                      name: newsArticles[index].name,
+                      description: newsArticles[index].description,
+                      link: newsArticles[index].link,
+                    ),
                   );
                 },
               ),
@@ -196,18 +191,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       children: [
         ElevatedButton(
           onPressed: () {
-            if(route == '/property') {
-              Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CurrencySelectionScreen(
-                            onCurrencySelected: (selectedCurrencies) {},
-                          ),
-                        ),
-                      );
-            }
-            else{
-            Navigator.pushNamed(context, route);}
+            Navigator.pushNamed(context, route);
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,
@@ -216,7 +200,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: 10,
-            padding: const EdgeInsets.all(16),
+            padding: EdgeInsets.all(16),
           ),
           child: Image.asset(assetPath, height: 50, width: 50),
         ),
