@@ -116,7 +116,7 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
         TextFormField(
           validator: (value) {
             if (value!.isEmpty) return null;
-            if (!RegExp(r'^[+-]?[0-9]+$').hasMatch(value!) &&
+            if (!RegExp(r'^[+-]?[0-9]+$').hasMatch(value) &&
                 value.isNotEmpty) {
               return 'Please enter only digits';
             }

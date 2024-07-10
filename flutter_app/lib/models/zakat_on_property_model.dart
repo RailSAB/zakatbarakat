@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_app/models/currency_model.dart';
 
 class ZakatOnPropertyModel {
   final List<Map<String, dynamic>> cash;

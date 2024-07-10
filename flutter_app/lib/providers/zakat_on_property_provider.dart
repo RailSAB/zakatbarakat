@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/models/zakat_on_property_model.dart';
 

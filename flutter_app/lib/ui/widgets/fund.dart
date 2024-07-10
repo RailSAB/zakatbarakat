@@ -9,12 +9,12 @@ class Fund extends StatelessWidget {
   final Uri url;
 
   const Fund({
-    Key? key,
+    super.key,
     required this.title,
     required this.description,
     required this.image,
     required this.url,
-  }) : super(key: key);
+  });
   
 
   @override
