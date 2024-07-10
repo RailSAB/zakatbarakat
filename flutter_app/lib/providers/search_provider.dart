@@ -6,27 +6,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final searchResultProvider = ChangeNotifierProvider.autoDispose((ref) => SearchResults());
 
 class SearchResults extends ChangeNotifier {
-  List<Article> _searchResultsA = [];
-  List<QA> _searchResultsQ = [];
+  List<Article> _searchResults = [];
 
-  List<Article> get searchResultsA => _searchResultsA;
-  List<QA> get searchResultsQ => _searchResultsQ;
+  List<Article> get searchResults => _searchResults;
 
-  set searchResultsA(List<Article> newResultsA) {
-    _searchResultsA = newResultsA;
-    notifyListeners();
-  }
-
-  set searchResultsQ(List<QA> newResultsQ) {
-    _searchResultsQ = newResultsQ;
+  set searchResults(List<Article> newResults) {
+    _searchResults = newResults;
     notifyListeners();
   }
 
   Future<void> resetSearchResults() async {
-    final newResultsA = await getArticles();
-    _searchResultsA = newResultsA;
-    final newResultsQ = await getQuestions();
-    _searchResultsQ = newResultsQ;
+    final newResults = await getArticles();
+    _searchResults = newResults;
     notifyListeners();
   }
 }
