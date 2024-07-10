@@ -136,150 +136,256 @@ Widget build(BuildContext context) {
             pageTitle: 'Organizations',
             appBarHeight: 70,
           ),
-         backgroundColor: const Color.fromARGB(104, 200, 215, 231),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                IconButton(
-                icon: const Icon(IconData(0xf068, fontFamily: 'MaterialIcons')),
-                  onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return StatefulBuilder(
-                        builder: (BuildContext context, StateSetter setState) {
-                          return SizedBox(
-                            height: 600,
-                            child: Column(children: [
-                              const SizedBox(height: 20),
-                              _buildSectionTitle('Categories', Icons.category_rounded),
-                              const SizedBox(height: 10),
-                              //не убирайте отсюда врап, перестанут работать выбранные категрии
-                              Wrap(
-                                spacing: 8.0,
-                                runSpacing: 8.0,
-                                children: categories.map((item) {
-                                  final isSelected = selectedCategories.contains(item);
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (isSelected) {
-                                          selectedCategories.remove(item);
-                                        } else {
-                                          selectedCategories.add(item);
-                                        }
-                                      });
-                                      _search(selectedCategories, selectedCountries);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: isSelected ? Colors.blueAccent : Colors.grey[800], // Изменено здесь
-                                        borderRadius: BorderRadius.circular(20.0),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                                      child: Text(
+          backgroundColor: Colors.grey[200],
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Expanded(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min, // Take up only necessary width
+                            children: [
+                              ...selectedCategories.map((item) => Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Chip(
+                                      label: Text(
                                         item,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: isSelected ? Colors.white : Colors.white,
-                                        ),
+                                        style: const TextStyle(color: Colors.white),
                                       ),
+                                      backgroundColor: Colors.grey[800],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                        side: const BorderSide(color: Colors.transparent),
+                                      ),
+                                      onDeleted: () {
+                                        selectedCategories.remove(item);
+                                        _search(selectedCategories, selectedCountries);
+                                      },
+                                      deleteIconColor: Colors.white,
                                     ),
-                                  );
-                                }).toList(),
-                              ),
-                              const SizedBox(height: 20),
-                              _buildSectionTitle('Countries', Icons.public_rounded),
-                              const SizedBox(height: 10),
-                              //не убирайте отсюда врап, перестанут отображаться выбранные страны
-                              Wrap(
-                                spacing: 8.0,
-                                runSpacing: 8.0,
-                                children: countries.map((item) {
-                                  final isSelected = selectedCountries.contains(item);
-                                  return GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        if (isSelected) {
-                                          selectedCountries.remove(item);
-                                        } else {
-                                          selectedCountries.add(item);
-                                        }
-                                      });
-                                      _search(selectedCategories, selectedCountries);
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: isSelected ? Colors.blueAccent : Colors.grey[800], // Изменено здесь
-                                        borderRadius: BorderRadius.circular(20.0),
-                                      ),
-                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                                      child: Text(
+                                  )),
+                              ...selectedCountries.map((item) => Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Chip(
+                                      label: Text(
                                         item,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: isSelected ? Colors.white : Colors.white,
-                                        ),
+                                        style: const TextStyle(color: Colors.white),
                                       ),
+                                      backgroundColor: Colors.grey[800],
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                        side: const BorderSide(color: Colors.transparent),
+                                      ),
+                                      onDeleted: () {
+                                        selectedCountries.remove(item);
+                                        _search(selectedCategories, selectedCountries);
+                                      },
+                                      deleteIconColor: Colors.white,
                                     ),
-                                  );
-                                }).toList(),
+                                  )),
+                            ],
+                          ),
+                        ),
+                      ),
+                      IconButton(
+  icon: const Icon(Icons.tune),
+  onPressed: () {
+    showModalBottomSheet(
+      backgroundColor: Colors.white,
+      context: context,
+      builder: (BuildContext context) {
+        return SingleChildScrollView( // Make the content scrollable
+          child: StatefulBuilder(
+            builder: (BuildContext context, StateSetter setState) {
+              return Column(
+                children: <Widget>[
+                  const SizedBox(height: 40,),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25), 
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Categories',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ),
+                  ), 
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), 
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: categories.map((item) {
+                          final isSelected = selectedCategories.contains(item);
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (isSelected) {
+                                  selectedCategories.remove(item);
+                                } else {
+                                  selectedCategories.add(item);
+                                }
+                              });
+                              _search(selectedCategories, selectedCountries);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: isSelected ? Colors.grey[800] : const Color.fromARGB(255, 242, 245, 247),
+                                borderRadius: BorderRadius.circular(20.0),
                               ),
-                              const SizedBox(height: 20),
-                            ]),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              child: Text(
+                                item,
+                                style: TextStyle(
+                                  fontSize: 14, // Keep the category item text size as 14
+                                  color: isSelected ? Colors.white : Colors.grey[800],
+                                ),
+                              ),
+                            ),
                           );
-                        },
-                      );
-                    },
-                  );
-                },
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20,),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 25), // Adds space to the left of the second title
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Countries',
+                        style: TextStyle(fontSize: 20), // Set the font size to 20
+                      ),
+                    ),
+                  ), 
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Adds space to the left of the second Wrap widget
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Wrap(
+                        spacing: 8.0,
+                        runSpacing: 8.0,
+                        children: countries.map((item) {
+                          final isSelected = selectedCountries.contains(item);
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (isSelected) {
+                                  selectedCountries.remove(item);
+                                } else {
+                                  selectedCountries.add(item);
+                                }
+                              });
+                              _search(selectedCategories, selectedCountries);
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: isSelected ? Colors.grey[800] : const Color.fromARGB(255, 242, 245, 247),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                              child: Text(
+                                item,
+                                style: TextStyle(
+                                  fontSize: 14, // Keep the country item text size as 14
+                                  color: isSelected ? Colors.white : Colors.grey[800],
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20,), // Additional space before the close button
+                  ElevatedButton(
+                    onPressed: () => Navigator.pop(context),
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.white, backgroundColor: Colors.blue, // Foreground color of the button (text color)
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10), // No rounded corners
+                      ),
+                      padding: const EdgeInsets.all(20), // Size of the button
+                      textStyle: const TextStyle(fontSize: 18), // Text size
+                    ),
+                    child: const Text('Apply Filter'),
+                  ),
+                  const SizedBox(height: 40,),
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
+  },
+  iconSize: 30,
+),
+
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 5), // Adds space to the left of the second title
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        'Organizations',
+                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ), 
+                  const SizedBox(height: 20),
+                  Expanded(
+  child: _isSearching
+      ? const Center(child: CircularProgressIndicator())
+      : filteredResults.isNotEmpty
+          ? GridView.builder(
+              padding: const EdgeInsets.all(8.0), // Optional: Add some padding around the grid
+              shrinkWrap: true, // Ensures the grid only occupies the space needed
+              physics: NeverScrollableScrollPhysics(), // Disables scrolling in the grid
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, // Display 2 items per row
+                crossAxisSpacing: 8.0, // Space between items horizontally
+                mainAxisSpacing: 8.0, // Space between items vertically
+                childAspectRatio: 1, // Makes the grid items square
               ),
-                _buildSectionTitle('Organizations', Icons.business_rounded),
-                const SizedBox(height: 30),
-                Expanded(
-                  child: _isSearching
-                      ? const Center(child: CircularProgressIndicator())
-                      : filteredResults.isNotEmpty
-                          ? ListView.builder(
-                              itemCount: filteredResults.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(
-                                  children: [
-                                    const SizedBox(height: 10),
-                                    Container(
-                                      width: double.infinity,
-                                      height: 150,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            color: Colors.grey.withOpacity(0.5),
-                                            spreadRadius: 2,
-                                            blurRadius: 5,
-                                          ),
-                                        ],
-                                        borderRadius: BorderRadius.circular(15.0),
-                                      ),
-                                      child: OrganizationCard(
-                                        id: filteredResults[index].id,
-                                        name: filteredResults[index].name,
-                                        link: filteredResults[index].link,
-                                        description: filteredResults[index].description,
-                                        logo: filteredResults[index].logo,
-                                        categories: filteredResults[index].categories,
-                                        countries: filteredResults[index].countries,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 5),
-                                  ],
-                                );
-                              },
-                            )
-                          : const Center(child: Text('Results are not found')),
-                ),
-              ],
+              itemCount: filteredResults.length,
+              itemBuilder: (BuildContext context, int index) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: OrganizationCard(
+                    id: filteredResults[index].id,
+                    name: filteredResults[index].name,
+                    link: filteredResults[index].link,
+                    description: filteredResults[index].description,
+                    logo: filteredResults[index].logo,
+                    categories: filteredResults[index].categories,
+                    countries: filteredResults[index].countries,
+                  ),
+                );
+              },
+            )
+          : const Center(child: Text('Results are not found')),
+),
+
+                ],
             ),
           ),
           bottomNavigationBar: const CustomBottomNavBar(index: 2),
@@ -289,18 +395,5 @@ Widget build(BuildContext context) {
   } catch (e) {
     throw Exception('Null data');
   }
-}
-
-Widget _buildSectionTitle(String title, IconData icon) {
-  return Row(
-    children: [
-      Icon(icon, color: const Color(0xFF004AAD)),  // Приятный оттенок синего
-      const SizedBox(width: 10),
-      Text(
-        title,
-        style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Color(0xFF004AAD)),  // Приятный оттенок синего
-      ),
-    ],
-  );
 }
 }

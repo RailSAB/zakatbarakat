@@ -38,7 +38,6 @@ class OrganizationCard extends StatelessWidget {
       margin: const EdgeInsets.all(8.0),
       padding: const EdgeInsets.all(8.0),
       decoration: BoxDecoration(
-        color: Colors.grey[200],
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Column(
