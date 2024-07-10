@@ -8,8 +8,6 @@ class ZakatOnLivestockNotifier extends StateNotifier<ZakatOnLivestockModel> {
   
   ZakatOnLivestockNotifier() : super(ZakatOnLivestockModel());
 
-  final ZakatOnLivestockModel _model = ZakatOnLivestockModel();
-
 
   void setSheep(int value) => state.sheep = value;//1
   void setCows(int value) => state.cows = value;//2

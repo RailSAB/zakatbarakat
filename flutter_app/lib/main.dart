@@ -5,7 +5,7 @@ import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_app/ui/pages/livestock/overall_screen_livestock.dart';
 import 'package:flutter_app/ui/pages/livestock/zakat_livestock_screen_1.dart';
 import 'package:flutter_app/ui/pages/organizations/organizations.dart';
-import 'package:flutter_app/ui/pages/property/zakat_property_screen_1.dart';
+import 'package:flutter_app/ui/pages/property/newproperty_screen.dart';
 import 'package:flutter_app/ui/pages/ushr/zakat_ushr_screen.dart';
 import 'package:flutter_app/ui/pages/home_page.dart';
 import 'package:flutter_app/ui/pages/livestock/zakat_livestock_screen_2.dart.dart';

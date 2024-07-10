@@ -5,8 +5,7 @@ import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 class CurrencySelectionScreen extends StatefulWidget {
   final Function(List<String>) onCurrencySelected;
 
-  const CurrencySelectionScreen({Key? key, required this.onCurrencySelected})
-      : super(key: key);
+  const CurrencySelectionScreen({super.key, required this.onCurrencySelected});
 
   @override
   State<CurrencySelectionScreen> createState() =>

@@ -1,4 +1,3 @@
-import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/models/zakat_on_property_model.dart';
 
@@ -9,95 +8,29 @@ final zakatOnPropertyProvider =
 class ZakatOnPropertyNotifier extends StateNotifier<ZakatOnPropertyModel> {
   ZakatOnPropertyNotifier() : super(ZakatOnPropertyModel());
 
-  final ZakatOnPropertyModel _model = ZakatOnPropertyModel();
+  void setAny(String category, List<Map<String, dynamic>> data) {
+    state = state.copyWith(
+      cash: category == 'cash' ? data : state.cash,
+      cashOnBankCards: category == 'cashOnBankCards' ? data : state.cashOnBankCards,
+      goldJewellery: category == 'goldJewellery' ? data : state.goldJewellery,
+      silverJewellery: category == 'silverJewellery' ? data : state.silverJewellery,
+      purchasedProductForResaling: category == 'purchasedProductForResaling' ? data : state.purchasedProductForResaling,
+      unfinishedProduct: category == 'unfinishedProduct' ? data : state.unfinishedProduct,
+      producedProductForResaling: category == 'producedProductForResaling' ? data : state.producedProductForResaling,
+      purchasedNotForResaling: category == 'purchasedNotForResaling' ? data : state.purchasedNotForResaling,
+      usedAfterNisab: category == 'usedAfterNisab' ? data : state.usedAfterNisab,
+      rentMoney: category == 'rentMoney' ? data : state.rentMoney,
+      stocksForResaling: category == 'stocksForResaling' ? data : state.stocksForResaling,
+      incomeFromStocks: category == 'incomeFromStocks' ? data : state.incomeFromStocks,
+      taxesValue: category == 'taxesValue' ? data : state.taxesValue,
+    );
+  }
 
-  void addCash(int value, CurrencyModel currency) =>
-      state.addCash(value, currency); //1
+  void setZakatValue(double value) {
+    state = state.copyWith(zakatValue: value);
+  }
 
-  void addCashOnBankCards(int value, CurrencyModel currency) =>
-      state.addCashOnBankCards(value, currency);
-
-  void addGoldJewellery(int value, CurrencyModel currency) =>
-      state.addGoldJewellery(value, currency); //3
-
-  void addSilverJewellery(int value, CurrencyModel currency) =>
-      state.addSilverJewellery(value, currency); //4
-  void addPurchasedProductForResaling(int value, CurrencyModel currency) =>
-      state.addPurchasedProductForResaling(value, currency); //5
-  void addUnfinishedProduct(int value, CurrencyModel currency) =>
-      state.addUnfinishedProduct(value, currency); //6
-  void addProducedProductForResaling(int value, CurrencyModel currency) =>
-      state.addProducedProductForResaling(value, currency); //7
-  void addPurchasedNotForResaling(int value, CurrencyModel currency) =>
-      state.addPurchasedNotForResaling(value, currency); //8
-
-  void addUsedAfterNisab(int value, CurrencyModel currency) =>
-      state.addUsedAfterNisab(value, currency); //9
-
-  void addRentMoney(int value, CurrencyModel currency) =>
-      state.addRentMoney(value, currency); //10
-  void addStocksForResaling(int value, CurrencyModel currency) =>
-      state.addStocksForResaling(value, currency); //11
-  void addIncomeFromStocks(int value, CurrencyModel currency) =>
-      state.addIncomeFromStocks(value, currency); //12
-  void addTaxesValue(int value, CurrencyModel currency) =>
-      state.addTaxesValue(value, currency); //13
-
-  void setZakatValue(int value) => state.setZakatValue(value: value);
-  void setNisabStatus(bool status) => state.setNisabStatus(status: status);
-
-  // int getZakatValue() =>
-  //     state.getValue('zakatValue', currency);
-
-  void add(String category, CurrencyModel currency, int value) {
-    switch (category) {
-      case 'cash':
-        addCash(value, currency);
-        break;
-      case 'cashOnBankCards':
-        addCashOnBankCards(value, currency);
-        break;
-      case 'goldJewellery':
-        addGoldJewellery(value, currency);
-        break;
-      case 'silverJewellery':
-        addSilverJewellery(value, currency);
-        break;
-      case 'purchasedProductForResaling':
-        addPurchasedProductForResaling(value, currency);
-        break;
-      case 'unfinishedProduct':
-        addUnfinishedProduct(value, currency);
-        break;
-      case 'producedProductForResaling':
-        addProducedProductForResaling(value, currency);
-        break;
-      case 'purchasedNotForResaling':
-        addPurchasedNotForResaling(value, currency);
-        break;
-      case 'usedAfterNisab':
-        addUsedAfterNisab(value, currency);
-        break;
-      case 'rentMoney':
-        addRentMoney(value, currency);
-        break;
-      case 'stocksForResaling':
-        addStocksForResaling(value, currency);
-        break;
-      case 'incomeFromStocks':
-        addIncomeFromStocks(value, currency);
-        break;
-      case 'taxesValue':
-        addTaxesValue(value, currency);
-        break;
-      case 'zakatValue':
-        setZakatValue(value);
-        break;
-      // case 'nisabValue':
-      //   setNisabValue(currency);
-      //   break;
-      default:
-        break;
-    }
+  void setNisabStatus(bool status) {
+    state = state.copyWith(nisabStatus: status);
   }
 }
