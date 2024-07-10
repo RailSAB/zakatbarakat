@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/ui/widgets/currency_selection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/news_card.dart';
 import 'package:http/http.dart' as http;
@@ -191,7 +192,18 @@ class _HomePageState extends ConsumerState<HomePage> {
       children: [
         ElevatedButton(
           onPressed: () {
-            Navigator.pushNamed(context, route);
+            if(route == '/property') {
+              Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CurrencySelectionScreen(
+                            onCurrencySelected: (selectedCurrencies) {},
+                          ),
+                        ),
+                      );
+            }
+            else{
+            Navigator.pushNamed(context, route);}
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,
@@ -200,7 +212,7 @@ class _HomePageState extends ConsumerState<HomePage> {
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: 10,
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
           ),
           child: Image.asset(assetPath, height: 50, width: 50),
         ),
@@ -212,4 +224,5 @@ class _HomePageState extends ConsumerState<HomePage> {
       ],
     );
   }
+
 }

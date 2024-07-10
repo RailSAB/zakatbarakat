@@ -40,7 +40,7 @@ class _PropertyOverallState extends ConsumerState<PropertyOverallPage> {
         style: TextStyle(fontSize: 30),
       );
 
-  Widget sum(int number) {
+  Widget sum(double number) {
     if (number == 0) {
       return const Text(
         style: TextStyle(fontSize: 30),
