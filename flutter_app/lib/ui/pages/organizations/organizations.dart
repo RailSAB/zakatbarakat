@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/organization_model.dart';
 import 'package:flutter_app/providers/organization_search_provider.dart';
+import 'package:flutter_app/providers/selected_categories_provider.dart';
+import 'package:flutter_app/providers/selected_countries_provider.dart';
 import 'package:flutter_app/ui/pages/organizations/json_organization.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
@@ -24,8 +26,8 @@ class _OrganizationsState extends ConsumerState<Organizations> {
   bool _isSearching = true;
   List<String> categories = [];
   List<String> countries = [];
-  List<String> selectedCategories = [];
-  List<String> selectedCountries = [];
+  late List<String> selectedCategories;
+  late List<String> selectedCountries;
 
   @override
   void initState() {
@@ -116,12 +118,10 @@ class _OrganizationsState extends ConsumerState<Organizations> {
 
   void loadCategories() async {
     categories = await getCategories();
-    setState(() {});
   }
 
   void loadCountries() async {
     countries = await getCountries();
-    setState(() {});
   }
   @override
 Widget build(BuildContext context) {
@@ -129,6 +129,8 @@ Widget build(BuildContext context) {
     return Consumer(
       builder: (context, ref, _) {
         final filteredResults = ref.watch(orgSearchProvider).searchResults;
+        selectedCategories = ref.watch(selectedCategoriesProvider).selectedCategories;
+        selectedCountries = ref.watch(selectedCountriesProvider).selectedCountries;
         return Scaffold(
           appBar: CustomAppBar(
             pageTitle: 'Organizations',
@@ -140,15 +142,100 @@ Widget build(BuildContext context) {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                const SizedBox(height: 20),
-                _buildSectionTitle('Categories', Icons.category_rounded),
-                const SizedBox(height: 10),
-                _buildWrap(categories, selectedCategories, _search),
-                const SizedBox(height: 20),
-                _buildSectionTitle('Countries', Icons.public_rounded),
-                const SizedBox(height: 10),
-                _buildWrap(countries, selectedCountries, _search),
-                const SizedBox(height: 20),
+                IconButton(
+                icon: const Icon(IconData(0xf068, fontFamily: 'MaterialIcons')),
+                  onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return StatefulBuilder(
+                        builder: (BuildContext context, StateSetter setState) {
+                          return SizedBox(
+                            height: 600,
+                            child: Column(children: [
+                              const SizedBox(height: 20),
+                              _buildSectionTitle('Categories', Icons.category_rounded),
+                              const SizedBox(height: 10),
+                              //не убирайте отсюда врап, перестанут работать выбранные категрии
+                              Wrap(
+                                spacing: 8.0,
+                                runSpacing: 8.0,
+                                children: categories.map((item) {
+                                  final isSelected = selectedCategories.contains(item);
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        if (isSelected) {
+                                          selectedCategories.remove(item);
+                                        } else {
+                                          selectedCategories.add(item);
+                                        }
+                                      });
+                                      _search(selectedCategories, selectedCountries);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: isSelected ? Colors.blueAccent : Colors.grey[800], // Изменено здесь
+                                        borderRadius: BorderRadius.circular(20.0),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                                      child: Text(
+                                        item,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: isSelected ? Colors.white : Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                              const SizedBox(height: 20),
+                              _buildSectionTitle('Countries', Icons.public_rounded),
+                              const SizedBox(height: 10),
+                              //не убирайте отсюда врап, перестанут отображаться выбранные страны
+                              Wrap(
+                                spacing: 8.0,
+                                runSpacing: 8.0,
+                                children: countries.map((item) {
+                                  final isSelected = selectedCountries.contains(item);
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        if (isSelected) {
+                                          selectedCountries.remove(item);
+                                        } else {
+                                          selectedCountries.add(item);
+                                        }
+                                      });
+                                      _search(selectedCategories, selectedCountries);
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: isSelected ? Colors.blueAccent : Colors.grey[800], // Изменено здесь
+                                        borderRadius: BorderRadius.circular(20.0),
+                                      ),
+                                      padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                                      child: Text(
+                                        item,
+                                        style: TextStyle(
+                                          fontSize: 14,
+                                          color: isSelected ? Colors.white : Colors.white,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                              const SizedBox(height: 20),
+                            ]),
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              ),
                 _buildSectionTitle('Organizations', Icons.business_rounded),
                 const SizedBox(height: 30),
                 Expanded(
@@ -216,42 +303,4 @@ Widget _buildSectionTitle(String title, IconData icon) {
     ],
   );
 }
-
-Widget _buildWrap(List<String> items, List<String> selectedItems, Function onTap) {
-  return Wrap(
-    spacing: 8.0,
-    runSpacing: 8.0,
-    children: items.map((item) {
-      final isSelected = selectedItems.contains(item);
-      return GestureDetector(
-        onTap: () {
-          setState(() {
-            if (isSelected) {
-              selectedItems.remove(item);
-            } else {
-              selectedItems.add(item);
-            }
-          });
-          _search(selectedCategories, selectedCountries);
-          // onTap(selectedItems, selectedCountries);
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: isSelected ? Colors.blueAccent : Colors.grey[800], // Изменено здесь
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-          child: Text(
-            item,
-            style: TextStyle(
-              fontSize: 14,
-              color: isSelected ? Colors.white : Colors.white,
-            ),
-          ),
-        ),
-      );
-    }).toList(),
-  );
-}
-
 }
