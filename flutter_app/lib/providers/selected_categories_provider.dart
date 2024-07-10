@@ -13,6 +13,17 @@ class SelectedCategories extends ChangeNotifier {
     notifyListeners(); // Notify all listeners about the change
   }
 
+  void initializeWithFundsCategory(bool isCharity) {
+    if (isCharity) {
+      if(_selectedCategories.isEmpty) {
+         _selectedCategories.add('Charity Funds');
+      }
+      if(selectedCategories.contains('Charity Funds')){
+        notifyListeners();
+      }
+    }
+  }
+
   // Method to toggle an item in the list
   void toggleItem(String item) {
     if (_selectedCategories.contains(item)) {
