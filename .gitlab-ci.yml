@@ -6,16 +6,17 @@ stages:
 
 cache:
   paths:
-    - .pub-cache
+    - flutter_app/.pub-cache
 
 build:
   stage: build
   script:
+    - cd flutter_app
     - flutter pub get
     - flutter build web
   artifacts:
     paths:
-      - build/web
+      - flutter_app/build/web
     expire_in: 1 week
 
 pages:
