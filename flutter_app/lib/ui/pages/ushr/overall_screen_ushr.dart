@@ -18,7 +18,7 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
+     backgroundColor: Colors.grey[200],
       appBar: CustomAppBar(pageTitle: 'Overall', appBarHeight: 70),
       body: Center(
         child: Padding(
@@ -72,6 +72,7 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
     final toReturn = ListView(
       children: crops.map((crop) {
         return Card(
+          color: Colors.white,
           margin: const EdgeInsets.all(8.0),
           child: Padding(
             padding: const EdgeInsets.all(16.0),

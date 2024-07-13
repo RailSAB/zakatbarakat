@@ -22,7 +22,7 @@ class _UshrState extends ConsumerState<UshrPage> {
   Widget build(BuildContext context) {
     return Scaffold(   
       appBar: CustomAppBar(pageTitle: 'Zakat on Ushr', appBarHeight: 70),
-      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
+      backgroundColor: Colors.grey[200],
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(

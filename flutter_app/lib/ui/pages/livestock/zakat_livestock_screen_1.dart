@@ -36,7 +36,7 @@ class _LivestockState extends ConsumerState<LivestockPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
+      backgroundColor: Colors.grey[200],
       appBar: CustomAppBar(pageTitle: 'Zakat on Livestock', appBarHeight: 70),
       body: Form(
         key: _formKey,

@@ -197,7 +197,7 @@ class _ArticlePageState extends State <ArticlePage> {
   Widget build(BuildContext context) {
   return Scaffold(
       appBar: CustomAppBar(pageTitle: 'Article', appBarHeight: 70,),
-      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
+    backgroundColor: Colors.grey[200],
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8.0),
         child: Column(

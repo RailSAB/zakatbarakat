@@ -17,10 +17,15 @@ class PropertyPage extends ConsumerStatefulWidget {
 }
 
 class _PropertyState extends ConsumerState<PropertyPage> {
+  TextEditingController cashController = TextEditingController();
+  TextEditingController bankCardController = TextEditingController();
   TextEditingController silverMeasuringUnitController = TextEditingController();
   TextEditingController goldMeasuringUnitController = TextEditingController();
   TextEditingController silverValueController = TextEditingController();
   TextEditingController goldValueController = TextEditingController();
+  TextEditingController silverSampleController = TextEditingController();
+  TextEditingController goldSampleController = TextEditingController();
+
 
 
   Map<String, List<Map<String, dynamic>>> categoryData = {};
@@ -28,6 +33,15 @@ class _PropertyState extends ConsumerState<PropertyPage> {
 
    String selectedMeasuringUnitSilver = 'kg';
    String selectedMeasuringUnitGold = 'kg';
+   String selectedSilverSample = '999';
+  String selectedGoldSample = '999';
+  void selectSilverSample(String unit) {
+    setState(() {
+      selectedSilverSample = unit;
+    });
+  }
+
+
 
 
   void _saveAllData() {
@@ -35,6 +49,13 @@ class _PropertyState extends ConsumerState<PropertyPage> {
     ref.read(zakatOnPropertyProvider.notifier).setAny(category, data);
   });
   }
+
+  void selectGoldSample(String unit) {
+    setState(() {
+      selectedGoldSample = unit;
+    });
+  }
+
 
   Future<void> calculateZakat() async {
     _saveAllData();
@@ -155,9 +176,11 @@ class _PropertyState extends ConsumerState<PropertyPage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
+          
             onPressed: () {
               calculateZakat();
             },
+            backgroundColor: const Color.fromARGB(255, 176, 216, 253),
             child: const Icon(Icons.calculate),
           ),
       ),
@@ -715,92 +738,143 @@ class _PropertyState extends ConsumerState<PropertyPage> {
   );
   }
   
-  
 
 
 
 Widget _buildSilverSection() {
-  return Container(
-    padding: const EdgeInsets.all(16.0),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.white,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.5),
-          spreadRadius: 2,
-          blurRadius: 5,
-          offset: Offset(0, 3), 
-        ),
-      ],
-    ),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          flex: 2,
-          child: SizedBox(
-            width: 220,
-            height: 50,
-            child: TextFormField(
-              controller: silverValueController,
-              validator: (value) {
-                if (value!.isEmpty) return null;
-                if (!RegExp(r'^[+-]?\d+$').hasMatch(value)) {
-                  return 'Please enter only digits';
-                }
-                if (int.parse(value) <= 0) {
-                  return 'Please enter a positive integer';
-                }
-                return null;
-              },
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
-                labelText: 'Enter value',
-                labelStyle: TextStyle(fontSize: 16),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+    return Container(
+      padding: const EdgeInsets.all(16.0),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              width: 220,
+              height: 50,
+              child: TextFormField(
+                controller: silverValueController,
+                validator: (value) {
+                  if (value!.isEmpty) return null;
+                  if (!RegExp(r'^[+-]?\d+$').hasMatch(value)) {
+                    return 'Please enter only digits';
+                  }
+                  if (int.parse(value) <= 0) {
+                    return 'Please enter a positive integer';
+                  }
+                  return null;
+                },
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                  labelText: 'Enter value',
+                  labelStyle: TextStyle(fontSize: 16),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                ),
               ),
             ),
           ),
-        ),
-        const SizedBox(width: 20),
-        Expanded(
-          flex: 2,
-          child: SizedBox(
-            height: 50,
-            child: DropdownButtonFormField<String>(
-              value: selectedMeasuringUnitSilver,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+          const SizedBox(width: 20),
+          Expanded(
+            flex: 2,
+            child: SizedBox(
+              height: 50,
+              child: DropdownButtonFormField<String>(
+                value: selectedMeasuringUnitSilver,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                  labelText: 'Measuring Unit',
+                  labelStyle: TextStyle(fontSize: 16),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                labelText: 'Measuring Unit',
-                labelStyle: TextStyle(fontSize: 16),
+                items: ['kg', 'oz', 'g'].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() {
+                    if (value != null) {
+                      selectedMeasuringUnitSilver = value;
+                      silverMeasuringUnitController.text = value;
+                    }
+                  });
+                },
               ),
-              items: ['kg', 'oz', 'g'].map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-              onChanged: (value) {
+            ),
+          ),
+          const SizedBox(width: 20),
+          Expanded(
+            flex: 2,
+            child: PopupMenuButton<String>(
+              onSelected: (String value) {
                 setState(() {
-                  if (value != null) {
-                    selectedMeasuringUnitSilver = value;
-                    silverMeasuringUnitController.text = value;
-                  }
+                  selectSilverSample(value);
+                  silverSampleController.text = value;
                 });
               },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(selectedSilverSample),
+                    const Icon(Icons.arrow_drop_down),
+                  ],
+                ),
+              ),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem<String>(
+                  value: '999',
+                  child: Text('999'),
+                ),
+                const PopupMenuItem<String>(
+                  value: '925/900',
+                  child: Text('925/900'),
+                ),
+                const PopupMenuItem<String>(
+                  value: '875/884',
+                  child: Text('875/884'),
+                ),
+                const PopupMenuItem<String>(
+                  value: '800',
+                  child: Text('800'),
+                ),
+                const PopupMenuItem<String>(
+                  value: '750',
+                  child: Text('750'),
+                ),
+                const PopupMenuItem<String>(
+                  value: '600',
+                  child: Text('600'),
+                ),
+              ],
             ),
           ),
-        ),
-      ],
-    ),
-  );
-}
-
+        ],
+      ),
+    );
+  }
+      
 Widget _buildGoldSection() {
   return Container(
     padding: const EdgeInsets.all(16.0),
@@ -812,7 +886,7 @@ Widget _buildGoldSection() {
           color: Colors.grey.withOpacity(0.5),
           spreadRadius: 2,
           blurRadius: 5,
-          offset: Offset(0, 3), // changes position of shadow
+          offset: Offset(0, 3), 
         ),
       ],
     ),
@@ -878,10 +952,72 @@ Widget _buildGoldSection() {
             ),
           ),
         ),
-      ],
-    ),
-  );
-}
+         const SizedBox(width: 20),
+          Expanded(
+            flex: 2,
+            child: PopupMenuButton<String>(
+              onSelected: (String value) {
+                setState(() {
+                  selectGoldSample(value);
+                  silverSampleController.text = value;
+                });
+              },
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(selectedGoldSample),
+                    const Icon(Icons.arrow_drop_down),
+                  ],
+                ),
+              ),
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                const PopupMenuItem<String>(
+                  value: '999/24K',
+                  child: Text('999/24K',),
+                ),
+                const PopupMenuItem<String>(
+                  value:  '958',
+                  child: Text( '958'),
+                ),
+                const PopupMenuItem<String>(
+                  value: '900/916/22K',
+                  child: Text('900/916/22K'),
+                ),
+                const PopupMenuItem<String>(
+                  value:   '850/21K',
+                  child: Text(  '850/21K'),
+                ),
+                const PopupMenuItem<String>(
+                  value: '750/18K',
+                  child: Text('750/18K'),
+                ),
+                const PopupMenuItem<String>(
+                  value:  '583/585/14K',
+                  child: Text( '583/585/14K'),
+                ),
+                const PopupMenuItem<String>(
+                  value:  '500/12K',
+                  child: Text( '500/12K'),
+                ),
+                const PopupMenuItem<String>(
+                  value:  '375/9K',
+                  child: Text(  '375/9K'),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+        
+  
 
 Widget _buildOtherTab() {
   return SingleChildScrollView(
@@ -890,21 +1026,27 @@ Widget _buildOtherTab() {
       child: Column(
         children: [
           const SizedBox(height: 25),
-          const Text(
-            'Silver',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: const Text(
+              'Silver',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const SizedBox(height: 10),
           _buildSilverSection(),
           const SizedBox(height: 25),
-          const Text(
-            'Gold',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+          Align(
+            alignment: Alignment.centerLeft,
+            child: const Text(
+              'Gold',
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
           const SizedBox(height: 10),
@@ -957,6 +1099,7 @@ Widget _buildOtherTab() {
     ),
   );
 }
+
 Widget _buildPurchasedGoodsSection() {
     return Padding(
     padding: const EdgeInsets.all(16.0), 
