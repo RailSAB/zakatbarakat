@@ -10,28 +10,28 @@ class SelectedCategories extends ChangeNotifier {
 
   set selectedCategories(List<String> newResults) {
     _selectedCategories = newResults;
-    notifyListeners(); // Notify all listeners about the change
+    notifyListeners(); 
   }
 
   void initializeWithFundsCategory(bool isCharity) {
+    _selectedCategories = [];
     if (isCharity) {
       if(_selectedCategories.isEmpty) {
-         _selectedCategories.add('Charity Funds');
+         _selectedCategories.add('Charity funds');
       }
-      if(selectedCategories.contains('Charity Funds')){
-        notifyListeners();
-      }
+    } else if(_selectedCategories.contains('Charity funds')){
+      _selectedCategories.remove('Charity funds');
     }
+    notifyListeners();
   }
 
-  // Method to toggle an item in the list
   void toggleItem(String item) {
     if (_selectedCategories.contains(item)) {
       _selectedCategories.remove(item);
     } else {
       _selectedCategories.add(item);
     }
-    notifyListeners(); // Notify listeners after the change
+    notifyListeners(); 
   }
 }
 

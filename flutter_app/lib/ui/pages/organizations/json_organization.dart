@@ -10,7 +10,6 @@ import 'package:http/http.dart' as http;
       final response = await http.get(Uri.parse('http://158.160.153.243:8000/organization/get-organizations'));
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
-        print('Total Items: ${jsonData.length}');
 
         for (var itemData in jsonData) {
           String? id = itemData['id'] as String?;
@@ -21,7 +20,6 @@ import 'package:http/http.dart' as http;
         } else {
           countries = [];
         } 
-        print('countries: ${countries}');
 
         List<String>? categories;
         if (itemData.containsKey('categories') && itemData['categories']!= null) {

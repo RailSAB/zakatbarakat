@@ -31,32 +31,41 @@ class _OrganizationsState extends ConsumerState<Organizations> {
   late List<String> selectedCategories;
   late List<String> selectedCountries;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance
-      .addPostFrameCallback((_) {
-        ref.refresh(orgSearchProvider.notifier).reset();
-        ref.read(selectedCategoriesProvider.notifier).initializeWithFundsCategory(isCharity);
-        loadCategories();
-        loadCountries();
+@override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ref.read(orgSearchProvider.notifier).reset().then((_) {
+      loadCategories();
+      loadCountries();
+      ref.read(selectedCategoriesProvider.notifier).initializeWithFundsCategory(isCharity);
+      ref.read(selectedCountriesProvider.notifier).reset();
+    }).then((_) {
+      _search(ref.read(selectedCategoriesProvider.notifier).selectedCategories, 
+              ref.read(selectedCountriesProvider.notifier).selectedCountries);
+    }).whenComplete(() {
+      setState(() {
+        _isSearching = false;
       });
-    setState(() {
-      _isSearching = false;
     });
-  }
+  });
+}
+
   
 
 
   Future<void> _search(List<String> categories, List<String> countries) async {
-    if(categories.isEmpty && countries.isEmpty) {
-      ref.refresh(orgSearchProvider.notifier).reset();
-      return;
-    }
-
     setState(() {
       _isSearching = true; 
     });
+
+    if(categories.isEmpty && countries.isEmpty) {
+      ref.refresh(orgSearchProvider.notifier).reset();
+      setState(() {
+        _isSearching = false;
+      });
+      return;
+    }
 
     final url = Uri.parse('http://158.160.153.243:8000/organization/search-organization/');
     final headers = {'Content-Type': 'application/json'}; 
@@ -69,7 +78,6 @@ class _OrganizationsState extends ConsumerState<Organizations> {
     } else {
       throw Exception('Failed to load search results');
     }
-
     setState(() {
       _isSearching = false; 
     });
@@ -343,8 +351,7 @@ Widget build(BuildContext context) {
                     ),
                   ), 
                   const SizedBox(height: 20),
-                  Expanded(
-                    child: _isSearching
+                  _isSearching
                         ? const Center(child: CircularProgressIndicator())
                         : filteredResults.isNotEmpty
                             ? GridView.builder(
@@ -384,7 +391,6 @@ Widget build(BuildContext context) {
                                 },
                               )
                             : const Center(child: Text('Results are not found')),
-                  ),
                 ],
             ),
           ),
