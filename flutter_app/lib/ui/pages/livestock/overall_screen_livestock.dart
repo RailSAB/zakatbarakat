@@ -127,7 +127,7 @@ class _OverallState extends ConsumerState<LivestockOverallPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(pageTitle: 'Overall Livestock Zakat', appBarHeight: 70),
-      backgroundColor: const Color.fromARGB(104, 200, 215, 231),
+       backgroundColor: Colors.grey[200],
       
       body: Padding(
         padding: const EdgeInsets.all(16.0),
