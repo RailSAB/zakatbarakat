@@ -22,7 +22,7 @@ build:
 pages:
   stage: deploy
   script:
-    - mv build/web public
+    - mv flutter_app/build/web public
   artifacts:
     paths:
       - public
