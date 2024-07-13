@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
   Future<List<Article>> getArticles() async {
   final List<Article> articles = [];
     try {
-      final response = await http.get(Uri.parse('http://158.160.153.243:8000/knowledge-base/get-articles'));
+      final response = await http.get(Uri.parse('https://weaviatetest.onrender.com/knowledge-base/get-articles'));
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
 

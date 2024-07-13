@@ -38,7 +38,7 @@ class _KBState extends ConsumerState<KBPage> {
     }
 
     // Get articles
-    final url = Uri.parse('http://158.160.153.243:8000/knowledge-base/search-article/');
+    final url = Uri.parse('https://weaviatetest.onrender.com/knowledge-base/search-article/');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({"searchString": query});
     final response = await http.post(url, headers: headers, body: body);

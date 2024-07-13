@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
   Future<List<Organization>> getOrganizations() async {
   final List<Organization> organizations = [];
     try {
-      final response = await http.get(Uri.parse('http://158.160.153.243:8000/organization/get-organizations'));
+      final response = await http.get(Uri.parse('https://weaviatetest.onrender.com/organization/get-organizations'));
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
 
@@ -57,7 +57,7 @@ import 'package:http/http.dart' as http;
 Future<List<String>> getCategories() async {
   final List<String> categories = [];
     try {
-      final response = await http.get(Uri.parse('http://158.160.153.243:8000/utility/get-categories'));
+      final response = await http.get(Uri.parse('https://weaviatetest.onrender.com/utility/get-categories'));
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         for (var itemData in jsonData) {
@@ -76,7 +76,7 @@ Future<List<String>> getCategories() async {
 Future<List<String>> getCountries() async {
   final List<String> countries = [];
     try {
-      final response = await http.get(Uri.parse('http://158.160.153.243:8000/utility/get-countries'));
+      final response = await http.get(Uri.parse('https://weaviatetest.onrender.com/utility/get-countries'));
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
         for (var itemData in jsonData) {

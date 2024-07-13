@@ -235,7 +235,7 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
 
   Future<http.Response?> _performPostRequest() async {
     final url =
-        Uri.parse('http://158.160.153.243:8000/calculator/zakat-livestock');
+        Uri.parse('https://weaviatetest.onrender.com/calculator/zakat-livestock');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({
       "camels": ref.read(zakatOnLivestockProvider).camels,

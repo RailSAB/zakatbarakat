@@ -86,7 +86,7 @@ class _SendRequestState extends State<SendRequest> {
   Future<void> _submitRequest() async {
     final request = _controller.text;
     final response = await http.post(
-      Uri.parse('http://158.160.153.243:8000/knowledge-base/send-request'),
+      Uri.parse('https://weaviatetest.onrender.com/knowledge-base/send-request'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({'requestText': request}),
     );

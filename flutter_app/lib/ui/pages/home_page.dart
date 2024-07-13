@@ -30,7 +30,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   final List<News> newsArticles = [];
 
   Future getData() async {
-    final response = await http.get(Uri.parse('http://158.160.153.243:8000/news/get-news'));
+    final response = await http.get(Uri.parse('https://weaviatetest.onrender.com/news/get-news'));
     try {
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);

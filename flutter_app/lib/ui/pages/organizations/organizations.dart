@@ -67,7 +67,7 @@ void initState() {
       return;
     }
 
-    final url = Uri.parse('http://158.160.153.243:8000/organization/search-organization/');
+    final url = Uri.parse('https://weaviatetest.onrender.com/organization/search-organization/');
     final headers = {'Content-Type': 'application/json'}; 
     final body = jsonEncode({"categories": categories, "countries": countries}); 
     final response = await http.post(url, headers: headers, body: body);
