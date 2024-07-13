@@ -12,4 +12,9 @@ class SelectedCountries extends ChangeNotifier {
     _selectedCountries = newResults;
     notifyListeners();
   }
+
+  void reset() {
+    _selectedCountries = [];
+    notifyListeners();
+  }
 }

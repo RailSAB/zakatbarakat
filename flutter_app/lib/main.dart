@@ -44,9 +44,9 @@ class ExampleApp extends StatelessWidget {
         //     ),
         //dont understand why this needs taskID, and what taskID should we use
         '/ushrOverall': (context) => const UshrOverallPage(),
-        '/funds': (context) => const FundsPage(),
+        '/funds': (context) => Organizations(isCharity: true),
         '/kb': (context) => const KBPage(),
-        '/org': (context) => const Organizations(),
+        '/org': (context) => Organizations(isCharity: false),
       },
     );
   }

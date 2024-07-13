@@ -8,52 +8,64 @@ import 'package:flutter_app/ui/pages/organizations/json_organization.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
 import 'package:flutter_app/ui/widgets/organization_card.dart';
-// import 'package:flutter_app/ui/widgets/selectableFields.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;
 
 
 class Organizations extends ConsumerStatefulWidget {
-  const Organizations({super.key});
+  final bool isCharity;
+  Organizations({super.key, required this.isCharity});
 
   @override
-  ConsumerState<Organizations> createState() => _OrganizationsState();
+  ConsumerState<Organizations> createState() => _OrganizationsState(isCharity: isCharity);
 }
 
 
   
 class _OrganizationsState extends ConsumerState<Organizations> {
+  bool isCharity;
+  _OrganizationsState({required this.isCharity});
   bool _isSearching = true;
   List<String> categories = [];
   List<String> countries = [];
   late List<String> selectedCategories;
   late List<String> selectedCountries;
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => ref.refresh(orgSearchProvider.notifier).reset());
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => loadCategories());
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => loadCountries());
-    setState(() {
-      _isSearching = false;
+@override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    ref.read(orgSearchProvider.notifier).reset().then((_) {
+      loadCategories();
+      loadCountries();
+      ref.read(selectedCategoriesProvider.notifier).initializeWithFundsCategory(isCharity);
+      ref.read(selectedCountriesProvider.notifier).reset();
+    }).then((_) {
+      _search(ref.read(selectedCategoriesProvider.notifier).selectedCategories, 
+              ref.read(selectedCountriesProvider.notifier).selectedCountries);
+    }).whenComplete(() {
+      setState(() {
+        _isSearching = false;
+      });
     });
-  }
+  });
+}
+
   
 
 
   Future<void> _search(List<String> categories, List<String> countries) async {
-    if(categories.isEmpty && countries.isEmpty) {
-      ref.refresh(orgSearchProvider.notifier).reset();
-      return;
-    }
-
     setState(() {
       _isSearching = true; 
     });
+
+    if(categories.isEmpty && countries.isEmpty) {
+      ref.refresh(orgSearchProvider.notifier).reset();
+      setState(() {
+        _isSearching = false;
+      });
+      return;
+    }
 
     final url = Uri.parse('http://158.160.153.243:8000/organization/search-organization/');
     final headers = {'Content-Type': 'application/json'}; 
@@ -66,7 +78,6 @@ class _OrganizationsState extends ConsumerState<Organizations> {
     } else {
       throw Exception('Failed to load search results');
     }
-
     setState(() {
       _isSearching = false; 
     });
@@ -139,8 +150,7 @@ Widget build(BuildContext context) {
           backgroundColor: Colors.grey[200],
             body: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: ListView(
                 children: <Widget>[
                   Row(
                     children: [
@@ -193,142 +203,141 @@ Widget build(BuildContext context) {
                         ),
                       ),
                       IconButton(
-  icon: const Icon(Icons.tune),
-  onPressed: () {
-    showModalBottomSheet(
-      backgroundColor: Colors.white,
-      context: context,
-      builder: (BuildContext context) {
-        return SingleChildScrollView( // Make the content scrollable
-          child: StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return Column(
-                children: <Widget>[
-                  const SizedBox(height: 40,),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25), 
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Categories',
-                        style: TextStyle(fontSize: 20),
-                      ),
-                    ),
-                  ), 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), 
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        children: categories.map((item) {
-                          final isSelected = selectedCategories.contains(item);
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                if (isSelected) {
-                                  selectedCategories.remove(item);
-                                } else {
-                                  selectedCategories.add(item);
-                                }
-                              });
-                              _search(selectedCategories, selectedCountries);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: isSelected ? Colors.grey[800] : const Color.fromARGB(255, 242, 245, 247),
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                              child: Text(
-                                item,
-                                style: TextStyle(
-                                  fontSize: 14, // Keep the category item text size as 14
-                                  color: isSelected ? Colors.white : Colors.grey[800],
+                        icon: const Icon(Icons.tune),
+                        onPressed: () {
+                          showModalBottomSheet(
+                            backgroundColor: Colors.white,
+                            context: context,
+                            builder: (BuildContext context) {
+                              return SingleChildScrollView( // Make the content scrollable
+                                child: StatefulBuilder(
+                                  builder: (BuildContext context, StateSetter setState) {
+                                    return Column(
+                                      children: <Widget>[
+                                        const SizedBox(height: 40,),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 25), 
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Categories',
+                                              style: TextStyle(fontSize: 20),
+                                            ),
+                                          ),
+                                        ), 
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), 
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Wrap(
+                                              spacing: 8.0,
+                                              runSpacing: 8.0,
+                                              children: categories.map((item) {
+                                                final isSelected = selectedCategories.contains(item);
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      if (isSelected) {
+                                                        selectedCategories.remove(item);
+                                                      } else {
+                                                        selectedCategories.add(item);
+                                                      }
+                                                    });
+                                                    _search(selectedCategories, selectedCountries);
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: isSelected ? Colors.grey[800] : const Color.fromARGB(255, 242, 245, 247),
+                                                      borderRadius: BorderRadius.circular(20.0),
+                                                    ),
+                                                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                                    child: Text(
+                                                      item,
+                                                      style: TextStyle(
+                                                        fontSize: 14, // Keep the category item text size as 14
+                                                        color: isSelected ? Colors.white : Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20,),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: 25), // Adds space to the left of the second title
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              'Countries',
+                                              style: TextStyle(fontSize: 20), // Set the font size to 20
+                                            ),
+                                          ),
+                                        ), 
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Adds space to the left of the second Wrap widget
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Wrap(
+                                              spacing: 8.0,
+                                              runSpacing: 8.0,
+                                              children: countries.map((item) {
+                                                final isSelected = selectedCountries.contains(item);
+                                                return GestureDetector(
+                                                  onTap: () {
+                                                    setState(() {
+                                                      if (isSelected) {
+                                                        selectedCountries.remove(item);
+                                                      } else {
+                                                        selectedCountries.add(item);
+                                                      }
+                                                    });
+                                                    _search(selectedCategories, selectedCountries);
+                                                  },
+                                                  child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: isSelected ? Colors.grey[800] : const Color.fromARGB(255, 242, 245, 247),
+                                                      borderRadius: BorderRadius.circular(20.0),
+                                                    ),
+                                                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                                                    child: Text(
+                                                      item,
+                                                      style: TextStyle(
+                                                        fontSize: 14, // Keep the country item text size as 14
+                                                        color: isSelected ? Colors.white : Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(height: 20,), // Additional space before the close button
+                                        ElevatedButton(
+                                          onPressed: () => Navigator.pop(context),
+                                          style: ElevatedButton.styleFrom(
+                                            foregroundColor: Colors.white, backgroundColor: Colors.blue, // Foreground color of the button (text color)
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: BorderRadius.circular(10), // No rounded corners
+                                            ),
+                                            padding: const EdgeInsets.all(20), // Size of the button
+                                            textStyle: const TextStyle(fontSize: 18), // Text size
+                                          ),
+                                          child: const Text('Apply Filter'),
+                                        ),
+                                        const SizedBox(height: 40,),
+                                      ],
+                                    );
+                                  },
                                 ),
-                              ),
-                            ),
-                          );
-                        }).toList(),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20,),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 25), // Adds space to the left of the second title
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Countries',
-                        style: TextStyle(fontSize: 20), // Set the font size to 20
-                      ),
-                    ),
-                  ), 
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // Adds space to the left of the second Wrap widget
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Wrap(
-                        spacing: 8.0,
-                        runSpacing: 8.0,
-                        children: countries.map((item) {
-                          final isSelected = selectedCountries.contains(item);
-                          return GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                if (isSelected) {
-                                  selectedCountries.remove(item);
-                                } else {
-                                  selectedCountries.add(item);
-                                }
-                              });
-                              _search(selectedCategories, selectedCountries);
+                              );
                             },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: isSelected ? Colors.grey[800] : const Color.fromARGB(255, 242, 245, 247),
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                              child: Text(
-                                item,
-                                style: TextStyle(
-                                  fontSize: 14, // Keep the country item text size as 14
-                                  color: isSelected ? Colors.white : Colors.grey[800],
-                                ),
-                              ),
-                            ),
                           );
-                        }).toList(),
+                        },
+                        iconSize: 30,
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 20,), // Additional space before the close button
-                  ElevatedButton(
-                    onPressed: () => Navigator.pop(context),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white, backgroundColor: Colors.blue, // Foreground color of the button (text color)
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10), // No rounded corners
-                      ),
-                      padding: const EdgeInsets.all(20), // Size of the button
-                      textStyle: const TextStyle(fontSize: 18), // Text size
-                    ),
-                    child: const Text('Apply Filter'),
-                  ),
-                  const SizedBox(height: 40,),
-                ],
-              );
-            },
-          ),
-        );
-      },
-    );
-  },
-  iconSize: 30,
-),
-
                     ],
                   ),
                   const Padding(
@@ -342,49 +351,46 @@ Widget build(BuildContext context) {
                     ),
                   ), 
                   const SizedBox(height: 20),
-                  Expanded(
-  child: _isSearching
-      ? const Center(child: CircularProgressIndicator())
-      : filteredResults.isNotEmpty
-          ? GridView.builder(
-              padding: const EdgeInsets.all(8.0), // Optional: Add some padding around the grid
-              shrinkWrap: true, // Ensures the grid only occupies the space needed
-              physics: NeverScrollableScrollPhysics(), // Disables scrolling in the grid
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, // Display 2 items per row
-                crossAxisSpacing: 8.0, // Space between items horizontally
-                mainAxisSpacing: 8.0, // Space between items vertically
-                childAspectRatio: 1, // Makes the grid items square
-              ),
-              itemCount: filteredResults.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 5,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  child: OrganizationCard(
-                    id: filteredResults[index].id,
-                    name: filteredResults[index].name,
-                    link: filteredResults[index].link,
-                    description: filteredResults[index].description,
-                    logo: filteredResults[index].logo,
-                    categories: filteredResults[index].categories,
-                    countries: filteredResults[index].countries,
-                  ),
-                );
-              },
-            )
-          : const Center(child: Text('Results are not found')),
-),
-
+                  _isSearching
+                        ? const Center(child: CircularProgressIndicator())
+                        : filteredResults.isNotEmpty
+                            ? GridView.builder(
+                                padding: const EdgeInsets.all(8.0), // Optional: Add some padding around the grid
+                                shrinkWrap: true, // Ensures the grid only occupies the space needed
+                                physics: const NeverScrollableScrollPhysics(), // Disables scrolling in the grid
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2, // Display 2 items per row
+                                  crossAxisSpacing: 8.0, // Space between items horizontally
+                                  mainAxisSpacing: 8.0, // Space between items vertically
+                                  childAspectRatio: 1, // Makes the grid items square
+                                ),
+                                itemCount: filteredResults.length,
+                                itemBuilder: (BuildContext context, int index) {
+                                  return Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey.withOpacity(0.5),
+                                          spreadRadius: 2,
+                                          blurRadius: 5,
+                                        ),
+                                      ],
+                                      borderRadius: BorderRadius.circular(15.0),
+                                    ),
+                                    child: OrganizationCard(
+                                      id: filteredResults[index].id,
+                                      name: filteredResults[index].name,
+                                      link: filteredResults[index].link,
+                                      description: filteredResults[index].description,
+                                      logo: filteredResults[index].logo,
+                                      categories: filteredResults[index].categories,
+                                      countries: filteredResults[index].countries,
+                                    ),
+                                  );
+                                },
+                              )
+                            : const Center(child: Text('Results are not found')),
                 ],
             ),
           ),
