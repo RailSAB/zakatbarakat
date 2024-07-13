@@ -44,7 +44,7 @@ class _LivestockState extends ConsumerState<LivestockPage> {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment
-                .spaceBetween, // This aligns items along the vertical axis
+                .spaceBetween, 
             children: <Widget>[
               const SizedBox(height: 20),
               title(),

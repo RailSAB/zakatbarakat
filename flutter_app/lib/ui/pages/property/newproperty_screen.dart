@@ -146,6 +146,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
       length: 3,
       child: Scaffold(
         appBar: CustomAppBar(pageTitle: 'Zakat on Property', appBarHeight: 115),
+        backgroundColor: Colors.grey[200],
         body: TabBarView(
           children: [
             _buildFinanceTab(),
@@ -233,17 +234,29 @@ class _PropertyState extends ConsumerState<PropertyPage> {
     );
   }
 
+  
+
   Widget _buildMoneySection() {
-    return Row(
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text(
-          'Money',
-          style: TextStyle(
-            fontSize: 30,
+        Expanded(
+          child: Text(
+            'Money',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
+            ),
           ),
         ),
         IconButton(
-          icon: const Icon(Icons.help_outline),
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
           onPressed: () {
             showDialog(
               context: context,
@@ -252,6 +265,9 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                   title: const Text('Money'),
                   content: const Text(
                     'Specify your savings on bank cards, in cash, in cryptocurrency',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                   actions: <Widget>[
                     TextButton(
@@ -259,6 +275,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                         'Close',
                         style: TextStyle(
                           color: Color.fromARGB(255, 30, 128, 208),
+                          fontWeight: FontWeight.w600, 
                         ),
                       ),
                       onPressed: () {
@@ -272,28 +289,47 @@ class _PropertyState extends ConsumerState<PropertyPage> {
           },
         ),
       ],
-    );
+    ),
+  );
   }
 
   Widget _buildDebtSection() {
-    return Row(
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text(
-          'Debt',
-          style: TextStyle(
-            fontSize: 30,
+        Expanded(
+          child: Text(
+            'Debt',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
+            ),
           ),
         ),
         IconButton(
-          icon: const Icon(Icons.help_outline),
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
           onPressed: () {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text('Debt'),
+                  title: const Text(
+                    'Debt',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                    ),
+                  ),
                   content: const Text(
                     'Debts are deducted from the property if they have to be paid within the next 12 months',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                   actions: <Widget>[
                     TextButton(
@@ -314,33 +350,55 @@ class _PropertyState extends ConsumerState<PropertyPage> {
           },
         ),
       ],
-    );
+    ),
+  );
   }
-
-  Widget _buildSharesSection() {
-    return Row(
+   Widget _buildSharesSection() {
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text('Shares',
+        Expanded(
+          child: Text(
+            'Shares',
             style: TextStyle(
               fontSize: 30,
-            )),
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
+            ),
+          ),
+        ),
         IconButton(
-          icon: const Icon(Icons.help_outline),
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
           onPressed: () {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text('Shares'),
+                  title: const Text(
+                    'Shares',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                    ),
+                  ),
                   content: const Text(
                     'Shares purchased for resale',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                   actions: <Widget>[
                     TextButton(
-                      child: const Text('Close',
-                          style: TextStyle(
-                              color: Color.fromARGB(
-                                  255, 30, 128, 208))),
+                      child: const Text(
+                        'Close',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 30, 128, 208),
+                        ),
+                      ),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -352,28 +410,47 @@ class _PropertyState extends ConsumerState<PropertyPage> {
           },
         ),
       ],
-    );
+    ),
+  );
   }
 
   Widget _buildIncomeSection() {
-    return Row(
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text(
-          'Income',
-          style: TextStyle(
-            fontSize: 30,
+        Expanded(
+          child: Text(
+           'Income',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
+            ),
           ),
         ),
         IconButton(
-          icon: const Icon(Icons.help_outline),
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
           onPressed: () {
             showDialog(
               context: context,
-              builder: (BuildContext dialogContext) {
+              builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text('Income'),
+                  title: const Text(
+                    'Income',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                    ),
+                  ),
                   content: const Text(
                     'Income from investments, if deferred in the form of savings',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                   actions: <Widget>[
                     TextButton(
@@ -384,7 +461,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                         ),
                       ),
                       onPressed: () {
-                        Navigator.of(dialogContext).pop();
+                        Navigator.of(context).pop();
                       },
                     ),
                   ],
@@ -394,8 +471,13 @@ class _PropertyState extends ConsumerState<PropertyPage> {
           },
         ),
       ],
-    );
+    ),
+  );
   }
+
+
+
+  
 
   Widget _buildRealEstateTab() {
     return SingleChildScrollView(
@@ -453,98 +535,42 @@ class _PropertyState extends ConsumerState<PropertyPage> {
   }
 
   Widget _buildPropertyForSaleSection() {
-    return Row(
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text(
-          'Property for sale',
-          style: TextStyle(fontSize: 30),
+        Expanded(
+          child: Text(
+           'Property for sale',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
+            ),
+          ),
         ),
         IconButton(
-          icon: const Icon(Icons.help_outline),
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
           onPressed: () {
             showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text('Property for sale'),
-                  content: const Text(
-                    'Bought without the intention of resale, but the first steps towards this have been taken',
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(color: Color(0xFF1E58D0)),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
+                  title: const Text(
+                   'Property for sale',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
                     ),
-                  ],
-                );
-              },
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildSpentPropertySection(){
-    return Row(children: [
-      const Text('Spent Property',
-          style: TextStyle(
-            fontSize: 30,
-          )),
-      IconButton(
-        icon: const Icon(Icons.help_outline),
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Spent property'),
-                content: const Text(
-                  'Was used or spent after payment of zakat became obligatory.\n\nDO NOT COUNT, if stolen or lost',
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text('Close',
-                        style: TextStyle(
-                            color: Color.fromARGB(
-                                255, 30, 128, 208))),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
                   ),
-                ],
-              );
-            },
-          );
-        },
-      ),
-    ]);
-  }
-
-  Widget _buildIncomeFromRentSection() {
-    return Row(
-      children: [
-        const Text(
-          'Income from Rent',
-          style: TextStyle(
-            fontSize: 30,
-          ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.help_outline),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  title: const Text('Income from Rent'),
                   content: const Text(
-                    'Income from premises for rent or sale',
+                  'Bought without the intention of resale, but the first steps towards this have been taken',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                   actions: <Widget>[
                     TextButton(
@@ -565,89 +591,151 @@ class _PropertyState extends ConsumerState<PropertyPage> {
           },
         ),
       ],
-    );
+    ),
+  );
   }
-
-  Widget _buildOtherTab() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 50.0),
-        child: Column(
-          children: [
-            Column(
-              children: [
-                const SizedBox(height: 25),
-                const Text(
-                  'Silver',
-                  style: TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-                const SizedBox(height: 10),
-                _buildSilverSection(),
-                const SizedBox(height: 25),
-                const Text('Gold',
-                  style: TextStyle(
-                    fontSize: 30,
-                  )
-                ),
-                const SizedBox(height: 10),
-                _buildGoldSection(),
-                const SizedBox(height: 25),
-                _buildPurchasedGoodsSection(),
-                const SizedBox(height: 10),
-                DynamicTable(
-                  taskId: '1',
-                  category: 'purchasedProductForResaling',
-                  currencies: widget.selectedCurrencies,
-                  initialData: categoryData['purchasedProductForResaling'],
-                  onDataChanged: (data){
-                    setState(() {
-                      categoryData['purchasedProductForResaling'] = data;
-                    });
-                  }
-                ),
-                const SizedBox(height: 25),
-                _buildUnfinishedProductsSection(),
-                const SizedBox(height: 10),
-                DynamicTable(
-                  taskId: '1',
-                  category: 'unfinishedProduct',
-                  currencies: widget.selectedCurrencies,
-                  initialData: categoryData['unfinishedProduct'],
-                  onDataChanged: (data){
-                    setState(() {
-                      categoryData['unfinishedProduct'] = data;
-                    });
-                  }
-                ),
-                const SizedBox(height: 25),
-                _buildProducedProductForResailingSection(),
-                const SizedBox(height: 10),
-                DynamicTable(
-                  taskId: '1',
-                  category: 'producedProductForResaling',
-                  currencies: widget.selectedCurrencies,
-                  initialData: categoryData['producedProductForResaling'],
-                  onDataChanged: (data){
-                    setState(() {
-                      categoryData['producedProductForResaling'] = data;
-                    });
-                  }
-                ),
-                const SizedBox(height: 40),
-              ],
+  Widget _buildSpentPropertySection() {
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Text(
+          'Spent Property',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
             ),
-          ],
+          ),
         ),
-      ),
-    );
+        IconButton(
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text(
+                  'Spent property',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                    ),
+                  ),
+                  content: const Text(
+                 'Was used or spent after payment of zakat became obligatory.\n\nDO NOT COUNT, if stolen or lost',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text(
+                        'Close',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 30, 128, 208),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ],
+    ),
+  );
   }
-
+  Widget _buildIncomeFromRentSection() {
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Text(
+          'Income from Rent',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text(
+                  'Income from Rent',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                    ),
+                  ),
+                  content: const Text(
+                  'Income from premises for rent or sale',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text(
+                        'Close',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 30, 128, 208),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ],
+    ),
+  );
+  }
   
-  Widget _buildSilverSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+  
+
+
+
+Widget _buildSilverSection() {
+  return Container(
+    padding: const EdgeInsets.all(16.0),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10.0),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 2,
+          blurRadius: 5,
+          offset: Offset(0, 3), 
+        ),
+      ],
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           flex: 2,
@@ -667,25 +755,37 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                 return null;
               },
               keyboardType: TextInputType.number,
-              decoration: const InputDecoration(
-                border: OutlineInputBorder(),
+              decoration: InputDecoration(
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
                 labelText: 'Enter value',
-                labelStyle: TextStyle(fontSize: 13),
+                labelStyle: TextStyle(fontSize: 16),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
               ),
             ),
           ),
         ),
-        const SizedBox(width: 35),
+        const SizedBox(width: 20),
         Expanded(
           flex: 2,
           child: SizedBox(
             height: 50,
-            child: DropdownMenu<String>(
-              menuHeight: 200,
-              width: 300,
-              initialSelection: selectedMeasuringUnitSilver,
-              label: const Text('Measuring Unit'),
-              onSelected: (value) {
+            child: DropdownButtonFormField<String>(
+              value: selectedMeasuringUnitSilver,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                labelText: 'Measuring Unit',
+                labelStyle: TextStyle(fontSize: 16),
+              ),
+              items: ['kg', 'oz', 'g'].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (value) {
                 setState(() {
                   if (value != null) {
                     selectedMeasuringUnitSilver = value;
@@ -693,33 +793,31 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                   }
                 });
               },
-              dropdownMenuEntries: const [
-                'kg',
-                'oz',
-                'g',
-              ].map<DropdownMenuEntry<String>>(
-                (String value) {
-                  return DropdownMenuEntry<String>(
-                    value: value,
-                    label: value,
-                    style: MenuItemButton.styleFrom(
-                      foregroundColor: const Color.fromARGB(
-                          255, 0, 0, 0),
-                    ),
-                  );
-                },
-              ).toList(),
             ),
           ),
         ),
       ],
-    );
-  }
+    ),
+  );
+}
 
-
-  Widget _buildGoldSection() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+Widget _buildGoldSection() {
+  return Container(
+    padding: const EdgeInsets.all(16.0),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(10.0),
+      color: Colors.white,
+      boxShadow: [
+        BoxShadow(
+          color: Colors.grey.withOpacity(0.5),
+          spreadRadius: 2,
+          blurRadius: 5,
+          offset: Offset(0, 3), // changes position of shadow
+        ),
+      ],
+    ),
+    child: Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           flex: 2,
@@ -727,160 +825,175 @@ class _PropertyState extends ConsumerState<PropertyPage> {
             width: 220,
             height: 50,
             child: TextFormField(
-                controller: goldValueController,
-                validator: (value) {
-                  if (value!.isEmpty) return null;
-                  if (!RegExp(r'^[+-]?[0-9]+$')
-                          .hasMatch(value) &&
-                      value.isNotEmpty) {
-                    return 'Please enter only digits';
-                  }
-                  if (int.parse(value) <= 0 &&
-                      value.isNotEmpty) {
-                    return 'Please enter a positive integer';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                onChanged: (value) {},
-                decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Enter value',
-                    labelStyle: TextStyle(fontSize: 13))),
+              controller: goldValueController,
+              validator: (value) {
+                if (value!.isEmpty) return null;
+                if (!RegExp(r'^[+-]?\d+$').hasMatch(value)) {
+                  return 'Please enter only digits';
+                }
+                if (int.parse(value) <= 0) {
+                  return 'Please enter a positive integer';
+                }
+                return null;
+              },
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.0)),
+                labelText: 'Enter value',
+                labelStyle: TextStyle(fontSize: 16),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+              ),
+            ),
           ),
         ),
-        const SizedBox(width: 35),
+        const SizedBox(width: 20),
         Expanded(
           flex: 2,
           child: SizedBox(
             height: 50,
-            child: DropdownMenu<String>(
-              menuHeight: 200,
-              width: 300,
-              initialSelection: selectedMeasuringUnitGold,
-              requestFocusOnTap: true,
-              label: const Text('Measuring Unit'),
-              onSelected: (String? value) {
+            child: DropdownButtonFormField<String>(
+              value: selectedMeasuringUnitGold,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                labelText: 'Measuring Unit',
+                labelStyle: TextStyle(fontSize: 16),
+              ),
+              items: ['kg', 'oz', 'g'].map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (value) {
                 setState(() {
                   if (value != null) {
                     selectedMeasuringUnitGold = value;
-                    goldMeasuringUnitController.text =
-                        value;
+                    goldMeasuringUnitController.text = value;
                   }
                 });
               },
-              dropdownMenuEntries: <String>[
-                'kg',
-                'oz',
-                'g'
-              ].map<DropdownMenuEntry<String>>(
-                  (String value) {
-                return DropdownMenuEntry<String>(
-                  value: value,
-                  label: value,
-                  style: MenuItemButton.styleFrom(
-                    foregroundColor: const Color.fromARGB(
-                        255, 0, 0, 0),
-                  ),
-                );
-              }).toList(),
             ),
           ),
         ),
       ],
-    );
-  }
+    ),
+  );
+}
 
-  Widget _buildPurchasedGoodsSection(){
-    return Row(children: [
-      const Text('Purchased goods',
-          style: TextStyle(
-            fontSize: 30,
-          )),
-      IconButton(
-        icon: const Icon(Icons.help_outline),
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Text('Purchased goods'),
-                content: const Text(
-                  'Goods purchased for sale at market price',
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: const Text('Close',
-                        style: TextStyle(
-                            color: Color.fromARGB(
-                                255, 30, 128, 208))),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
+Widget _buildOtherTab() {
+  return SingleChildScrollView(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+      child: Column(
+        children: [
+          const SizedBox(height: 25),
+          const Text(
+            'Silver',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 10),
+          _buildSilverSection(),
+          const SizedBox(height: 25),
+          const Text(
+            'Gold',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          const SizedBox(height: 10),
+          _buildGoldSection(),
+          const SizedBox(height: 25),
+          _buildPurchasedGoodsSection(),
+          const SizedBox(height: 10),
+          DynamicTable(
+            taskId: '1',
+            category: 'purchasedProductForResaling',
+            currencies: widget.selectedCurrencies,
+            initialData: categoryData['purchasedProductForResaling'],
+            onDataChanged: (data) {
+              setState(() {
+                categoryData['purchasedProductForResaling'] = data;
+              });
             },
-          );
-        },
+          ),
+          const SizedBox(height: 25),
+          _buildUnfinishedProductsSection(),
+          const SizedBox(height: 10),
+          DynamicTable(
+            taskId: '1',
+            category: 'unfinishedProduct',
+            currencies: widget.selectedCurrencies,
+            initialData: categoryData['unfinishedProduct'],
+            onDataChanged: (data) {
+              setState(() {
+                categoryData['unfinishedProduct'] = data;
+              });
+            },
+          ),
+          const SizedBox(height: 25),
+          _buildProducedProductForResailingSection(),
+          const SizedBox(height: 10),
+          DynamicTable(
+            taskId: '1',
+            category: 'producedProductForResaling',
+            currencies: widget.selectedCurrencies,
+            initialData: categoryData['producedProductForResaling'],
+            onDataChanged: (data) {
+              setState(() {
+                categoryData['producedProductForResaling'] = data;
+              });
+            },
+          ),
+          const SizedBox(height: 40),
+        ],
       ),
-    ]);
-  }
-
-  Widget _buildUnfinishedProductsSection() {
-    return Row(
+    ),
+  );
+}
+Widget _buildPurchasedGoodsSection() {
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text(
-          'Unfinished products',
-          style: TextStyle(fontSize: 30),
-        ),
-        IconButton(
-          icon: const Icon(Icons.help_outline),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext dialogContext) {
-                return AlertDialog(
-                  title: const Text('Unfinished products'),
-                  content: const Text(
-                    'Not fully produced products at market price',
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text('Close'),
-                      onPressed: () {
-                        Navigator.of(dialogContext).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProducedProductForResailingSection() {
-    return Row(
-      children: [
-        const Text(
-          'Produced goods',
-          style: TextStyle(
-            fontSize: 30,
+        Expanded(
+          child: Text(
+         'Purchased goods',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
+            ),
           ),
         ),
         IconButton(
-          icon: const Icon(Icons.help_outline),
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
           onPressed: () {
-            showDialog<void>(
+            showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: const Text('Produced goods'),
+                  title: const Text(
+                  'Purchased goods',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                    ),
+                  ),
                   content: const Text(
-                    'Goods produced for sale at production price',
+                 'Goods purchased for sale at market price',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
                   ),
                   actions: <Widget>[
                     TextButton(
@@ -901,6 +1014,129 @@ class _PropertyState extends ConsumerState<PropertyPage> {
           },
         ),
       ],
-    );
+    ),
+  );
+  }
+
+  Widget _buildUnfinishedProductsSection() {
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Text(
+       'Unfinished products',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text(
+                 'Unfinished products',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                    ),
+                  ),
+                  content: const Text(
+                 'Not fully produced products at market price',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text(
+                        'Close',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 30, 128, 208),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ],
+    ),
+  );
+  }
+
+  Widget _buildProducedProductForResailingSection() {
+    return Padding(
+    padding: const EdgeInsets.all(16.0), 
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: Text(
+       'Produced goods',
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold, 
+              color: Colors.black, 
+            ),
+          ),
+        ),
+        IconButton(
+          icon: const Icon(
+            Icons.help_outline,
+            color: Colors.grey, 
+          ),
+          onPressed: () {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Text(
+                 'Produced goods',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold, 
+                    ),
+                  ),
+                  content: const Text(
+                'Goods produced for sale at production price',
+                    style: TextStyle(
+                      fontSize: 16,
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text(
+                        'Close',
+                        style: TextStyle(
+                          color: Color.fromARGB(255, 30, 128, 208),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      ],
+    ),
+  );
   }
 }
