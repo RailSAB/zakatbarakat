@@ -20,6 +20,7 @@ This product allows you to calculate 3 types of zakat, browse the Knowledge Base
 - [Setup](#setup)
 - [Deployment instructions](#deployment-instructions)
 - [Frameworks](#frameworks)
+- [License](#license)
 ---
 
 ## Features
