@@ -18,8 +18,8 @@ This product allows you to calculate 3 types of zakat, browse the Knowledge Base
 - [User guide](#user-guide)
 - [Prerequisites](#prerequisites)
 - [Setup](#setup)
-- [Deployment instructions](#deployment-instructions)
 - [Frameworks](#frameworks)
+- [For customer](#for-customer)
 - [License](#license)
 ---
 
@@ -126,9 +126,18 @@ This product allows you to calculate 3 types of zakat, browse the Knowledge Base
     ```
 ---
 
-## Deployment instructions
 
-### Hosting on [Firebase](https://firebase.google.com/), [video](https://www.youtube.com/watch?v=OwO0oPcCeX0&ab_channel=AdityaThakur) with description
+## Frameworks
+
+- Flutter
+- Firebase for hosting
+---
+
+## For customer
+
+### Deployment instructions (for Customer)
+
+#### Hosting on [Firebase](https://firebase.google.com/), [video](https://www.youtube.com/watch?v=OwO0oPcCeX0&ab_channel=AdityaThakur) with description
 1. Register on [Firebase](https://firebase.google.com/)
 2. Go to console and **Add** project
 ![Creation page](demo/deploy_firebase_creation.png)
@@ -137,7 +146,7 @@ This product allows you to calculate 3 types of zakat, browse the Knowledge Base
 5. Create project
 6. In left bar in build section go to Hosting
 7. In Get Started You will find all necessary information, like downloading NodeJS and command prompts
-8. After creating project:
+8. After creating project run this commands in command line in project repo:
     ```sh
      npm install -g firebase-tools
      firebase login
@@ -146,17 +155,17 @@ This product allows you to calculate 3 types of zakat, browse the Knowledge Base
     ```sh
      firebase init 
     ```
-    what you need to select and answer you can see in video 
+    what you need to select and answer you can see in video. Then
     ```sh
      flutter build web
      firebase deploy 
     ```
----
 
-## Frameworks
-
-- Flutter
-- Firebase for hosting
+### Sources
+- [Azan.ru](https://azan.ru/islam/zakat)
+- [Q&A azan.ru](https://azan.ru/ramadan#description_soum-zakat)
+- [Unma](https://umma.ru/voprosy-i-otvety-po-vyplate-zakyata-praktika-zhizni)
+- [Ahmad Abu Yahya's video](https://vk.com/wall-69899854_757)
 ---
 
 ## License
