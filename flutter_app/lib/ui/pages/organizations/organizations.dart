@@ -34,14 +34,14 @@ class _OrganizationsState extends ConsumerState<Organizations> {
 @override
 void initState() {
   super.initState();
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    ref.read(orgSearchProvider.notifier).reset().then((_) {
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
+    await ref.read(orgSearchProvider.notifier).reset().then((_) {
       loadCategories();
       loadCountries();
       ref.read(selectedCategoriesProvider.notifier).initializeWithFundsCategory(isCharity);
       ref.read(selectedCountriesProvider.notifier).reset();
-    }).then((_) {
-      _search(ref.read(selectedCategoriesProvider.notifier).selectedCategories, 
+    }).then((_) async {
+      await _search(ref.read(selectedCategoriesProvider.notifier).selectedCategories, 
               ref.read(selectedCountriesProvider.notifier).selectedCountries);
     }).whenComplete(() {
       setState(() {

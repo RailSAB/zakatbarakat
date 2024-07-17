@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/itemkb_model.dart';
@@ -18,13 +19,23 @@ class KBPage extends ConsumerStatefulWidget {
 
 class _KBState extends ConsumerState<KBPage> {
   bool _isSearching = true;
+  Completer<void>? _refreshCompleter;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-        (_) => ref.refresh(searchResultProvider.notifier).resetSearchResults());
-    _isSearching = false;
+    //this is needed so that it shows curcular bar until the data is loaded
+    _refreshCompleter = Completer<void>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await ref.refresh(searchResultProvider.notifier).resetSearchResults();
+      _refreshCompleter?.complete();
+      _refreshCompleter = null;
+    });
+
+    _refreshCompleter?.future.then((_) => setState(() {
+          _isSearching = false;
+        }));
   }
 
   Future<void> _search(String query) async {
@@ -33,7 +44,10 @@ class _KBState extends ConsumerState<KBPage> {
     });
 
     if (query.isEmpty) {
-      ref.refresh(searchResultProvider.notifier).resetSearchResults();
+      await ref.refresh(searchResultProvider.notifier).resetSearchResults();
+      setState(() {
+        _isSearching = false;
+      });
       return;
     }
 

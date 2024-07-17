@@ -7,6 +7,7 @@ final orgSearchProvider = ChangeNotifierProvider.autoDispose((ref) => OrgSearch(
 
 class OrgSearch extends ChangeNotifier {
   List<Organization> _searchResults = [];
+  List<Organization> initialResults = [];
 
   List<Organization> get searchResults => _searchResults;
 
@@ -16,8 +17,10 @@ class OrgSearch extends ChangeNotifier {
   }
 
   Future<void> reset() async {
-    final newResults = await getOrganizations();
+    if(initialResults.isEmpty){
+      final newResults = await getOrganizations();
     _searchResults = newResults;
+    } else{_searchResults = initialResults;}
     notifyListeners();
   }
 }

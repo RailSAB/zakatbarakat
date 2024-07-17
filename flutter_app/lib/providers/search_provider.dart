@@ -7,6 +7,7 @@ final searchResultProvider = ChangeNotifierProvider.autoDispose((ref) => SearchR
 
 class SearchResults extends ChangeNotifier {
   List<Article> _searchResults = [];
+  List<Article> initialResults = [];
 
   List<Article> get searchResults => _searchResults;
 
@@ -16,8 +17,10 @@ class SearchResults extends ChangeNotifier {
   }
 
   Future<void> resetSearchResults() async {
-    final newResults = await getArticles();
+    if(initialResults.isEmpty){
+      final newResults = await getArticles();
     _searchResults = newResults;
+    } else{_searchResults = initialResults;}
     notifyListeners();
   }
 }
