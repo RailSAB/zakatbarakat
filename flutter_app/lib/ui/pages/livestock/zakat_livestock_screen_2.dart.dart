@@ -199,14 +199,15 @@ class _Livestock2State extends ConsumerState<Livestock2Page> {
         }
       },
       style: ElevatedButton.styleFrom(
+        minimumSize: const Size(400, 60),
         backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        textStyle: const TextStyle(fontSize: 18, color: Colors.black),
-        minimumSize: const Size(double.infinity, 60),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
       ),
       child: const Text(
         'Calculate',
-        style: TextStyle(color: Colors.black),
+        style: TextStyle(fontSize: 24, color: Colors.black),
       ),
     );
   }
