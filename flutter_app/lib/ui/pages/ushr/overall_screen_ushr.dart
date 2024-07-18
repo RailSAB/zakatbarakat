@@ -73,12 +73,17 @@ class _UshrOverallState extends ConsumerState<UshrOverallPage> {
       children: crops.map((crop) {
         return Card(
           color: Colors.white,
-          margin: const EdgeInsets.all(8.0),
+          margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          elevation: 8,
           child: Padding(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                 const Text(
+              'Overall:',
+              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            ),
                 Text(
                   "Crop type: ${crop.type}",
                   style: const TextStyle(fontSize: 20),

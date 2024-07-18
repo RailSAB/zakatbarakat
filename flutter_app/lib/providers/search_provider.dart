@@ -18,7 +18,7 @@ class SearchResults extends ChangeNotifier {
 
   Future<void> resetSearchResults() async {
     if(initialResults.isEmpty){
-    final newResults = await ArticleAPI.getArticles();
+      final newResults = await ArticleAPI.getArticles();
     _searchResults = newResults;
     } else{_searchResults = initialResults;}
     notifyListeners();

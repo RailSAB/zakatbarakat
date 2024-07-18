@@ -1058,7 +1058,8 @@ Widget _buildGoldSection() {
 Widget _buildOtherTab() {
   return SingleChildScrollView(
     child: Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 50.0),
+       padding: const EdgeInsets.all(16.0),
+      // padding: const EdgeInsets.symmetric(horizontal: 50.0),
       child: Column(
         children: [
           const SizedBox(height: 25),
