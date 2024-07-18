@@ -33,8 +33,6 @@ class ExampleApp extends StatelessWidget {
         '/livestock': (context) => const LivestockPage(),
         '/property': (context) =>  PropertyPage(selectedCurrencies: ModalRoute.of(context)!.settings.arguments as List<CurrencyModel>,),
         '/ushr': (context) => const UshrPage(),
-        //'/property2': (context) => const Property2Page(),
-        //'/property3': (context) => const Property3Page(),
         '/livestock2': (context) => const Livestock2Page(),
         '/propertyoverall': (context) => const PropertyOverallPage(),
         '/livestockoverall': (context) => const LivestockOverallPage(),
