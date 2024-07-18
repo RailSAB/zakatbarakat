@@ -162,31 +162,40 @@ class _PropertyState extends ConsumerState<PropertyPage> {
 
 
   @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: CustomAppBar(pageTitle: 'Zakat on Property', appBarHeight: 165),
-        backgroundColor: Colors.grey[200],
-        body: TabBarView(
-          children: [
-            _buildFinanceTab(),
-            _buildRealEstateTab(),
-            _buildOtherTab(),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          
+ Widget build(BuildContext context) {
+  return DefaultTabController(
+    length: 3,
+    child: Scaffold(
+      appBar: CustomAppBar(pageTitle: 'Zakat on Property', appBarHeight: 155),
+      backgroundColor: Colors.grey[200],
+      body: TabBarView(
+        children: [
+          _buildFinanceTab(),
+          _buildRealEstateTab(),
+          _buildOtherTab(),
+        ],
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, 
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(bottom: 20), 
+        child: SizedBox(
+          width: 200, 
+          child: FloatingActionButton.extended(
             onPressed: () {
               calculateZakat();
             },
-            backgroundColor: const Color.fromARGB(255, 176, 216, 253),
-            child: const Icon(Icons.calculate),
-          ),
+            backgroundColor:  Colors.blue[800],
+            shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25), 
       ),
-      
-    );
-  }
+            label: const Text('Calculate', style: TextStyle(fontSize: 18,color: Colors.white)), 
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
   
   Widget _buildFinanceTab() {
     return SingleChildScrollView(
@@ -259,245 +268,262 @@ class _PropertyState extends ConsumerState<PropertyPage> {
 
   
 
-  Widget _buildMoneySection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
+ Widget _buildMoneySection() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-            'Money',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Money'),
-                  content: const Text(
-                    'Specify your savings on bank cards, in cash, in cryptocurrency',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
-                          fontWeight: FontWeight.w600, 
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Money',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Money'),
+                        content: const Text(
+                          'Specify your savings on bank cards, in cash, in cryptocurrency',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
   );
-  }
+}
+Widget _buildDebtSection() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+                'Debt',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  // Add some spacing between text and icon
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text( 'Debt'),
+                        content: const Text(
+                          'Debts are deducted from the property if they have to be paid within the next 12 months',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
 
-  Widget _buildDebtSection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Text(
-            'Debt',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text(
-                    'Debt',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                    ),
-                  ),
-                  content: const Text(
-                    'Debts are deducted from the property if they have to be paid within the next 12 months',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-        ),
-      ],
-    ),
-  );
-  }
-   Widget _buildSharesSection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: Text(
-            'Shares',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text(
-                    'Shares',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                    ),
-                  ),
-                  content: const Text(
-                    'Shares purchased for resale',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
-                        ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-        ),
-      ],
-    ),
-  );
-  }
 
-  Widget _buildIncomeSection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
+Widget _buildSharesSection() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-           'Income',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text(
-                    'Income',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                    ),
-                  ),
-                  content: const Text(
-                    'Income from investments, if deferred in the form of savings',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+               'Shares',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  // Add some spacing between text and icon
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text( 'Shares'),
+                        content: const Text(
+                           'Shares purchased for resale',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
   );
-  }
+}
 
+Widget _buildIncomeSection() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+              'Income',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  // Add some spacing between text and icon
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text( 'Income'),
+                        content: const Text(
+                             'Income from investments, if deferred in the form of savings',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
+                        ),
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
+
+
+  
+  
 
 
   
@@ -558,185 +584,195 @@ class _PropertyState extends ConsumerState<PropertyPage> {
   }
 
   Widget _buildPropertyForSaleSection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-           'Property for sale',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text(
-                   'Property for sale',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                    ),
-                  ),
-                  content: const Text(
-                  'Bought without the intention of resale, but the first steps towards this have been taken',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+               'Property for sale',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text(  'Property for sale'),
+                        content: const Text(
+                              'Bought without the intention of resale, but the first steps towards this have been taken',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
   );
-  }
+}
   Widget _buildSpentPropertySection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-          'Spent Property',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text(
-                  'Spent property',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                    ),
-                  ),
-                  content: const Text(
-                 'Was used or spent after payment of zakat became obligatory.\n\nDO NOT COUNT, if stolen or lost',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+               'Spent Property',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text( 'Spent Property'),
+                        content: const Text(
+                               'Was used or spent after payment of zakat became obligatory.\n\nDO NOT COUNT, if stolen or lost',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
   );
-  }
-  Widget _buildIncomeFromRentSection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
+}
+    Widget _buildIncomeFromRentSection() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-          'Income from Rent',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text(
-                  'Income from Rent',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                    ),
-                  ),
-                  content: const Text(
-                  'Income from premises for rent or sale',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+               'Income from Rent',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Income from Rent'),
+                        content: const Text(
+                               'Income from premises for rent or sale',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
   );
-  }
+}
+
+  
+  
+  
   
 
 
@@ -1100,186 +1136,195 @@ Widget _buildOtherTab() {
   );
 }
 
-Widget _buildPurchasedGoodsSection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
+
+  Widget _buildPurchasedGoodsSection() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-         'Purchased goods',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text(
-                  'Purchased goods',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                    ),
-                  ),
-                  content: const Text(
-                 'Goods purchased for sale at market price',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+               'Purchased goods',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Purchased goods'),
+                        content: const Text(
+                               'Goods purchased for sale at market price',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
   );
-  }
+}
 
-  Widget _buildUnfinishedProductsSection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
+Widget _buildUnfinishedProductsSection() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-       'Unfinished products',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text(
-                 'Unfinished products',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                    ),
-                  ),
-                  content: const Text(
-                 'Not fully produced products at market price',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
+               'Unfinished products',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text( 'Unfinished products'),
+                        content: const Text(
+                              'Not fully produced products at market price',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
   );
-  }
-
-  Widget _buildProducedProductForResailingSection() {
-    return Padding(
-    padding: const EdgeInsets.all(16.0), 
+}
+Widget _buildProducedProductForResailingSection() {
+  return Padding(
+    padding: const EdgeInsets.all(16.0),
     child: Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Expanded(
-          child: Text(
-       'Produced goods',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold, 
-              color: Colors.black, 
-            ),
-          ),
-        ),
-        IconButton(
-          icon: const Icon(
-            Icons.help_outline,
-            color: Colors.grey, 
-          ),
-          onPressed: () {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text(
+        Flexible(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Text(
                  'Produced goods',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold, 
-                    ),
-                  ),
-                  content: const Text(
-                'Goods produced for sale at production price',
-                    style: TextStyle(
-                      fontSize: 16,
-                    ),
-                  ),
-                  actions: <Widget>[
-                    TextButton(
-                      child: const Text(
-                        'Close',
-                        style: TextStyle(
-                          color: Color.fromARGB(255, 30, 128, 208),
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(width: 8),  
+              GestureDetector(
+                onTap: () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Produced goods'),
+                        content: const Text(
+                              'Goods produced for sale at production price',
+                          style: TextStyle(
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
+                        actions: <Widget>[
+                          TextButton(
+                            child: const Text(
+                              'Close',
+                              style: TextStyle(
+                                color: Color.fromARGB(255, 30, 128, 208),
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                child: Icon(
+                  Icons.help_outline,
+                  color: Colors.black,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     ),
   );
-  }
+}
+
+
+  
 }

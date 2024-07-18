@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/itemkb_model.dart';
+import 'package:flutter_app/models/article_m.dart';
 import 'package:flutter_app/ui/pages/knowledge_base/json_item.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -18,7 +18,7 @@ class SearchResults extends ChangeNotifier {
 
   Future<void> resetSearchResults() async {
     if(initialResults.isEmpty){
-      final newResults = await getArticles();
+    final newResults = await ArticleAPI.getArticles();
     _searchResults = newResults;
     } else{_searchResults = initialResults;}
     notifyListeners();

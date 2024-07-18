@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_app/models/itemkb_model.dart';
 import 'package:flutter_app/providers/search_provider.dart';
 import 'package:flutter_app/ui/pages/knowledge_base/send_request.dart';
 import 'package:flutter_app/ui/widgets/footer.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_app/ui/widgets/article.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
+import 'package:flutter_app/models/article_m.dart';
 import 'package:http/http.dart' as http;
 
 class KBPage extends ConsumerStatefulWidget {
@@ -51,7 +51,7 @@ class _KBState extends ConsumerState<KBPage> {
       return;
     }
 
-    // Get articles
+  
     final url = Uri.parse('https://weaviatetest.onrender.com/knowledge-base/search-article/');
     final headers = {'Content-Type': 'application/json'};
     final body = jsonEncode({"searchString": query});
@@ -68,45 +68,19 @@ class _KBState extends ConsumerState<KBPage> {
     });
   }
 
-  List<Article> _decodeArticles(dynamic response) {
+  List<Article> _decodeArticles(http.Response response) {
     final List<Article> data = [];
     try {
-      var jsonData = jsonDecode(response.body);
+      var jsonData = jsonDecode(response.body) as List<dynamic>;
       for (var itemData in jsonData) {
-        String? id = itemData['id'] as String?;
-
-        List<String>? tags;
-
-        if (itemData.containsKey('tags') && itemData['tags'] != null) {
-          var dynamicTags = itemData['tags'];
-          tags = (dynamicTags as List<dynamic>).map((tag) => tag.toString()).toList();
-        } else {
-          tags = [];
-        }
-
-        String? title = itemData['title'] as String?;
-        String? text = itemData['text'] as String?;
-        List<Operation> ops = (itemData['content']['ops'] as List)
-            .map((op) => Operation(
-                  insert: op['insert'] ?? '',
-                  attributes: op['attributes'] ?? {},
-                ))
-            .toList();
-        Content content = Content(ops: ops);
-
-        data.add(Article(
-          id: id,
-          tags: tags,
-          title: title,
-          text: text,
-          content: content,
-        ));
+        data.add(Article.fromJson(itemData as Map<String, dynamic>));
       }
-      return data.toList();
+      return data;
     } catch (e) {
-      throw Exception('Null data');
+      throw Exception('Failed to decode articles: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
