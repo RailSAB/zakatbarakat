@@ -319,9 +319,7 @@ class _ArticlePageState extends State<ArticlePage> {
               child: QuillEditor.basic(
                 configurations: QuillEditorConfigurations(
          controller: _quillController,
-         
           ),
-
          
  
               ),
