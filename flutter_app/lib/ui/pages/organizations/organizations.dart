@@ -34,7 +34,11 @@ class _OrganizationsState extends ConsumerState<Organizations> {
 @override
 void initState() {
   super.initState();
-  WidgetsBinding.instance.addPostFrameCallback((_) async {
+  loadInitialData();
+}
+
+  void loadInitialData(){
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
     await ref.read(orgSearchProvider.notifier).reset().then((_) {
       loadCategories();
       loadCountries();
@@ -43,16 +47,9 @@ void initState() {
     }).then((_) async {
       await _search(ref.read(selectedCategoriesProvider.notifier).selectedCategories, 
               ref.read(selectedCountriesProvider.notifier).selectedCountries);
-    }).whenComplete(() {
-      setState(() {
-        _isSearching = false;
-      });
     });
   });
-}
-
-  
-
+  }
 
   Future<void> _search(List<String> categories, List<String> countries) async {
     setState(() {
@@ -60,7 +57,7 @@ void initState() {
     });
 
     if(categories.isEmpty && countries.isEmpty) {
-      ref.refresh(orgSearchProvider.notifier).reset();
+      await ref.refresh(orgSearchProvider.notifier).reset();
       setState(() {
         _isSearching = false;
       });

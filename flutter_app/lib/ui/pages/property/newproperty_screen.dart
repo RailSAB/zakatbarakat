@@ -166,7 +166,7 @@ class _PropertyState extends ConsumerState<PropertyPage> {
     return DefaultTabController(
       length: 3,
       child: Scaffold(
-        appBar: CustomAppBar(pageTitle: 'Zakat on Property', appBarHeight: 115),
+        appBar: CustomAppBar(pageTitle: 'Zakat on Property', appBarHeight: 165),
         backgroundColor: Colors.grey[200],
         body: TabBarView(
           children: [

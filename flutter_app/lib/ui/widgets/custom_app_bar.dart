@@ -1,4 +1,8 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_app/models/currency_model.dart';
 import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,19 +80,40 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       ],
       toolbarHeight: appBarHeight,
       bottom: pageTitle == "Zakat on Property"
-          ? const TabBar(
-              labelStyle: TextStyle(fontSize: 15),
-              indicatorColor: Color.fromARGB(200, 153, 202, 255),
-              labelColor: Colors.black,
-              tabs: <Widget>[
-                Tab(
-                  text: "FINANCE",
+          ? PreferredSize(
+            preferredSize: const Size.fromHeight(40),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              child: Container(
+                height: 48,
+                margin: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  color: Colors.blue[50],
                 ),
-                Tab(
-                  text: "REAL ESTATE",
-                ),
-                Tab(text: "OTHER"),
-              ],
+                child: TabBar(
+                        labelStyle: TextStyle(fontSize: 15),
+                        indicatorSize: TabBarIndicatorSize.tab,
+                        dividerColor: Colors.transparent,
+                        indicator: BoxDecoration(
+                          color: Color.fromRGBO(21, 101, 192, 1),
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        indicatorColor: Color.fromARGB(200, 153, 202, 255),
+                        labelColor: Colors.white,
+                        unselectedLabelColor: Colors.black,
+                        tabs: <Widget>[
+                          Tab(
+                            text: "FINANCE",
+                          ),
+                          Tab(
+                            text: "REAL ESTATE",
+                          ),
+                          Tab(text: "OTHER"),
+                        ],
+                      ),
+              ),
+            )
             )
           : null,
     );
