@@ -79,29 +79,33 @@ class _CurrencySelectionScreenState extends State<CurrencySelectionScreen> {
               },
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 10.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, '/property',
-                    arguments: selectedCurrencies);
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(50, 50),
-                padding: EdgeInsets.all(0), 
-                backgroundColor: const Color.fromARGB(255, 176, 216, 253),
-              ),
-              child: Container(
-                width: 200, 
-                height: 50,
-                alignment: Alignment.center,
-                child: const Text(
-                  'SAVE',
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ),
-            ),
-          ),
+         Padding(
+  padding: const EdgeInsets.only(bottom: 10.0),
+  child: ElevatedButton(
+    onPressed: () {
+      Navigator.pushNamed(context, '/property', arguments: selectedCurrencies);
+    },
+    style: ElevatedButton.styleFrom(
+      
+      fixedSize: const Size(260, 60), 
+      backgroundColor: Colors.blue[800],
+      padding: EdgeInsets.zero,
+     
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25), // Adjust the radius for desired curvature
+      ),
+      elevation: 5,
+    ),
+    child: Container(
+      alignment: Alignment.center,
+      child: const Text(
+        'SAVE',
+        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+    ),
+  )
+)
+        
         ],
       ),
     );

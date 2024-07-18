@@ -35,19 +35,19 @@ class Operation {
   }
 }
 
-class Article extends Item{
+// class Article extends Item{
 
-  final String? id;
-  final List<String>? tags;
-  final String? title;
-  final String? text;
-  final Content content;
+//   final String? id;
+//   final List<String>? tags;
+//   final String? title;
+//   final String? text;
+//   final Content content;
 
-  Article({
-    this.id,
-    this.tags,
-    this.title,
-    this.text,
-    required this.content,
-  });
-}
+//   Article({
+//     this.id,
+//     this.tags,
+//     this.title,
+//     this.text,
+//     required this.content,
+//   });
+//}
