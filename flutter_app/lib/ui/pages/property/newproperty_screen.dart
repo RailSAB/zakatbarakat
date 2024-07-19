@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter_app/ui/widgets/jewelry_dynami_table.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/currency_model.dart';
@@ -70,16 +71,18 @@ class _PropertyState extends ConsumerState<PropertyPage> {
                 "value": item['quantity']
               })
           .toList(),
-      "silver_jewelry": {
-        "measurement_unit": selectedMeasuringUnitSilver,
-        "value": int.tryParse(silverValueController.text) ?? 0,
-        "qarat": selectedSilverSample,
-      },
-      "gold_jewelry": {
-        "measurement_unit": selectedMeasuringUnitGold,
-        "value": int.tryParse(goldValueController.text) ?? 0,
-        "qarat": selectedGoldSample,
-      },
+      "silver_jewelry": zakatData.silverJewellery.map((item) => {
+        "measurement_unit": item['measurement_unit'],
+        "value": item['quantity'],
+        "qarat": item['qarat'],
+      }).toList()
+      ,
+      "gold_jewelry": zakatData.goldJewellery.map((item) => {
+        "measurement_unit": item['measurement_unit'],
+        "value": item['quantity'],
+        "qarat": item['qarat'],
+      }).toList()
+      ,
       "purchased_product_for_resaling": zakatData.purchasedProductForResaling
           .map((item) => {
                 "currency_code": item['currency'].code,
@@ -773,290 +776,26 @@ class _PropertyState extends ConsumerState<PropertyPage> {
   }
 
   Widget _buildSilverSection() {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 2,
-            child: SizedBox(
-              width: 220,
-              height: 50,
-              child: TextFormField(
-                controller: silverValueController,
-                validator: (value) {
-                  if (value!.isEmpty) return null;
-                  if (!RegExp(r'^[+-]?\d+$').hasMatch(value)) {
-                    return 'Please enter only digits';
-                  }
-                  if (int.parse(value) <= 0) {
-                    return 'Please enter a positive integer';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  labelText: 'Enter value',
-                  labelStyle: TextStyle(fontSize: 16),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 12.0),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 20),
-          Expanded(
-            flex: 2,
-            child: SizedBox(
-              height: 50,
-              child: DropdownButtonFormField<String>(
-                value: selectedMeasuringUnitSilver,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 12.0),
-                  labelText: 'Measuring Unit',
-                  labelStyle: TextStyle(fontSize: 16),
-                ),
-                items: ['kg', 'oz', 'g']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    if (value != null) {
-                      selectedMeasuringUnitSilver = value;
-                      silverMeasuringUnitController.text = value;
-                    }
-                  });
-                },
-              ),
-            ),
-          ),
-          const SizedBox(width: 20),
-          Expanded(
-            flex: 2,
-            child: PopupMenuButton<String>(
-              onSelected: (String value) {
-                setState(() {
-                  selectSilverSample(value);
-                  silverSampleController.text = value;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 12.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(selectedSilverSample),
-                    const Icon(Icons.arrow_drop_down),
-                  ],
-                ),
-              ),
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                  value: '999',
-                  child: Text('999'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '925/900',
-                  child: Text('925/900'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '875/884',
-                  child: Text('875/884'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '800',
-                  child: Text('800'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '750',
-                  child: Text('750'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '600',
-                  child: Text('600'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return DynamicTableJewelry(
+      category: 'silver',
+      initialData: categoryData['silverJewellery'],
+      onDataChanged: (data) {
+       setState(() {
+          categoryData['silverJewellery'] = data;
+        });
+      },
     );
   }
 
   Widget _buildGoldSection() {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 2,
-            blurRadius: 5,
-            offset: Offset(0, 3),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            flex: 2,
-            child: SizedBox(
-              width: 220,
-              height: 50,
-              child: TextFormField(
-                controller: goldValueController,
-                validator: (value) {
-                  if (value!.isEmpty) return null;
-                  if (!RegExp(r'^[+-]?\d+$').hasMatch(value)) {
-                    return 'Please enter only digits';
-                  }
-                  if (int.parse(value) <= 0) {
-                    return 'Please enter a positive integer';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0)),
-                  labelText: 'Enter value',
-                  labelStyle: TextStyle(fontSize: 16),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 12.0),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 20),
-          Expanded(
-            flex: 2,
-            child: SizedBox(
-              height: 50,
-              child: DropdownButtonFormField<String>(
-                value: selectedMeasuringUnitGold,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  contentPadding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 12.0),
-                  labelText: 'Measuring Unit',
-                  labelStyle: TextStyle(fontSize: 16),
-                ),
-                items: ['kg', 'oz', 'g']
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                onChanged: (value) {
-                  setState(() {
-                    if (value != null) {
-                      selectedMeasuringUnitGold = value;
-                      goldMeasuringUnitController.text = value;
-                    }
-                  });
-                },
-              ),
-            ),
-          ),
-          const SizedBox(width: 20),
-          Expanded(
-            flex: 2,
-            child: PopupMenuButton<String>(
-              onSelected: (String value) {
-                setState(() {
-                  selectGoldSample(value);
-                  silverSampleController.text = value;
-                });
-              },
-              child: Container(
-                padding: const EdgeInsets.symmetric(
-                    horizontal: 16.0, vertical: 12.0),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(selectedGoldSample),
-                    const Icon(Icons.arrow_drop_down),
-                  ],
-                ),
-              ),
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                const PopupMenuItem<String>(
-                  value: '999/24K',
-                  child: Text(
-                    '999/24K',
-                  ),
-                ),
-                const PopupMenuItem<String>(
-                  value: '958',
-                  child: Text('958'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '900/916/22K',
-                  child: Text('900/916/22K'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '850/21K',
-                  child: Text('850/21K'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '750/18K',
-                  child: Text('750/18K'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '583/585/14K',
-                  child: Text('583/585/14K'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '500/12K',
-                  child: Text('500/12K'),
-                ),
-                const PopupMenuItem<String>(
-                  value: '375/9K',
-                  child: Text('375/9K'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+    return DynamicTableJewelry(
+      category: 'gold',
+      initialData: categoryData['goldJewellery'],
+      onDataChanged: (data) {
+        setState(() {
+          categoryData['goldJewellery'] = data;
+        });
+      },
     );
   }
 
