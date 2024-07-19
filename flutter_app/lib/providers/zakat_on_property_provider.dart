@@ -33,4 +33,36 @@ class ZakatOnPropertyNotifier extends StateNotifier<ZakatOnPropertyModel> {
   void setNisabStatus(bool status) {
     state = state.copyWith(nisabStatus: status);
   }
+
+
+  // getters
+
+  List<Map<String, dynamic>> get getCash => state.cash;
+
+  List<Map<String, dynamic>> get getCashOnBankCards => state.cashOnBankCards;
+
+  List<Map<String, dynamic>> get getGoldJewellery => state.goldJewellery;
+
+  List<Map<String, dynamic>> get getSilverJewellery => state.silverJewellery;
+
+  List<Map<String, dynamic>> get getPurchasedProductForResaling => state.purchasedProductForResaling;
+
+  List<Map<String, dynamic>> get getUnfinishedProduct => state.unfinishedProduct;
+
+  List<Map<String, dynamic>> get getProducedProductForResaling => state.producedProductForResaling;
+
+  List<Map<String, dynamic>> get getPurchasedNotForResaling => state.purchasedNotForResaling;
+
+  List<Map<String, dynamic>> get getUsedAfterNisab => state.usedAfterNisab;
+
+  List<Map<String, dynamic>> get getRentMoney => state.rentMoney;
+
+  List<Map<String, dynamic>> get getStocksForResaling => state.stocksForResaling;
+
+  List<Map<String, dynamic>> get getIncomeFromStocks => state.incomeFromStocks;
+
+  List<Map<String, dynamic>> get getTaxesValue => state.taxesValue;
+
+
+
 }
