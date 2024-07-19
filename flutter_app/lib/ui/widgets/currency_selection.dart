@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/models/currency_model.dart';
+import 'package:flutter_app/providers/currency_provider.dart';
 import 'package:flutter_app/ui/widgets/custom_app_bar.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 
-class CurrencySelectionScreen extends StatefulWidget {
+class CurrencySelectionScreen extends ConsumerStatefulWidget {
   final Function(List<String>) onCurrencySelected;
 
   const CurrencySelectionScreen({super.key, required this.onCurrencySelected});
 
   @override
-  State<CurrencySelectionScreen> createState() =>
-      _CurrencySelectionScreenState();
+  ConsumerState<CurrencySelectionScreen> createState() => _CurrencySelectionScreenState();
 }
 
-class _CurrencySelectionScreenState extends State<CurrencySelectionScreen> {
+class _CurrencySelectionScreenState extends ConsumerState<CurrencySelectionScreen> {
   List<CurrencyModel> selectedCurrencies = [];
   final TextEditingController _searchController = TextEditingController();
 
@@ -22,6 +23,7 @@ class _CurrencySelectionScreenState extends State<CurrencySelectionScreen> {
     _searchController.dispose();
     super.dispose();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +85,7 @@ class _CurrencySelectionScreenState extends State<CurrencySelectionScreen> {
   padding: const EdgeInsets.only(bottom: 10.0),
   child: ElevatedButton(
     onPressed: () {
-      Navigator.pushNamed(context, '/property', arguments: selectedCurrencies);
+      Navigator.pushNamed(context, '/property', arguments: checkSelectedCurrencies());
     },
     style: ElevatedButton.styleFrom(
       
@@ -109,6 +111,13 @@ class _CurrencySelectionScreenState extends State<CurrencySelectionScreen> {
         ],
       ),
     );
+  }
+
+  List<CurrencyModel> checkSelectedCurrencies() {
+    if(selectedCurrencies.isEmpty) {
+      selectedCurrencies.add(ref.read(currencyProvider));
+    }
+    return selectedCurrencies;
   }
 }
 
