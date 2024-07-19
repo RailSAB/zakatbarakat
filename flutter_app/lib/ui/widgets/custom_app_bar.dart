@@ -60,7 +60,8 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
                         child: ClipOval(
                           child: Transform.scale(
                             scale: 0.7,
-                            child: Image.asset('images/currency.png'),
+                            child: Image.network(
+                                'https://raw.githubusercontent.com/meldilen/deploying/main/assets/images/currency.png'),
                           ),
                         ),
                       ),
@@ -81,40 +82,39 @@ class CustomAppBar extends ConsumerWidget implements PreferredSizeWidget {
       toolbarHeight: appBarHeight,
       bottom: pageTitle == "Zakat on Property"
           ? PreferredSize(
-            preferredSize: const Size.fromHeight(40),
-            child: ClipRRect(
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
-              child: Container(
-                height: 48,
-                margin: const EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  color: Colors.blue[50],
-                ),
-                child: TabBar(
-                        labelStyle: TextStyle(fontSize: 15),
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        dividerColor: Colors.transparent,
-                        indicator: BoxDecoration(
-                          color: Color.fromRGBO(21, 101, 192, 1),
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                        ),
-                        indicatorColor: Color.fromARGB(200, 153, 202, 255),
-                        labelColor: Colors.white,
-                        unselectedLabelColor: Colors.black,
-                        tabs: <Widget>[
-                          Tab(
-                            text: "FINANCE",
-                          ),
-                          Tab(
-                            text: "REAL ESTATE",
-                          ),
-                          Tab(text: "OTHER"),
-                        ],
+              preferredSize: const Size.fromHeight(40),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                child: Container(
+                  height: 48,
+                  margin: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    color: Colors.blue[50],
+                  ),
+                  child: TabBar(
+                    labelStyle: TextStyle(fontSize: 15),
+                    indicatorSize: TabBarIndicatorSize.tab,
+                    dividerColor: Colors.transparent,
+                    indicator: BoxDecoration(
+                      color: Color.fromRGBO(21, 101, 192, 1),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    indicatorColor: Color.fromARGB(200, 153, 202, 255),
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.black,
+                    tabs: <Widget>[
+                      Tab(
+                        text: "FINANCE",
                       ),
-              ),
-            )
-            )
+                      Tab(
+                        text: "REAL ESTATE",
+                      ),
+                      Tab(text: "OTHER"),
+                    ],
+                  ),
+                ),
+              ))
           : null,
     );
   }

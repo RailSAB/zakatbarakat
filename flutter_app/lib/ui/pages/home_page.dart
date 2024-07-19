@@ -30,7 +30,8 @@ class _HomePageState extends ConsumerState<HomePage> {
   final List<News> newsArticles = [];
 
   Future getData() async {
-    final response = await http.get(Uri.parse('https://weaviatetest.onrender.com/news/get-news'));
+    final response = await http
+        .get(Uri.parse('https://weaviatetest.onrender.com/news/get-news'));
     try {
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
@@ -52,13 +53,13 @@ class _HomePageState extends ConsumerState<HomePage> {
     } catch (e) {
       print(e.toString());
     }
-    setState(() {}); 
+    setState(() {});
   }
 
   @override
   void initState() {
     super.initState();
-    getData(); 
+    getData();
   }
 
   @override
@@ -84,7 +85,9 @@ class _HomePageState extends ConsumerState<HomePage> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   image: const DecorationImage(
-                    image: AssetImage('images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'),
+                    image: NetworkImage(
+                        'https://raw.githubusercontent.com/meldilen/deploying/main/assets/images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'),
+                    //image: AssetImage('images/ashkan-forouzani-xiHAseekqqw-unsplash.jpg'),
                     fit: BoxFit.cover,
                   ),
                   boxShadow: [
@@ -110,14 +113,16 @@ class _HomePageState extends ConsumerState<HomePage> {
                   Navigator.pushNamed(context, '/funds');
                 },
                 style: ButtonStyle(
-                  minimumSize:  MaterialStateProperty.all(const Size(double.infinity, 50)),
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                  minimumSize: MaterialStateProperty.all(
+                      const Size(double.infinity, 50)),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-                  elevation:  MaterialStateProperty.all(10),
+                  elevation: MaterialStateProperty.all(10),
                 ),
                 child: const Text(
                   "View Funds",
@@ -129,7 +134,10 @@ class _HomePageState extends ConsumerState<HomePage> {
               padding: EdgeInsets.symmetric(vertical: 16.0),
               child: Text(
                 'News',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.black87),
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87),
               ),
             ),
             if (newsArticles.isEmpty)
@@ -139,12 +147,12 @@ class _HomePageState extends ConsumerState<HomePage> {
             else
               ListView.builder(
                 shrinkWrap: true,
-                
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: newsArticles.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 8.0), // Добавляем расстояние
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 8.0), // Добавляем расстояние
                     child: NewsCard(
                       name: newsArticles[index].name,
                       description: newsArticles[index].description,
@@ -178,9 +186,18 @@ class _HomePageState extends ConsumerState<HomePage> {
         spacing: 20.0,
         runSpacing: 20.0,
         children: [
-          _createButton('Property', 'images/property.png', '/property'),
-          _createButton('Livestock', 'images/lifestock.png', '/livestock'),
-          _createButton('Ushr', 'images/ushr.png', '/ushr'),
+          _createButton(
+              'Property',
+              'https://raw.githubusercontent.com/meldilen/deploying/main/assets/images/property.png',
+              '/property'),
+          _createButton(
+              'Livestock',
+              'https://raw.githubusercontent.com/meldilen/deploying/main/assets/images/lifestock.png',
+              '/livestock'),
+          _createButton(
+              'Ushr',
+              'https://raw.githubusercontent.com/meldilen/deploying/main/assets/images/ushr.png',
+              '/ushr'),
         ],
       ),
     );
@@ -192,37 +209,36 @@ class _HomePageState extends ConsumerState<HomePage> {
       children: [
         ElevatedButton(
           onPressed: () {
-            if(route == '/property') {
+            if (route == '/property') {
               Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CurrencySelectionScreen(
-                            onCurrencySelected: (selectedCurrencies) {},
-                          ),
-                        ),
-                      );
+                context,
+                MaterialPageRoute(
+                  builder: (context) => CurrencySelectionScreen(
+                    onCurrencySelected: (selectedCurrencies) {},
+                  ),
+                ),
+              );
+            } else {
+              Navigator.pushNamed(context, route);
             }
-            else{
-            Navigator.pushNamed(context, route);}
           },
           style: ElevatedButton.styleFrom(
             backgroundColor: Colors.white,
-            minimumSize: const Size(100, 90), 
+            minimumSize: const Size(100, 90),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(12),
             ),
             elevation: 10,
             padding: const EdgeInsets.all(16),
           ),
-          child: Image.asset(assetPath, height: 50, width: 50),
+          child: Image.network(assetPath, height: 50, width: 50),
         ),
         const SizedBox(height: 10),
         Text(
           text,
-          style: const TextStyle(fontSize: 18, color: Colors.black87), 
+          style: const TextStyle(fontSize: 18, color: Colors.black87),
         ),
       ],
     );
   }
-
 }
